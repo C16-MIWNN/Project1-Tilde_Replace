@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:fragment="baseheader(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">Title</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.min.css}">
+
+    <link rel="stylesheet" type="text/css" href="/css/recipes.css">
+</head>
+
+<body>
+<div th:fragment="navbar">
+    <nav>
+        <a th:href="@{/recipeOverview}">Recipes</a>
+        <a th:href="@{/}">Ingredients</a>
+    </nav>
+</div>
+
+<div class="container"></div>
+
+<div th:fragment="footer">
+    <footer><p>Copyright &copy; TildeReplace inc.</p></footer>
+</div>
+
+<div th:fragment="bottomScripts">
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</div>
+
+</body>
+</html>
