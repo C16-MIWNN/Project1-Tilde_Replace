@@ -1,0 +1,39 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0" version="27.1.6">
+  <diagram name="Page-1" id="LcfojBMEP6jThsr_iVC6">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="MnAlRHsr2K1yNofalpHe-2" value="Recipe" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FFFFFF,#999999);fontColor=light-dark(#000000,#000000);" vertex="1" parent="1">
+          <mxGeometry x="420" y="310" width="250" height="120" as="geometry">
+            <mxRectangle x="360" y="240" width="80" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MnAlRHsr2K1yNofalpHe-3" value="recipeTitle:String" style="text;strokeColor=none;fillColor=light-dark(#FFFFFF,#FFFFFF);align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=light-dark(#000000,#000000);" vertex="1" parent="MnAlRHsr2K1yNofalpHe-2">
+          <mxGeometry y="30" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MnAlRHsr2K1yNofalpHe-4" value="&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(0, 0, 0));&quot;&gt;ingredients:List&amp;lt;Ingredient&amp;gt;&lt;/font&gt;" style="text;strokeColor=none;fillColor=light-dark(#FFFFFF,#FFFFFF);align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=light-dark(#000000,#000000);" vertex="1" parent="MnAlRHsr2K1yNofalpHe-2">
+          <mxGeometry y="60" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MnAlRHsr2K1yNofalpHe-5" value="preparationText: String" style="text;strokeColor=none;fillColor=light-dark(#FFFFFF,#FFFFFF);align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=light-dark(#000000,#000000);" vertex="1" parent="MnAlRHsr2K1yNofalpHe-2">
+          <mxGeometry y="90" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MnAlRHsr2K1yNofalpHe-6" value="Ingredient" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FFFFFF,#999999);fontColor=light-dark(#000000,#000000);" vertex="1" parent="1">
+          <mxGeometry x="140" y="310" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MnAlRHsr2K1yNofalpHe-7" value="name: String" style="text;strokeColor=none;fillColor=light-dark(#FFFFFF,#FFFFFF);align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=light-dark(#000000,#000000);" vertex="1" parent="MnAlRHsr2K1yNofalpHe-6">
+          <mxGeometry y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MnAlRHsr2K1yNofalpHe-10" value="&lt;font style=&quot;color: rgb(204, 204, 204);&quot;&gt;kCal: double&lt;/font&gt;" style="text;strokeColor=none;fillColor=light-dark(#FFFFFF,#FFFFFF);align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=light-dark(#000000,#000000);" vertex="1" parent="MnAlRHsr2K1yNofalpHe-6">
+          <mxGeometry y="60" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="MnAlRHsr2K1yNofalpHe-11" value="" style="endArrow=ERzeroToMany;html=1;rounded=0;exitX=1.002;exitY=0.733;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.733;entryDx=0;entryDy=0;entryPerimeter=0;startArrow=ERoneToMany;startFill=0;endFill=0;" edge="1" parent="1" source="MnAlRHsr2K1yNofalpHe-7" target="MnAlRHsr2K1yNofalpHe-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="450" as="sourcePoint" />
+            <mxPoint x="450" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
