@@ -1,4 +1,4 @@
-package nl.miwnn.ch16.tildereplace.ingredients.controller;
+package nl.miwnn.ch16.tildereplace.recipes.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
