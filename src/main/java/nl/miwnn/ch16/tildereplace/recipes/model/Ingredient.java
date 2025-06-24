@@ -2,6 +2,7 @@ package nl.miwnn.ch16.tildereplace.recipes.model;
 
 import jakarta.persistence.*;
 
+@Entity
 public class Ingredient {
 
     @Id
