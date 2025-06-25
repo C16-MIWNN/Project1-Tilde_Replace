@@ -46,7 +46,7 @@ public class InitializeController {
         try {
             RecipesUser user = new RecipesUser();
             user.setUsername("user");
-            user.setUsername("userPW");
+            user.setPassword("userPW");
             recipesUserService.saveUser(user);
 
             loadFoods();

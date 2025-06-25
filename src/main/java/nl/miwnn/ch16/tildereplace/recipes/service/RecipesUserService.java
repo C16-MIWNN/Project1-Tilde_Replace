@@ -31,4 +31,5 @@ public class RecipesUserService implements UserDetailsService {
         recipesUserRepository.save(user);
     }
 
+
 }
