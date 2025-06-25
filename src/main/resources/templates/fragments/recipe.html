@@ -7,10 +7,10 @@
 
 
 <div th:fragment="recipeCard(recipe)">
-    <div class="col-4">
-        <div class="card">
+
+        <div class="card" style="width: 24rem;">
             <a th:href="@{/recipe/detail/{recipeName}(recipeName= ${recipe.recipeName})}">
-                <img height="300px" src="https://imgur.com/OByMbYu.jpeg" class="card-img-top object-fit-cover" alt="..." style="height:300px">
+                <img src="https://imgur.com/OByMbYu.jpeg" class="card-img-top object-fit-cover" alt="..." style="height:300px">
 
             </a>
             <div class="card-body">
@@ -20,10 +20,10 @@
                 Optional extra information
             </div>
         </div>
-    </div>
+
 </div>
 
-<div th:fragment="recipeCards(cards)" class="row m-2 g-4">
+<div th:fragment="recipeCards(cards)" class="row row-cols-1 row-cols-md-3 g-4" >
     <div th:each="recipe : ${allRecipes}" th:insert="~{:: recipeCard(recipe)}"></div>
 </div>
 
