@@ -6,10 +6,15 @@
 <body>
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<div class="container"></div>
+<div class="container">
+    <h1>Overzicht van Recepten</h1>
+
+    <div th:replace="~{fragments/recipe :: recipeCards(${allRecipes})}"></div>
+
+</div>
+
 
 <div th:replace="~{fragments/general :: footer}"></div>
-
 <div th:replace="~{fragments/general :: bottomScripts}"></div>
 
 </body>
