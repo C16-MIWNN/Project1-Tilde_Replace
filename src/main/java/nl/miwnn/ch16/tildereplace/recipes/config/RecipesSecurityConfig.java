@@ -17,6 +17,7 @@ public class RecipesSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests((request) -> request
+                        .requestMatchers("/").authenticated()
                         .anyRequest().permitAll()
                     )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)

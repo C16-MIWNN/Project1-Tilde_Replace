@@ -1,9 +1,13 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
+import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipesUserDTO;
 import nl.miwnn.ch16.tildereplace.recipes.repository.RecipesUserRepository;
+import nl.miwnn.ch16.tildereplace.recipes.service.RecipesUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -11,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RecipesUserController {
 
     private final RecipesUserRepository recipesUserRepository;
+    private final RecipesUserService recipesUserService;
 
-    public RecipesUserController(RecipesUserRepository recipesUserRepository) {
+    public RecipesUserController(RecipesUserRepository recipesUserRepository, RecipesUserService recipesUserService, RecipesUserService recipesUserService1) {
         this.recipesUserRepository = recipesUserRepository;
+        this.recipesUserService = recipesUserService1;
     }
 
     @GetMapping("/userOverview")
@@ -22,6 +28,23 @@ public class RecipesUserController {
         return "userOverview";
     }
 
+    @GetMapping("/new")
+    public String newUser(@ModelAttribute("userForm") NewRecipesUserDTO newRecipesUserDTO, BindingResult result) {
 
+        if (recipesUserService.usernameInUse(newRecipesUserDTO.getUsername())) {
+            result.rejectValue("username", "duplicate username", "username is already in user");
+        }
+
+        if (!newRecipesUserDTO.getUsername().equals(newRecipesUserDTO.getPasswordConfirm())) {
+            result.rejectValue("password", "no matching", "passwords do not match");
+        }
+
+        if (result.hasErrors()) {
+            return "userForm";
+        }
+
+        recipesUserService.save(newRecipesUserDTO);
+        return "redirect:/userOverview";
+    }
 
 }
