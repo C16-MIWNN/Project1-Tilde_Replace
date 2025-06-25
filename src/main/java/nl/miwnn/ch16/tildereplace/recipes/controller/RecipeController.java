@@ -36,7 +36,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/detail/{recipeName}")
-    private String showTest(@PathVariable("recipeName") String name, Model datamodel) {
+    private String showRecipeDetail(@PathVariable("recipeName") String name, Model datamodel) {
 
         Optional<Recipe> recipeOptional = recipeRepository.findRecipeByRecipeName(name);
 
