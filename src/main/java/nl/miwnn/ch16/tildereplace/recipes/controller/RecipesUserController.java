@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -47,4 +48,13 @@ public class RecipesUserController {
         return "redirect:/userOverview";
     }
 
+    @PostMapping("/delete")
+    public String deleteUser(@ModelAttribute("userId") Long userId, BindingResult result) {
+        if (result.hasErrors()) {
+            return "userOverview";
+        }
+
+        recipesUserRepository.deleteById(userId);
+        return "redirect:/userOverview";
+    }
 }
