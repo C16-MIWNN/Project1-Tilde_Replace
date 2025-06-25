@@ -22,7 +22,6 @@ public class RecipesSecurityConfig {
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .logout((logout) -> logout.logoutSuccessUrl("/"));
 
-
         return httpSecurity.build();
     }
 
