@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title>Recipe details</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="row col-12 g-0 mt-2 justify-content-center">
+    <div class="card col-8">
+        <img src="https://imgur.com/OByMbYu.jpeg" class="card-img-top object-fit-cover" alt="..." style="height:300px">
+        <div class="card-body">
+            <h4 class="card-title" th:text="${recipe.recipeName}"></h4>
+            <h5>Ingredienten</h5>
+            <p th:text="${theIngredients}"></p>
+            <table class="table">
+                <tbody>
+                <tr th:each="ingredient: ${theIngredients}">
+                    <td th:text="${ingredient.ingredientId}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="card-text"><small class="text-body-secondary">Bereidingstijd: xxxx | Kcal: xxxx | Etc: xxxx</small></p>
+        </div>
+    </div>
+    <div class="card col-8 border-0">
+        <div class="card-body">
+            <h4 class="card-title">Bereiding</h4>
+            <p th:text="${recipe.preperationInstructions}"></p>
+        </div>
+    </div>
+    <div class="card col-8 border-0">
+        <div class="card-body">
+            <button type="button" class="btn btn-primary m-2"><i class="bi bi-pencil pe-2"></i>Aanpassen</button>
+            <button type="button" class="btn btn-danger m-2"><i class="bi bi-trash3 pe-2"></i>Verwijderen</button>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+</body>
+</html>
