@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RecipesUserService implements UserDetailsService {
 
     private final RecipesUserRepository recipesUserRepository;
@@ -17,7 +19,6 @@ public class RecipesUserService implements UserDetailsService {
         this.recipesUserRepository = recipesUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

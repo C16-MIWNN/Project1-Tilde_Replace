@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import nl.miwnn.ch16.tildereplace.recipes.service.RecipesUserService;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.ClassPathResource;
@@ -22,13 +23,16 @@ public class InitializeController {
     private FoodRepository foodRepository;
     private IngredientRepository ingredientRepository;
     private RecipeRepository recipeRepository;
+    private RecipesUserService recipesUserService;
 
     private Map<String, Food> foodCache = new HashMap<String, Food>();
 
-    public InitializeController(FoodRepository foodRepository, IngredientRepository ingredientRepository, RecipeRepository recipeRepository) {
+    public InitializeController(FoodRepository foodRepository, IngredientRepository ingredientRepository,
+                                RecipeRepository recipeRepository, RecipesUserService recipesUserService) {
         this.foodRepository = foodRepository;
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
+        this.recipesUserService = recipesUserService;
     }
 
     @EventListener
@@ -40,6 +44,11 @@ public class InitializeController {
 
     private void initializeDB() {
         try {
+            RecipesUser user = new RecipesUser();
+            user.setUsername("user");
+            user.setUsername("userPW");
+            recipesUserService.saveUser(user);
+
             loadFoods();
             loadRecipes();
         } catch (IOException | CsvValidationException e) {
