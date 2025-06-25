@@ -72,10 +72,6 @@ public class InitializeController {
             reader.skip(1);
 
             for (String[] recipeLine : reader) {
-                System.out.println("=======");
-                System.out.println(recipeLine[0]);
-                System.out.println("========");
-
                 Recipe recipe = new Recipe();
                 recipe.setRecipeName(recipeLine[0]);
                 recipe.setPreperationInstructions(recipeLine[2]);
