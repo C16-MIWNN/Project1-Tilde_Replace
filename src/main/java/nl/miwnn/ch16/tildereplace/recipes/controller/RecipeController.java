@@ -20,4 +20,5 @@ public class RecipeController {
         datamodel.addAttribute("allRecipes", recipeRepository.findAll());
         return "recipeOverview";
     }
+
 }
