@@ -7,24 +7,24 @@ public class Food {
 
     @Id
     @GeneratedValue
-    private Long FoodId;
+    private Long foodId;
 
-    private String FoodName;
+    private String foodName;
 
     public Long getFoodId() {
-        return FoodId;
+        return foodId;
     }
 
     public void setFoodId(Long foodId) {
-        FoodId = foodId;
+        this.foodId = foodId;
     }
 
     public String getFoodName() {
-        return FoodName;
+        return foodName;
     }
 
     public void setFoodName(String foodName) {
-        FoodName = foodName;
+        this.foodName = foodName;
     }
 
 }
