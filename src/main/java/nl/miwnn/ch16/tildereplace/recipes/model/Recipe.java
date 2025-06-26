@@ -15,7 +15,6 @@ public class Recipe {
 
     @ManyToMany
     private List<Ingredient> ingredients;
-
     private String preparationInstructions;
 
     public Long getRecipeId() {
