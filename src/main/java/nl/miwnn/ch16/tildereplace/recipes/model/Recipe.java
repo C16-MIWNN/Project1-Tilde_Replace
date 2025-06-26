@@ -15,8 +15,7 @@ public class Recipe {
 
     @OneToMany (mappedBy = "recipe")
     private List<Ingredient> ingredients;
-
-    private String preperationInstructions;
+    private String preparationInstructions;
 
     public Long getRecipeId() {
         return recipeId;
@@ -42,11 +41,11 @@ public class Recipe {
     }
 
     public String getPreperationInstructions() {
-        return preperationInstructions;
+        return preparationInstructions;
     }
 
     public void setPreperationInstructions(String preperationInstructions) {
-        this.preperationInstructions = preperationInstructions;
+        this.preparationInstructions = preperationInstructions;
     }
 
 }
