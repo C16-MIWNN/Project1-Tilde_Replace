@@ -1,8 +1,10 @@
 package nl.miwnn.ch16.tildereplace.recipes.service;
 
 
+import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipesUserDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.RecipesUser;
 import nl.miwnn.ch16.tildereplace.recipes.repository.RecipesUserRepository;
+import nl.miwnn.ch16.tildereplace.recipes.service.mapper.NewRecipeUserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,7 +30,15 @@ public class RecipesUserService implements UserDetailsService {
 
     public void saveUser(RecipesUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        recipesUserRepository.save(user);
+        recipesUserRepository.save(user); // mapper
+    }
+
+    public boolean usernameInUse(String username) {
+        return recipesUserRepository.existsByUsername(username);
+    }
+
+    public void save(NewRecipesUserDTO newRecipesUserDTO) {
+        saveUser(NewRecipeUserMapper.fromDto(newRecipesUserDTO));
     }
 
 

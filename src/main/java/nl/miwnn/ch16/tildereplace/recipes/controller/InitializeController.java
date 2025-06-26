@@ -24,15 +24,22 @@ public class InitializeController {
     private IngredientRepository ingredientRepository;
     private RecipeRepository recipeRepository;
     private RecipesUserService recipesUserService;
+    private UnitRepository unitRepository;
 
     private Map<String, Food> foodCache = new HashMap<String, Food>();
+    private Map<String, Unit> unitCache = new HashMap<String, Unit>();
 
-    public InitializeController(FoodRepository foodRepository, IngredientRepository ingredientRepository,
-                                RecipeRepository recipeRepository, RecipesUserService recipesUserService) {
+    public InitializeController(FoodRepository foodRepository,
+                                IngredientRepository ingredientRepository,
+                                RecipeRepository recipeRepository,
+                                RecipesUserService recipesUserService,
+                                UnitRepository unitRepository
+                                ) {
         this.foodRepository = foodRepository;
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
         this.recipesUserService = recipesUserService;
+        this.unitRepository = unitRepository;
     }
 
     @EventListener
@@ -49,12 +56,31 @@ public class InitializeController {
             user.setPassword("userPW");
             recipesUserService.saveUser(user);
 
+            loadUnits();
             loadFoods();
             loadRecipes();
         } catch (IOException | CsvValidationException e) {
             throw new RuntimeException("Failed to initialize database from CSV files", e);
         }
     }
+
+    private void loadUnits() throws IOException, CsvValidationException {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(
+                new ClassPathResource("/example_data/units.csv").getInputStream()))) {
+
+            // Skip header
+            reader.skip(1);
+
+            for (String[] unitLine : reader) {
+                Unit unit = new Unit();
+                unit.setUnitName(unitLine[0]);
+                unit.setAbbreviation(unitLine[1]);
+                unitRepository.save(unit);
+                unitCache.put(unit.getUnitName(), unit);
+            }
+        }
+    }
+
 
     private void loadFoods() throws IOException, CsvValidationException {
         try (CSVReader reader = new CSVReader(new InputStreamReader(
@@ -95,13 +121,14 @@ public class InitializeController {
     private void loadIngredients(String ingredientLine, Recipe recipe) throws IOException, CsvValidationException {
         String[] ingredients = ingredientLine.split(",");
 
-        for (int index = 0; index + 1 < ingredients.length; index += 2) {
+        for (int index = 0; index + 2 < ingredients.length; index += 3) {
                 Ingredient ingredient = new Ingredient();
 
                 ingredient.setRecipe(recipe);
 
                 ingredient.setFood(foodCache.get(ingredients[index]));
-                ingredient.setGrams(Integer.parseInt(ingredients[index+1]));
+                ingredient.setAmount(Integer.parseInt(ingredients[index+1]));
+                ingredient.setUnit(unitCache.get(ingredients[index+2]));
 
                 ingredientRepository.save(ingredient);
         }
