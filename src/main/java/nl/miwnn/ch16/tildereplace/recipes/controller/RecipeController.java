@@ -79,4 +79,16 @@ public class RecipeController {
         return "recipeForm";
     }
 
+    @PostMapping("/recipe/save")
+    private String saveOrUpdateRecipe(@ModelAttribute("recipeForm") Recipe toBeSavedRecipe,
+                                      BindingResult result) {
+        if (result.hasErrors()) {
+            System.err.println(result.getAllErrors());
+        } else {
+            recipeRepository.save(toBeSavedRecipe);
+        }
+
+        return "redirect:/recipe/detail/" + toBeSavedRecipe.getRecipeName();
+    }
+
 }
