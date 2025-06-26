@@ -13,7 +13,7 @@ public class Recipe {
 
     private String recipeName;
 
-    @ManyToMany
+    @OneToMany (mappedBy = "recipe")
     private List<Ingredient> ingredients;
     private String preparationInstructions;
 
