@@ -24,7 +24,7 @@ public class RecipeController {
     private String setupRecipeDetail(Model datamodel, Recipe recipeToShow) {
         datamodel.addAttribute("recipe", recipeToShow);
         List<Ingredient> allIngredients = recipeToShow.getIngredients();
-        PrintList();
+        //PrintList();
         datamodel.addAttribute("myIngredients", allIngredients);
 
         return "recipeDetails";
