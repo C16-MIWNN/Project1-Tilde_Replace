@@ -12,26 +12,16 @@
 
 <body>
 <div th:fragment="navbar">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/recipeOverview}">Smakelijk</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/ingredientOverview}">Ingredienten</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <nav>
+        <a th:href="@{/recipeOverview}">Recipes</a>
+        <a th:href="@{/ingredientOverview}">Ingredients</a>
     </nav>
 </div>
 
 <div class="container"></div>
 
 <div th:fragment="footer">
-    <div class="fixed-bottom">
-        <footer><p> Copyright &copy; TildeReplace inc.</p></footer>
-    </div>
+    <footer><p>Copyright &copy; TildeReplace inc.</p></footer>
 </div>
 
 <div th:fragment="bottomScripts">

@@ -1,16 +1,10 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
-import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
-import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class RecipeController {
@@ -19,14 +13,6 @@ public class RecipeController {
 
     public RecipeController(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
-    }
-
-    private String setupRecipeDetail(Model datamodel, Recipe recipeToShow) {
-        datamodel.addAttribute("recipe", recipeToShow);
-        List<Ingredient> allIngredients = recipeToShow.getIngredients();
-        datamodel.addAttribute("theIngredients", allIngredients);
-
-        return "recipeDetails";
     }
 
     @GetMapping({"/", "/recipeOverview"})

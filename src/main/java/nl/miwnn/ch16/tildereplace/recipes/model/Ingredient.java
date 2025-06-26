@@ -16,7 +16,10 @@ public class Ingredient {
     @ManyToOne
     private Food food;
 
-    private int grams;
+    @ManyToOne
+    private Unit unit;
+
+    private int amount;
 
     public Long getIngredientId() {
         return ingredientId;
@@ -42,11 +45,19 @@ public class Ingredient {
         this.food = food;
     }
 
-    public int getGrams() {
-        return grams;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setGrams(int grams) {
-        this.grams = grams;
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 }
