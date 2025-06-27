@@ -34,15 +34,9 @@ public class RecipeController {
     private String setupRecipeDetail(Model datamodel, Recipe recipeToShow) {
         datamodel.addAttribute("recipe", recipeToShow);
         List<Ingredient> allIngredients = recipeToShow.getIngredients();
-        PrintList();
         datamodel.addAttribute("myIngredients", allIngredients);
 
         return "recipeDetails";
-    }
-
-    public void PrintList() {
-        System.out.println("TEST");
-        //System.err.println(ing);
     }
 
     @GetMapping({"/", "/recipeOverview"})

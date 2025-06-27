@@ -12,10 +12,15 @@
 
 <body>
 <div th:fragment="navbar">
-    <nav>
-        <a th:href="@{/recipeOverview}">Recipes</a>
-        <a th:href="@{/ingredientOverview}">Ingredients</a>
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/recipeOverview}">Smakelijk</a>
+        </div>
     </nav>
+    <!--    <nav>-->
+    <!--        <a th:href="@{/recipeOverview}">Recipes</a>-->
+    <!--        <a th:href="@{/ingredientOverview}">Ingredients</a>-->
+    <!--    </nav>-->
 </div>
 
 <div class="container"></div>
