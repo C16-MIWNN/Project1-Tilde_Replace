@@ -31,7 +31,7 @@ public class NewRecipeMapper {
 
     public Recipe fromDto(NewRecipeDTO newRecipeDTO) {
         Recipe recipe = new Recipe();
-        Ingredient ingredient = new Ingredient();
+
 
         recipe.setRecipeName(newRecipeDTO.getRecipeName());
         recipe.setPreperationInstructions(newRecipeDTO.getPreparationInstruction());
@@ -40,6 +40,7 @@ public class NewRecipeMapper {
 
         int numberOfIngredients = newRecipeDTO.getFoodIds().size();
         for (int index = 0; index < numberOfIngredients; index++) {
+            Ingredient ingredient = new Ingredient();
             Optional<Food> foodOptional = foodRepository.findById(newRecipeDTO.getFoodIds().get(index));
             Optional<Unit> unitOptional = unitRepository.findById(newRecipeDTO.getUnitIds().get(index));
             int quantity = newRecipeDTO.getIngredientQuantities().get(index);
@@ -54,6 +55,8 @@ public class NewRecipeMapper {
 
             ingredient.setAmount(quantity);
             ingredient.setRecipe(recipe);
+            System.err.println(ingredient.getFood().getFoodName());
+            System.err.println(ingredient.getUnit().getUnitName());
             ingredientRepository.save(ingredient);
         }
 
