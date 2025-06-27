@@ -20,7 +20,7 @@
         </div>
         <br>
 
-        <p>Kies een ingredient</p>
+        <p>Kies een ingredient 1</p>
         <select class="form-select col" size="3" th:field="*{foodIds}">
             <option th:each="food : ${allFoods}"
                     th:text="${food.foodName}"
@@ -29,8 +29,52 @@
         <br>
 
         <div class="mb-3">
-            <label for="newFoodQuantity" class="form-label">Geef de Ingredient hoeveelheid</label>
+            <label for="newFoodQuantity1" class="form-label">Geef de Ingredient 1 hoeveelheid</label>
+            <input type="text" th:field="*{ingredientQuantities}" class="form-control" id="newFoodQuantity1"
+                   placeholder="Geef de hoeveelheid">
+        </div>
+        <br>
+
+        <p>Kies de eenheid van de hoeveelheid</p>
+        <select class="form-select col" size="3" th:field="*{unitIds}">
+            <option th:each="unit : ${allUnits}"
+                    th:text="${unit.unitName}"
+                    th:value="${unit.unitId}"></option>
+        </select>
+
+        <p>Kies een ingredient 2</p>
+        <select class="form-select col" size="3" th:field="*{foodIds}">
+            <option th:each="food : ${allFoods}"
+                    th:text="${food.foodName}"
+                    th:value="${food.foodId}"></option>
+        </select>
+        <br>
+
+        <div class="mb-3">
+            <label for="newFoodQuantity" class="form-label">Geef de ingredient 2 hoeveelheid</label>
             <input type="text" th:field="*{ingredientQuantities}" class="form-control" id="newFoodQuantity"
+                   placeholder="Geef de hoeveelheid">
+        </div>
+        <br>
+
+        <p>Kies de eenheid van de hoeveelheid</p>
+        <select class="form-select col" size="3" th:field="*{unitIds}">
+            <option th:each="unit : ${allUnits}"
+                    th:text="${unit.unitName}"
+                    th:value="${unit.unitId}"></option>
+        </select>
+
+        <p>Kies een ingredient 3</p>
+        <select class="form-select col" size="3" th:field="*{foodIds}">
+            <option th:each="food : ${allFoods}"
+                    th:text="${food.foodName}"
+                    th:value="${food.foodId}"></option>
+        </select>
+        <br>
+
+        <div class="mb-3">
+            <label for="newFoodQuantity3" class="form-label">Geef de ingredient 3 hoeveelheid</label>
+            <input type="text" th:field="*{ingredientQuantities}" class="form-control" id="newFoodQuantity3"
                    placeholder="Geef de hoeveelheid">
         </div>
         <br>
