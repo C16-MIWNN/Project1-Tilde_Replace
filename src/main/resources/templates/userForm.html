@@ -8,18 +8,46 @@
 
 <div class="container">
 
-    <div class=" justify-content-center">
-
-        <div class="p-5 mb-5 rounded-3 shadow-lg bg-light">
-            <form>
-                <div class="row-cols-2 justify-content-center">
-                    <label for="username" class="form-label">Username</label>
-                    <input id="username" class="form-control" type="text" name="username">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center">
+                    Create a new Account
                 </div>
+                <div class="card-body">
+                    <form th:action="@{/user/save}" method="post" th:object="${userForm}">
+                        <div class="row justify-content-center mb-3">
+                            <div class="col-11">
+                                <label for="username" class="form-label">Username</label>
+                                <input id="username" class="form-control" type="text" th:field="*{username}">
+                                <span class="text-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                            </div>
+                        </div>
 
-            </form>
+                        <div class="row justify-content-center mb-3">
+                            <div class="col-11">
+                                <label for="password" class="form-label">Password</label>
+                                <input id="password" class="form-control" type="password" th:field="*{password}">
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center mb-3">
+                            <div class="col-11">
+                                <label for="passwordConfirm" class="form-label">Confirm Password</label>
+                                <input id="passwordConfirm" class="form-control" type="password" th:field="*{passwordConfirm}">
+                                <span class="text-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center mb-3">
+                            <div class="col-11 d-grid">
+                                <button class="btn btn-primary" type="submit">Register</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
     </div>
 
 </div>
