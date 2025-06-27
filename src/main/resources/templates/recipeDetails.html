@@ -17,7 +17,7 @@
             <table class="table">
                 <tbody>
                 <tr th:each="ingredient: ${myIngredients}">
-                    <td th:text="${ingredient}"></td>
+                    <td th:text="${ingredient.getFood().getFoodName()}"></td>
                     <td th:text="|${ingredient.getAmount()} ${ingredient.getUnit().abbreviation}|"></td>
                 </tr>
 
