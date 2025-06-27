@@ -3,13 +3,15 @@ package nl.miwnn.ch16.tildereplace.recipes.controller;
 import jakarta.persistence.ManyToOne;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
 import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
-import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
+import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
+import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +23,11 @@ import java.util.Optional;
 public class RecipeController {
 
     private final RecipeRepository recipeRepository;
-    private final FoodRepository foodRepository;
+    private final IngredientRepository ingredientRepository;
 
-    public RecipeController(RecipeRepository recipeRepository, FoodRepository foodRepository) {
+    public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository) {
         this.recipeRepository = recipeRepository;
-        this.foodRepository = foodRepository;
+        this.ingredientRepository = ingredientRepository;
     }
 
     private String setupRecipeDetail(Model datamodel, Recipe recipeToShow) {
@@ -53,15 +55,15 @@ public class RecipeController {
         return setupRecipeDetail(datamodel, recipeOptional.get());
     }
 
-    @GetMapping("/new")
-    private String newRecipe(Model dataModel) {
-        dataModel.addAttribute("recipeForm", new Recipe());
-        dataModel.addAttribute("allFoods", foodRepository.findAll());
+    @GetMapping("/recipe/new")
+    private String newRecipe(Model datamodel) {
+        datamodel.addAttribute("recipeForm", new Recipe());
+        datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
 
         return "recipeForm";
     }
 
-    @GetMapping("/edit/{recipeId}")
+    @GetMapping("/recipe/edit/{recipeId}")
     private String editRecipe(@PathVariable("recipeId") Long recipeId, Model dataModel) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
         if (recipeOptional.isPresent()) {
@@ -71,7 +73,7 @@ public class RecipeController {
         return "recipeForm";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/recipe/save")
     private String saveOrUpdateRecipe(@ModelAttribute("recipeForm") Recipe toBeSavedRecipe,
                                       BindingResult result) {
         if (result.hasErrors()) {
@@ -80,7 +82,7 @@ public class RecipeController {
             recipeRepository.save(toBeSavedRecipe);
         }
 
-        return "redirect:/";
+        return "redirect:/recipe/detail/" + toBeSavedRecipe.getRecipeName();
     }
 
 }
