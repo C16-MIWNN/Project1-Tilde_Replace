@@ -30,7 +30,13 @@ public class RecipesUserController {
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("userForm") NewRecipesUserDTO newRecipesUserDTO, BindingResult result) {
+    private String newRecipesUser(Model dataModel) {
+        dataModel.addAttribute("userForm", new NewRecipesUserDTO());
+        return "userForm";
+    }
+
+    @PostMapping("/save")
+    public String saveOrUpdateRecipesUser(@ModelAttribute("userForm") NewRecipesUserDTO newRecipesUserDTO, BindingResult result) {
 
         if (recipesUserService.usernameInUse(newRecipesUserDTO.getUsername())) {
             result.rejectValue("username", "duplicate username", "username is already in user");
@@ -49,7 +55,7 @@ public class RecipesUserController {
     }
 
     @PostMapping("/delete")
-    public String deleteUser(@ModelAttribute("userId") Long userId, BindingResult result) {
+    public String deleteRecipesUser(@ModelAttribute("userId") Long userId, BindingResult result) {
         if (result.hasErrors()) {
             return "userOverview";
         }
