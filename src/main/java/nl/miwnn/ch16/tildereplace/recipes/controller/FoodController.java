@@ -20,7 +20,7 @@ public class FoodController {
         this.foodRepository = foodRepository;
     }
 
-    @GetMapping({"/foodOverview"})
+    @GetMapping({"/overview"})
     private String showFoodOverview(Model datamodel) {
         datamodel.addAttribute("allFoods", foodRepository.findAll());
         return "foodOverview";
@@ -52,7 +52,7 @@ public class FoodController {
             foodRepository.save(toBeSavedFood);
         }
 
-        return "redirect:/food/foodOverview";
+        return "redirect:/food/overview";
     }
 
     @GetMapping("/delete/{foodId}")
@@ -62,7 +62,7 @@ public class FoodController {
             foodRepository.deleteById(foodId);
         }
 
-        return "redirect:/food/foodOverview";
+        return "redirect:/food/overview";
     }
 
 

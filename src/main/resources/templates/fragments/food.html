@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title>Replace this title</title>
+</head>
+<body>
+
+
+<div th:fragment="foodCard(food)">
+    <a th:href="@{/food/detail/{foodName}(foodName=${food.foodName})}">
+    <div class="col-10">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${food.foodName}"></h5>
+                <img object-fit="fill" witdh="50px" height="50px" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmanfaat.co.id%2Fwp-content%2Fuploads%2F2014%2F08%2Fwortel.jpg&f=1&nofb=1&ipt=4179d1a10a7e91b2521e02114102f24211a2dce62e7b32af037d6afd7ec7f0f7"
+                                    class="card-img-top object-fit-cover" alt="no image for ${foodName}">
+
+            </div>
+        </div>
+    </div>
+    </a>
+</div>
+
+
+<div th:fragment="foodCardNew">
+    <a th:href="@{/food/new}">
+        <div class="col-10">
+            <div class="card">
+                <div class="card-body">
+                <span class="btn btn-secondary btn-lg fw-bold">Add New Food</h5>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+
+
+<div th:fragment="foodCards(cards)" class="row row-cols-md-4 m-2 g-4">
+    <div th:replace="~{:: foodCardNew}"></div>
+    <div th:each="food : ${allFoods}" th:insert="~{:: foodCard(food)}"></div>
+</div>
+
+</body>
+</html>
