@@ -4,9 +4,11 @@ import jakarta.persistence.ManyToOne;
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
 import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
+import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
 
+import nl.miwnn.ch16.tildereplace.recipes.repository.UnitRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,10 +27,14 @@ public class RecipeController {
 
     private final RecipeRepository recipeRepository;
     private final IngredientRepository ingredientRepository;
+    private final FoodRepository foodRepository;
+    private final UnitRepository unitRepository;
 
-    public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository) {
+    public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, FoodRepository foodRepository, UnitRepository unitRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
+        this.foodRepository = foodRepository;
+        this.unitRepository = unitRepository;
     }
 
     private String setupRecipeDetail(Model datamodel, Recipe recipeToShow) {
@@ -60,6 +66,8 @@ public class RecipeController {
     private String newRecipe(Model datamodel) {
         datamodel.addAttribute("recipeForm", new NewRecipeDTO());
         datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
+        datamodel.addAttribute("allFoods", foodRepository.findAll());
+        datamodel.addAttribute("allUnits",unitRepository.findAll());
 
         return "recipeForm";
     }

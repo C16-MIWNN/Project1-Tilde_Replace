@@ -30,4 +30,12 @@ public class Unit {
     public void setAbbreviation(String abbreviation) {
         this.abbreviation = abbreviation;
     }
+
+    public Long getUnitId() {
+        return unitId;
+    }
+
+    public void setUnitId(Long unitId) {
+        this.unitId = unitId;
+    }
 }

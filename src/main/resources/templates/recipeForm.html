@@ -11,12 +11,15 @@
     <h1>Create a new book</h1>
 
     <form th:object="${recipeForm}">
-        <select class="form-select col" size="3" th:field="*{ingredients}">
+        <select class="form-select col" size="3" th:field="*{foodIds}">
             <option th:each="food : ${allFoods}"
                     th:text="${food.foodName}"
                     th:value="${food.foodId}"></option>
         </select>
-        <select class="form-select col" size="3" th:field="*{ingredients}">
+
+
+
+        <select class="form-select col" size="3" th:field="*{unitIds}">
             <option th:each="unit : ${allUnits}"
                     th:text="${unit.unitName}"
                     th:value="${unit.unitId}"></option>
