@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
+    <title>userForm.html</title>
+</head>
+<body>
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+
+    <div class=" justify-content-center">
+
+        <div class="p-5 mb-5 rounded-3 shadow-lg bg-light">
+            <form>
+                <div class="row-cols-2 justify-content-center">
+                    <label for="username" class="form-label">Username</label>
+                    <input id="username" class="form-control" type="text" name="username">
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+</body>
+</html>
