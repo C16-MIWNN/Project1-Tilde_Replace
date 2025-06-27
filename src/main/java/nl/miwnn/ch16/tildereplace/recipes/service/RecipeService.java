@@ -25,7 +25,7 @@ public class RecipeService {
     }
 
     public void save(NewRecipeDTO newRecipeDTO) {
-        NewRecipeMapper mapper = new NewRecipeMapper(foodRepository, unitRepository, ingredientRepository);
+        NewRecipeMapper mapper = new NewRecipeMapper(foodRepository, unitRepository, ingredientRepository, recipeRepository);
         recipeRepository.save(mapper.fromDto(newRecipeDTO));
     }
 
