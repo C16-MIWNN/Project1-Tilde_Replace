@@ -9,6 +9,7 @@ import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
 
 import nl.miwnn.ch16.tildereplace.recipes.repository.UnitRepository;
+import nl.miwnn.ch16.tildereplace.recipes.service.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,12 +30,14 @@ public class RecipeController {
     private final IngredientRepository ingredientRepository;
     private final FoodRepository foodRepository;
     private final UnitRepository unitRepository;
+    private final RecipeService recipeService;
 
-    public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, FoodRepository foodRepository, UnitRepository unitRepository) {
+    public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository, FoodRepository foodRepository, UnitRepository unitRepository, RecipeService recipeService) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
+        this.recipeService = recipeService;
     }
 
     private String setupRecipeDetail(Model datamodel, Recipe recipeToShow) {
@@ -83,12 +86,15 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe/save")
-    private String saveOrUpdateRecipe(@ModelAttribute("recipeForm") Recipe toBeSavedRecipe,
+    private String saveOrUpdateRecipe(@ModelAttribute("recipeForm") NewRecipeDTO toBeSavedRecipe,
                                       BindingResult result) {
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
         } else {
-            recipeRepository.save(toBeSavedRecipe);
+
+
+            //recipeRepository.save(toBeSavedRecipe);
+            recipeService.save(toBeSavedRecipe);
         }
 
         return "redirect:/recipe/detail/" + toBeSavedRecipe.getRecipeName();
