@@ -56,7 +56,7 @@ public class RecipesUserController {
 //        System.err.println("Received: " + newRecipesUserDTO.getPasswordConfirm());
 
         recipesUserService.save(newRecipesUserDTO);
-        return "redirect:/userOverview";
+        return "redirect:/user/userOverview";
     }
 
     @PostMapping("/delete")
@@ -66,7 +66,7 @@ public class RecipesUserController {
         }
 
         recipesUserRepository.deleteById(userId);
-        return "redirect:/userOverview";
+        return "redirect:/user/userOverview";
     }
 
 }

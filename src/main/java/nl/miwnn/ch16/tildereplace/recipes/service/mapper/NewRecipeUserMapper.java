@@ -11,8 +11,8 @@ public class NewRecipeUserMapper {
 
     public static RecipesUser fromDto(NewRecipesUserDTO userDTO) {
         RecipesUser newUser = new RecipesUser();
-        newUser.setUsername(newUser.getUsername());
-        newUser.setPassword(newUser.getPassword());
+        newUser.setUsername(userDTO.getUsername());
+        newUser.setPassword(userDTO.getPassword());
 
         return newUser;
     }
