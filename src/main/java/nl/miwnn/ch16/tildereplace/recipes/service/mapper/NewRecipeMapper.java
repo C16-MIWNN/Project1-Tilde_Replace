@@ -8,21 +8,19 @@ import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
 import nl.miwnn.ch16.tildereplace.recipes.model.Unit;
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.UnitRepository;
 
 import java.util.Optional;
 
+
 public class NewRecipeMapper {
 
-    private final RecipeRepository recipeRepository;
     private final FoodRepository foodRepository;
     private final UnitRepository unitRepository;
     private final IngredientRepository ingredientRepository;
 
-    public NewRecipeMapper(RecipeRepository recipeRepository, FoodRepository foodRepository,
+    public NewRecipeMapper(FoodRepository foodRepository,
                          UnitRepository unitRepository, IngredientRepository ingredientRepository) {
-        this.recipeRepository = recipeRepository;
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
         this.ingredientRepository = ingredientRepository;
