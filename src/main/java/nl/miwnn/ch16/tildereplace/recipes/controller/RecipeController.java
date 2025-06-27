@@ -1,6 +1,7 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
 import jakarta.persistence.ManyToOne;
+import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
 import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
@@ -63,7 +64,7 @@ public class RecipeController {
 
     @GetMapping("/recipe/new")
     private String newRecipe(Model datamodel) {
-        datamodel.addAttribute("recipeForm", new Recipe());
+        datamodel.addAttribute("recipeForm", new NewRecipeDTO());
         datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
         datamodel.addAttribute("allFoods", foodRepository.findAll());
         datamodel.addAttribute("allUnits",unitRepository.findAll());
