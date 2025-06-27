@@ -17,7 +17,11 @@ public class RecipesSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests((request) -> request
-                        .anyRequest().permitAll()
+                        .requestMatchers("/", "/recipeOverview").permitAll()
+                        .requestMatchers("/food/overview").permitAll()
+                        .requestMatchers("/user/new").permitAll()
+                        .requestMatchers("/webjars/**", "/css/**").permitAll()
+                        .anyRequest().authenticated()
                     )
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
                 .logout((logout) -> logout.logoutSuccessUrl("/"));

@@ -8,9 +8,27 @@
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
-    <ul>
-        <li th:each="user : ${allUsers}" th:text="${user.username}"></li>
-    </ul>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <table class="table">
+                <thead>
+                    <th>Username</th>
+                    <th></th>
+                </thead>
+                <tr th:each="user : ${allUsers}">
+                    <td th:text="${user.username}"></td>
+                    <td>
+                        <form>
+                            <input type="hidden" th:value="${user.userId}">
+                            <input type="submit" class="btn btn-sm btn-danger">
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>

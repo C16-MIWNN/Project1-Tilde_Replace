@@ -1,6 +1,7 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipesUserDTO;
+import nl.miwnn.ch16.tildereplace.recipes.model.RecipesUser;
 import nl.miwnn.ch16.tildereplace.recipes.repository.RecipesUserRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.RecipesUserService;
 import org.springframework.stereotype.Controller;
@@ -42,13 +43,17 @@ public class RecipesUserController {
             result.rejectValue("username", "duplicate username", "username is already in user");
         }
 
-        if (!newRecipesUserDTO.getUsername().equals(newRecipesUserDTO.getPasswordConfirm())) {
+        if (!newRecipesUserDTO.getPassword().equals(newRecipesUserDTO.getPasswordConfirm())) {
             result.rejectValue("password", "no matching", "passwords do not match");
         }
 
         if (result.hasErrors()) {
             return "userForm";
         }
+
+//        System.err.println("Received: " + newRecipesUserDTO.getUsername());
+//        System.err.println("Received: " + newRecipesUserDTO.getPassword());
+//        System.err.println("Received: " + newRecipesUserDTO.getPasswordConfirm());
 
         recipesUserService.save(newRecipesUserDTO);
         return "redirect:/userOverview";
@@ -63,4 +68,5 @@ public class RecipesUserController {
         recipesUserRepository.deleteById(userId);
         return "redirect:/userOverview";
     }
+
 }
