@@ -13,17 +13,15 @@
         <div class="card-body">
             <h4 class="card-title" th:text="${recipe.recipeName}"></h4>
             <h5>Ingredienten</h5>
-<!--            <p th:text="${myIngredients}"></p>-->
+            <!--            <p th:text="${myIngredients}"></p>-->
             <table class="table">
                 <tbody>
                 <tr th:each="ingredient: ${myIngredients}">
                     <td th:text="${ingredient.getFood().getFoodName()}"></td>
                     <td th:text="|${ingredient.getAmount()} ${ingredient.getUnit().abbreviation}|"></td>
                 </tr>
-
                 </tbody>
             </table>
-            <p class="card-text"><small class="text-body-secondary">Bereidingstijd: xxxx | Kcal: xxxx | Etc: xxxx</small></p>
         </div>
     </div>
     <div class="card col-8 border-0">
