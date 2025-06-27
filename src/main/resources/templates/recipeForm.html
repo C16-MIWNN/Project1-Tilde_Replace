@@ -8,30 +8,48 @@
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
-    <h1>Create a new book</h1>
+    <h4>Maak een nieuw recept aan</h4>
 
-    <form th:object="${recipeForm}">
+
+    <form th:action="@{/recipe/save}" method="post" th:object="${recipeForm}">
+
+        <div class="mb-3">
+            <label for="newReceptName" class="form-label">Recept naam</label>
+            <input type="text" th:field="*{recipeName}" class="form-control" id="newReceptName"
+                   placeholder="Geef het recept een naam">
+        </div>
+        <br>
+
+        <p>Kies een ingredient</p>
         <select class="form-select col" size="3" th:field="*{foodIds}">
             <option th:each="food : ${allFoods}"
                     th:text="${food.foodName}"
                     th:value="${food.foodId}"></option>
         </select>
+        <br>
 
+        <div class="mb-3">
+            <label for="newFoodQuantity" class="form-label">Geef de Ingredient hoeveelheid</label>
+            <input type="text" th:field="*{ingredientQuantities}" class="form-control" id="newFoodQuantity"
+                   placeholder="Geef de hoeveelheid">
+        </div>
+        <br>
 
-
+        <p>Kies de eenheid van de hoeveelheid</p>
         <select class="form-select col" size="3" th:field="*{unitIds}">
             <option th:each="unit : ${allUnits}"
                     th:text="${unit.unitName}"
                     th:value="${unit.unitId}"></option>
         </select>
-        <button type="button" class="btn btn-danger m-2"
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Recept verwijderen">
-            <i class="bi bi-trash3 pe-2"></i>Submit
-        </button>
-    </form>
 
+        <div class="mb-3">
+            <label for="recipePreparation" class="form-label">Bereiding beschrijving</label>
+            <input type="text" th:field="*{preparationInstruction}" class="form-control" id="recipePreparation"
+                   placeholder="Beschrijf de bereiding van het recept">
+        </div>
+
+        <input type="submit" value="Sla recept op"/>
+    </form>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>
