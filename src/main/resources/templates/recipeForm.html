@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title>Replace this title</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container">
+    <h1>Create a new book</h1>
+
+    <form th:object="${recipeForm}">
+        <select class="form-select col" size="3" th:field="*{ingredients}">
+            <option th:each="food : ${allFoods}"
+                    th:text="${food.foodName}"
+                    th:value="${food.foodId}"></option>
+        </select>
+        <select class="form-select col" size="3" th:field="*{ingredients}">
+            <option th:each="unit : ${allUnits}"
+                    th:text="${unit.unitName}"
+                    th:value="${unit.unitId}"></option>
+        </select>
+        <button type="button" class="btn btn-danger m-2"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Recept verwijderen">
+            <i class="bi bi-trash3 pe-2"></i>Submit
+        </button>
+    </form>
+
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+</body>
+</html>
