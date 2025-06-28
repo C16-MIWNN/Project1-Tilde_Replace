@@ -51,12 +51,8 @@ public class RecipesUserController {
             return "userForm";
         }
 
-//        System.err.println("Received: " + newRecipesUserDTO.getUsername());
-//        System.err.println("Received: " + newRecipesUserDTO.getPassword());
-//        System.err.println("Received: " + newRecipesUserDTO.getPasswordConfirm());
-
         recipesUserService.save(newRecipesUserDTO);
-        return "redirect:/user/userOverview";
+        return "redirect:/";
     }
 
     @PostMapping("/delete")
