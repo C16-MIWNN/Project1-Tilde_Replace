@@ -30,8 +30,17 @@ public class NewRecipeMapper {
     }
 
     public Recipe fromDto(NewRecipeDTO newRecipeDTO) {
-        Recipe recipe = new Recipe();
+        Recipe recipe;
 
+        if (newRecipeDTO.getId() != null) {
+            recipe = recipeRepository.findById(newRecipeDTO.getId())
+                    .orElseThrow(() -> new IllegalArgumentException(
+                            "No recipe with ID " + newRecipeDTO.getId()));
+            ingredientRepository.deleteAll(recipe.getIngredients());
+            recipe.getIngredients().clear();
+        } else {
+            recipe = new Recipe();
+        }
 
         recipe.setRecipeName(newRecipeDTO.getRecipeName());
         recipe.setPreperationInstructions(newRecipeDTO.getPreparationInstruction());
