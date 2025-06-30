@@ -30,6 +30,9 @@
             <p th:text="${recipe.preperationInstructions}"></p>
         </div>
     </div>
+    <div class="card col-8 border-0">
+        <a th:href="@{/recipe/delete/{recipeId}(recipeId = ${recipe.getRecipeId()})}" class="btn btn-danger">Verwijder recept</a>
+    </div>
 <!--    <div class="card col-8 border-0">-->
 <!--        <div class="card-body">-->
 <!--            <button type="button" class="btn btn-primary m-2"-->

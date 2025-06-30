@@ -13,7 +13,7 @@ public class Recipe {
 
     private String recipeName;
 
-    @OneToMany (mappedBy = "recipe")
+    @OneToMany (mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
     private String preparationInstructions;
 
