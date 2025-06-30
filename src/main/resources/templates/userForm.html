@@ -9,7 +9,7 @@
 <div class="container">
 
     <div class="row justify-content-center">
-        <div class="col-6">
+        <div class="col-5">
 
             <div class="card shadow-lg">
                 <div class="card-header text-center">
@@ -19,7 +19,7 @@
                     <form th:action="@{/user/save}" method="post" th:object="${userForm}">
                         <div class="row justify-content-center mb-3">
                             <div class="col-11">
-                                <label for="username" class="form-label">Username</label>
+                                <label for="username" class="form-label">Gebruikersnaam</label>
                                 <input id="username" class="form-control" type="text" th:field="*{username}">
                                 <span class="text-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
                             </div>
