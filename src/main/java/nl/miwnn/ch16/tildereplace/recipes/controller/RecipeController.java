@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,23 +69,64 @@ public class RecipeController {
 
     @GetMapping("/recipe/new")
     private String newRecipe(Model datamodel) {
+        NewRecipeDTO newRecipeDTO = new NewRecipeDTO();
+        newRecipeDTO.getFoodIds();
+        newRecipeDTO.getIngredientQuantities();
+        newRecipeDTO.getUnitIds();
+
+
         datamodel.addAttribute("recipeForm", new NewRecipeDTO());
         datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
         datamodel.addAttribute("allFoods", foodRepository.findAll());
-        datamodel.addAttribute("allUnits",unitRepository.findAll());
+        datamodel.addAttribute("allUnits", unitRepository.findAll());
 
         return "recipeForm";
     }
+
+//    @GetMapping("/recipe/edit/{recipeId}")
+//    private String editRecipe(@PathVariable("recipeId") Long recipeId, Model dataModel) {
+//        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+//        if (recipeOptional.isPresent()) {
+//            dataModel.addAttribute("recipeForm", recipeOptional.get());
+//            dataModel.addAttribute("allIngredients", ingredientRepository.findAll());
+//            dataModel.addAttribute("allFoods", foodRepository.findAll());
+//            dataModel.addAttribute("allUnits",unitRepository.findAll());
+//        }
+//
+//        return "recipeForm";
+//    }
 
     @GetMapping("/recipe/edit/{recipeId}")
     private String editRecipe(@PathVariable("recipeId") Long recipeId, Model dataModel) {
-        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
-        if (recipeOptional.isPresent()) {
-            dataModel.addAttribute("recipeForm", recipeOptional.get());
+        Recipe updatedRecipe = recipeRepository.findByRecipeId(recipeId);
+
+        NewRecipeDTO updatedRecipeDTO = new NewRecipeDTO();
+        updatedRecipeDTO.setId(recipeId);
+
+        updatedRecipeDTO.setRecipeName(updatedRecipe.getRecipeName());
+        updatedRecipeDTO.setPreparationInstruction(updatedRecipe.getPreperationInstructions());
+
+        List<Long> foodIds = new ArrayList<>();
+        List<Integer> amounts = new ArrayList<>();
+        List<Long> unitIds = new ArrayList<>();
+
+        for (Ingredient ing : updatedRecipe.getIngredients()) {
+            foodIds.add(ing.getFood().getFoodId());
+            amounts.add(ing.getAmount());
+            unitIds.add(ing.getUnit().getUnitId());
         }
+
+        updatedRecipeDTO.setFoodIds(new ArrayList<>(foodIds));
+        updatedRecipeDTO.setIngredientQuantities(new ArrayList<>(amounts));
+        updatedRecipeDTO.setUnitIds(new ArrayList<>(unitIds));
+
+        dataModel.addAttribute("recipeForm", updatedRecipeDTO);
+        dataModel.addAttribute("allFoods", foodRepository.findAll());
+        dataModel.addAttribute("allUnits", unitRepository.findAll());
 
         return "recipeForm";
     }
+
 
     @PostMapping("/recipe/save")
     private String saveOrUpdateRecipe(@ModelAttribute("recipeForm") NewRecipeDTO toBeSavedRecipe,
@@ -93,8 +135,8 @@ public class RecipeController {
             System.err.println(result.getAllErrors());
         } else {
 
-
             //recipeRepository.save(toBeSavedRecipe);
+            System.err.println(toBeSavedRecipe.getId());
             recipeService.save(toBeSavedRecipe);
         }
 
