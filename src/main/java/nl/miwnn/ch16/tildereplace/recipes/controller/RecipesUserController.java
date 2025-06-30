@@ -40,11 +40,19 @@ public class RecipesUserController {
     public String saveOrUpdateRecipesUser(@ModelAttribute("userForm") NewRecipesUserDTO newRecipesUserDTO, BindingResult result) {
 
         if (recipesUserService.usernameInUse(newRecipesUserDTO.getUsername())) {
-            result.rejectValue("username", "duplicate username", "username is already in user");
+            result.rejectValue("username", "duplicate username", "gebruikersnaam is al in gebruik");
+        }
+
+        if (newRecipesUserDTO.getUsername().isEmpty()) {
+            result.rejectValue("username", "empty username", "gebruikersnaam mag niet leeg zijn");
+        }
+
+        if (newRecipesUserDTO.getPassword().isEmpty()) {
+            result.rejectValue("password", "empty password", "wachtwoord mag niet leeg zijn");
         }
 
         if (!newRecipesUserDTO.getPassword().equals(newRecipesUserDTO.getPasswordConfirm())) {
-            result.rejectValue("password", "no matching", "passwords do not match");
+            result.rejectValue("password", "no matching", "wachtwoorden komen niet overeen");
         }
 
         if (result.hasErrors()) {
