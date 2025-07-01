@@ -7,7 +7,7 @@
 
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<div class="food-form-container">
+<div class="container food-form-container">
     <h1 th:text="${foodId} ? 'Aanpassing Ingredient' : 'Nieuw Ingredient'"></h1>
 
     <form class="row g-3" th:action="@{/food/save}" method="post" th:object="${foodForm}">

@@ -32,16 +32,15 @@
         </div>
             <div class="col-8">
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane" th:each="food : ${allFoods}" th:id="|${food.foodName}-detail|" role"tabpanel" th:text="${food.foodName}"></div>
+                    <div class="tab-pane"
+                        th:each="food : ${allFoods}"
+                        th:id="|${food.foodName}-detail|"
+                        role"tabpanel"
+                        th:insert="~{fragments/food :: foodCard(food)}">
+                    </div>
                 </div>
             </div>
-
-
     </div>
-
-
-
-
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>
