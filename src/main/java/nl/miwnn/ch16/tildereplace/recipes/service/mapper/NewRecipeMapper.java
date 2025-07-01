@@ -30,37 +30,46 @@ public class NewRecipeMapper {
     }
 
     public Recipe fromDto(NewRecipeDTO newRecipeDTO) {
-        Recipe recipe = new Recipe();
-
-
-        recipe.setRecipeName(newRecipeDTO.getRecipeName());
-        recipe.setPreperationInstructions(newRecipeDTO.getPreparationInstruction());
-
+        Recipe recipe = setRecipeDetails(newRecipeDTO);
         recipeRepository.save(recipe);
 
         int numberOfIngredients = newRecipeDTO.getFoodIds().size();
         for (int index = 0; index < numberOfIngredients; index++) {
             Ingredient ingredient = new Ingredient();
-            Optional<Food> foodOptional = foodRepository.findById(newRecipeDTO.getFoodIds().get(index));
-            Optional<Unit> unitOptional = unitRepository.findById(newRecipeDTO.getUnitIds().get(index));
-            int quantity = newRecipeDTO.getIngredientQuantities().get(index);
-
-            if (foodOptional.isPresent()) {
-                ingredient.setFood(foodOptional.get());
-            }
-
-            if (unitOptional.isPresent()) {
-                ingredient.setUnit(unitOptional.get());
-            }
-
-            ingredient.setAmount(quantity);
-            ingredient.setRecipe(recipe);
-            System.err.println(ingredient.getFood().getFoodName());
-            System.err.println(ingredient.getUnit().getUnitName());
+            setIngredientDetails(newRecipeDTO, index, ingredient, recipe);
             ingredientRepository.save(ingredient);
         }
 
         return recipe;
+    }
+
+    private Recipe setRecipeDetails(NewRecipeDTO newRecipeDTO) {
+        Recipe recipe = new Recipe();
+        recipe.setRecipeName(newRecipeDTO.getRecipeName());
+        recipe.setPreperationInstructions(newRecipeDTO.getPreparationInstruction());
+
+        return recipe;
+    }
+
+    private void setIngredientDetails(NewRecipeDTO newRecipeDTO, int index, Ingredient ingredient, Recipe recipe) {
+        ingredient.setRecipe(recipe);
+        setFood(newRecipeDTO, index, ingredient);
+        ingredient.setAmount(newRecipeDTO.getIngredientQuantities().get(index));
+        setUnit(newRecipeDTO, index, ingredient);
+    }
+
+    private void setUnit(NewRecipeDTO newRecipeDTO, int index, Ingredient ingredient) {
+        Optional<Unit> unitOptional = unitRepository.findById(newRecipeDTO.getUnitIds().get(index));
+        if (unitOptional.isPresent()) {
+            ingredient.setUnit(unitOptional.get());
+        }
+    }
+
+    private void setFood(NewRecipeDTO newRecipeDTO, int index, Ingredient ingredient) {
+        Optional<Food> foodOptional = foodRepository.findById(newRecipeDTO.getFoodIds().get(index));
+        if (foodOptional.isPresent()) {
+            ingredient.setFood(foodOptional.get());
+        }
     }
 
 }
