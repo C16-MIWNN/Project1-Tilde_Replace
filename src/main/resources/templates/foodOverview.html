@@ -6,13 +6,43 @@
 <body>
 <div th:replace="~{fragments/general :: navbar}"></div>
 
-<div class="food-overview-container">
+<div class="container food-overview-container">
     <h1>Overzicht van ingredienten</h1>
 
-    <div th:replace="~{fragments/food :: foodCards(${allFoods})}"></div>
+    <div class="row">
+        <div class="col-4">
+            <div class="list-group"
+                style="max-height: h-100; margin-bottom: 10px; overflow:scroll;"
+                id="list-tab" role="tablist">
+
+                <a th:each="food : ${allFoods}" class="list-group-item list-group-item-action"
+                    th:id="|${food.foodName}-item|"
+                    data-bs-toggle="list"
+                    role="tab"
+                    th:href="|#${food.foodName}-detail|"
+                    th:text="${food.foodName}">
+                </a>
+            </div>
+            <div class="list-group">
+                <a class=" btn btn-secondary btn-lg fw-bold"
+                   th:href="@{/food/new}">
+                    Voeg Nieuw Ingredient Toe
+                </a>
+            </div>
+        </div>
+            <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane" th:each="food : ${allFoods}" th:id="|${food.foodName}-detail|" role"tabpanel" th:text="${food.foodName}"></div>
+                </div>
+            </div>
+
+
+    </div>
+
+
+
 
 </div>
-
 
 <div th:replace="~{fragments/general :: footer}"></div>
 <div th:replace="~{fragments/general :: bottomScripts}"></div>

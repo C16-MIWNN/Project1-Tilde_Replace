@@ -6,39 +6,5 @@
 <body>
 
 
-<div th:fragment="foodCard(food)">
-    <a th:href="@{/food/detail/{foodName}(foodName=${food.foodName})}">
-    <div class="col-10">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title" th:text="${food.foodName}"></h5>
-                <img object-fit="fill" witdh="50px" height="50px" th:src="${food.imageUrl}"
-                                    class="card-img-top object-fit-cover" th:alt="|no image for ${food.foodName}|">
-
-            </div>
-        </div>
-    </div>
-    </a>
-</div>
-
-
-<div th:fragment="foodCardNew">
-    <a th:href="@{/food/new}">
-        <div class="col-10">
-            <div class="card">
-                <div class="card-body">
-                <span class="btn btn-secondary btn-lg fw-bold">Add New Food</h5>
-                </div>
-            </div>
-        </div>
-    </a>
-</div>
-
-
-<div th:fragment="foodCards(cards)" class="row row-cols-md-4 m-2 g-4">
-    <div th:replace="~{:: foodCardNew}"></div>
-    <div th:each="food : ${allFoods}" th:insert="~{:: foodCard(food)}"></div>
-</div>
-
 </body>
 </html>
