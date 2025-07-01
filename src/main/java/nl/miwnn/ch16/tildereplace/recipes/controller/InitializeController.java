@@ -107,9 +107,7 @@ public class InitializeController {
             reader.skip(1);
 
             for (String[] recipeLine : reader) {
-                Recipe recipe = new Recipe();
-                recipe.setRecipeName(recipeLine[0]);
-                recipe.setPreperationInstructions(recipeLine[2]);
+                Recipe recipe = setRecipeDetails(recipeLine);
                 recipeRepository.save(recipe);
 
                 loadIngredients(recipeLine[1], recipe);
@@ -117,25 +115,33 @@ public class InitializeController {
         }
     }
 
+    private static Recipe setRecipeDetails(String[] recipeLine) {
+        Recipe recipe = new Recipe();
+        recipe.setRecipeName(recipeLine[0]);
+        recipe.setPreperationInstructions(recipeLine[2]);
+        return recipe;
+    }
+
 
     private void loadIngredients(String ingredientLine, Recipe recipe) throws IOException, CsvValidationException {
         String[] ingredients = ingredientLine.split(",");
 
         for (int index = 0; index + 2 < ingredients.length; index += 3) {
-                Ingredient ingredient = new Ingredient();
-
-                ingredient.setRecipe(recipe);
-
-                ingredient.setFood(foodCache.get(ingredients[index]));
-                ingredient.setAmount(Integer.parseInt(ingredients[index+1]));
-                ingredient.setUnit(unitCache.get(ingredients[index+2]));
-
-                ingredientRepository.save(ingredient);
+            Ingredient ingredient = setIngredientDetails(recipe, ingredients, index);
+            ingredientRepository.save(ingredient);
         }
-
     }
 
+    private Ingredient setIngredientDetails(Recipe recipe, String[] ingredients, int index) {
+        Ingredient ingredient = new Ingredient();
 
+        ingredient.setRecipe(recipe);
+
+        ingredient.setFood(foodCache.get(ingredients[index]));
+        ingredient.setAmount(Integer.parseInt(ingredients[index +1]));
+        ingredient.setUnit(unitCache.get(ingredients[index +2]));
+        return ingredient;
+    }
 
 
 }

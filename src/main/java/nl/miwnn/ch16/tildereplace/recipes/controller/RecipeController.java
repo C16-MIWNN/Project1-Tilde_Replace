@@ -1,6 +1,5 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
-import jakarta.persistence.ManyToOne;
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
 import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
@@ -92,9 +91,6 @@ public class RecipeController {
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
         } else {
-
-
-            //recipeRepository.save(toBeSavedRecipe);
             recipeService.save(toBeSavedRecipe);
         }
 

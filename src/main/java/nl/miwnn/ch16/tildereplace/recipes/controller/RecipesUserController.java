@@ -1,7 +1,6 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipesUserDTO;
-import nl.miwnn.ch16.tildereplace.recipes.model.RecipesUser;
 import nl.miwnn.ch16.tildereplace.recipes.repository.RecipesUserRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.RecipesUserService;
 import org.springframework.stereotype.Controller;
