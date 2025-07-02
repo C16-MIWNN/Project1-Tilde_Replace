@@ -79,7 +79,10 @@ public class RecipeController {
     private String editRecipe(@PathVariable("recipeId") Long recipeId, Model dataModel) {
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
         if (recipeOptional.isPresent()) {
-            dataModel.addAttribute("recipeForm", recipeOptional.get());
+            dataModel.addAttribute("recipeForm", recipeService.recipeEdit(recipeOptional.get()));
+            dataModel.addAttribute("allIngredients", ingredientRepository.findAll());
+            dataModel.addAttribute("allFoods", foodRepository.findAll());
+            dataModel.addAttribute("allUnits",unitRepository.findAll());
         }
 
         return "recipeForm";
