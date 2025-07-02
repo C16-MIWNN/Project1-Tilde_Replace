@@ -72,4 +72,24 @@ public class NewRecipeMapper {
         }
     }
 
+    public NewRecipeDTO toDto(Recipe recipe) {
+        NewRecipeDTO recipeDTO = new NewRecipeDTO();
+
+        recipeDTO.setRecipeName(recipe.getRecipeName());
+        recipeDTO.setPreparationInstruction(recipe.getPreperationInstructions());
+
+        for (int index = 0; index < recipe.getIngredients().size(); index++) {
+            Ingredient currentIngredient = recipe.getIngredients().get(index);
+            setIngredientIds(recipeDTO, currentIngredient);
+        }
+
+        return recipeDTO;
+    }
+
+    private static void setIngredientIds(NewRecipeDTO recipeDTO, Ingredient currentIngredient) {
+        recipeDTO.getFoodIds().add(currentIngredient.getFood().getFoodId());
+        recipeDTO.getUnitIds().add(currentIngredient.getUnit().getUnitId());
+        recipeDTO.getIngredientQuantities().add(currentIngredient.getAmount());
+    }
+
 }

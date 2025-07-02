@@ -2,6 +2,7 @@ package nl.miwnn.ch16.tildereplace.recipes.service;
 
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
+import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
@@ -17,7 +18,10 @@ public class RecipeService {
     private final UnitRepository unitRepository;
     private final IngredientRepository ingredientRepository;
 
-    public RecipeService(RecipeRepository recipeRepository, FoodRepository foodRepository, UnitRepository unitRepository, IngredientRepository ingredientRepository) {
+    public RecipeService(RecipeRepository recipeRepository,
+                         FoodRepository foodRepository,
+                         UnitRepository unitRepository,
+                         IngredientRepository ingredientRepository) {
         this.recipeRepository = recipeRepository;
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
@@ -27,6 +31,11 @@ public class RecipeService {
     public void save(NewRecipeDTO newRecipeDTO) {
         NewRecipeMapper mapper = new NewRecipeMapper(foodRepository, unitRepository, ingredientRepository, recipeRepository);
         recipeRepository.save(mapper.fromDto(newRecipeDTO));
+    }
+
+    public NewRecipeDTO recipeEdit(Recipe recipe) {
+        NewRecipeMapper mapper = new NewRecipeMapper(foodRepository, unitRepository, ingredientRepository, recipeRepository);
+        return mapper.toDto(recipe);
     }
 
 }
