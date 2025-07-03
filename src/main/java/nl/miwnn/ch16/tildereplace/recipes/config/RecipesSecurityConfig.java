@@ -23,7 +23,7 @@ public class RecipesSecurityConfig {
                         .requestMatchers("/webjars/**", "/css/**").permitAll()
                         .anyRequest().authenticated()
                     )
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
+                .formLogin(form -> form.loginPage("/user/login").permitAll())
                 .logout((logout) -> logout.logoutSuccessUrl("/"));
 
         return httpSecurity.build();

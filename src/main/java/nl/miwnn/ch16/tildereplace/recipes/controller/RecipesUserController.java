@@ -23,6 +23,11 @@ public class RecipesUserController {
         this.recipesUserService = recipesUserService1;
     }
 
+    @GetMapping("/login")
+    public String loginUser() {
+        return "login";
+    }
+
     @GetMapping("/userOverview")
     public String showUserOverview(Model dataModel) {
         dataModel.addAttribute("allUsers", recipesUserRepository.findAll());
