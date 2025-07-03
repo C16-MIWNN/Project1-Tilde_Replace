@@ -7,7 +7,7 @@
 
 
 <div th:fragment="recipeCard(recipe)">
-    <div class="card" style="width: 24rem;">
+    <div class="card" style="width: 20rem;">
         <a th:href="@{/recipe/detail/{recipeName}(recipeName= ${recipe.recipeName})}">
             <img src="https://imgur.com/OByMbYu.jpeg" class="card-img-top object-fit-cover" alt="..."
                  style="height:300px">
@@ -19,20 +19,20 @@
 </div>
 
 
-<div th:fragment="recipeCardNew">
-    <a th:href="@{/recipe/new}">
-        <div class="col-4">
-            <div class="card">
-                <span class="btn btn-secondary btn-lg px-4 fw-bold">Nieuw recept</span>
-            </div>
-        </div>
-    </a>
-</div>
+<!--<div th:fragment="recipeCardNew">-->
+<!--    <a th:href="@{/recipe/new}">-->
+<!--        <div class="col-4">-->
+<!--            <div class="card">-->
+<!--                <span class="btn btn-secondary btn-lg px-4 fw-bold">Nieuw recept</span>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </a>-->
+<!--</div>-->
 
 
-<div th:fragment="recipeCards(cards)" class="row row-cols-1 row-cols-md-3 g-4">
+<div th:fragment="recipeCards(cards)" class="row row-cols-1 row-cols-3 g-4">
     <div th:each="recipe : ${allRecipes}" th:insert="~{:: recipeCard(recipe)}"></div>
-    <div th:replace="~{:: recipeCardNew}"></div>
+<!--    <div th:replace="~{:: recipeCardNew}"></div>-->
 </div>
 
 </body>
