@@ -22,7 +22,7 @@ public class FoodController {
 
     @GetMapping({"/overview"})
     private String showFoodOverview(Model datamodel) {
-        datamodel.addAttribute("allFoods", foodRepository.findAll());
+        datamodel.addAttribute("allFoods", foodRepository.findByOrderByFoodName());
         return "foodOverview";
     }
 
