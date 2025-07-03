@@ -43,34 +43,6 @@
                     </option>
                 </select>
 
-                <button type="button" class="btn btn-danger" onclick="removeIngredient(this)">Remove</button>
-            </div>
-
-            <!-- Extra ingredients -->
-            <div th:each="_, iter : *{foodIds}" class="ingredient-row input-group mb-3">
-                <span class="input-group-text">Ingredient</span>
-                <select class="form-select" th:id="'food-' + ${iter.index}"
-                        th:field="*{foodIds[__${iter.index}__]}">
-                    <option th:each="food : ${allFoods}"
-                            th:value="${food.foodId}"
-                            th:text="${food.foodName}">
-                    </option>
-                </select>
-
-                <span class="input-group-text">Hoeveelheid</span>
-                <input type="number" class="form-control" placeholder="Hoeveelheid"
-                       th:id="'quantity-' + ${iter.index}"
-                       th:field="*{ingredientQuantities[__${iter.index}__]}"/>
-
-                <span class="input-group-text">Eenheid</span>
-                <select class="form-select" th:id="'unit-' + ${iter.index}"
-                        th:field="*{unitIds[__${iter.index}__]}">
-                    <option th:each="unit : ${allUnits}"
-                            th:value="${unit.unitId}"
-                            th:text="${unit.unitName}">
-                    </option>
-                </select>
-
                 <button type="button" class="btn btn-danger" onclick="removeIngredient(this)">Verwijderen</button>
             </div>
         </div>
