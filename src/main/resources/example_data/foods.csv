@@ -12,4 +12,3 @@ ingredientId,ingredientName,energy,protein,fat,carbohydrates,fiber,salt,allergy
 11,Aardappel,100,30,10,40,6,2,"eiwit,gluten"
 12,Ham,350,30,10,40,6,3,
 13,Olijf,1000,31,10,40,6,3,"eiwit,gluten"
-14,Olijf,1000,31,10,40,6,3,"eiwit,gluten"
