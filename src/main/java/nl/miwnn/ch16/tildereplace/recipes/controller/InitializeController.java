@@ -136,9 +136,7 @@ public class InitializeController {
     private Set<Allergy> getAllergyList(String allergyLine) {
         Set<Allergy> allergies = new HashSet<Allergy>();
         for (String allergyString : allergyLine.split(",")) {
-            System.out.println("allergy " + allergyString);
             Allergy allergy = allergyCache.get(allergyString);
-            System.out.println(allergyString);
             allergies.add(allergy);
         }
 
