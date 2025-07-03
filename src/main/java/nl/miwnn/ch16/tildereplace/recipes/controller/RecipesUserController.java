@@ -25,7 +25,7 @@ public class RecipesUserController {
 
     @GetMapping("/login")
     public String loginUser() {
-        return "login";
+        return "userLogin";
     }
 
     @GetMapping("/userOverview")
