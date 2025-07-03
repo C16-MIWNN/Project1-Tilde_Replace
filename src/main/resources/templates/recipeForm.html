@@ -1,90 +1,83 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="~{fragments/general :: baseheader(~{:: title})}">
-    <title>Replace this title</title>
+    <title>Recepten beschrijven</title>
 </head>
 <body>
 
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container">
-    <h4>Maak een nieuw recept aan</h4>
 
+    <h4>Maak een nieuw recept aan</h4>
 
     <form th:action="@{/recipe/save}" method="post" th:object="${recipeForm}">
 
+        <!--        <input type="hidden" th:field="*{id}"/>-->
         <div class="mb-3">
             <label for="newReceptName" class="form-label">Recept naam</label>
             <input type="text" th:field="*{recipeName}" class="form-control" id="newReceptName"
                    placeholder="Geef het recept een naam">
         </div>
-        <br>
 
-        <p>Kies een ingredient 1</p>
-        <select class="form-select col" size="3" th:field="*{foodIds}">
-            <option th:each="food : ${allFoods}"
-                    th:text="${food.foodName}"
-                    th:value="${food.foodId}"></option>
-        </select>
-        <br>
 
-        <div class="mb-3">
-            <label for="newFoodQuantity1" class="form-label">Geef de Ingredient 1 hoeveelheid</label>
-            <input type="text" th:field="*{ingredientQuantities}" class="form-control" id="newFoodQuantity1"
-                   placeholder="Geef de hoeveelheid">
+        <div class="mb-3" id="ingredient-list">
+            <div th:if="${#lists.isEmpty(recipeForm.foodIds)}" class="ingredient-row input-group mb-3">
+                <span class="input-group-text">Ingredient</span>
+                <select class="form-select" th:field="*{foodIds}">
+                    <option th:each="food : ${allFoods}"
+                            th:value="${food.foodId}"
+                            th:text="${food.foodName}">
+                    </option>
+                </select>
+
+                <span class="input-group-text">Hoeveelheid</span>
+                <input type="number" class="form-control" placeholder="Hoeveelheid"
+                       th:field="*{ingredientQuantities}"/>
+
+                <span class="input-group-text">Eenheid</span>
+                <select class="form-select" th:field="*{unitIds}">
+                    <option th:each="unit : ${allUnits}"
+                            th:value="${unit.unitId}"
+                            th:text="${unit.unitName}">
+                    </option>
+                </select>
+
+                <button type="button" class="btn btn-danger" onclick="removeIngredient(this)">Remove</button>
+            </div>
+
+            <!-- Extra ingredients -->
+            <div th:each="_, iter : *{foodIds}" class="ingredient-row input-group mb-3">
+                <span class="input-group-text">Ingredient</span>
+                <select class="form-select" th:id="'food-' + ${iter.index}"
+                        th:field="*{foodIds[__${iter.index}__]}">
+                    <option th:each="food : ${allFoods}"
+                            th:value="${food.foodId}"
+                            th:text="${food.foodName}">
+                    </option>
+                </select>
+
+                <span class="input-group-text">Hoeveelheid</span>
+                <input type="number" class="form-control" placeholder="Hoeveelheid"
+                       th:id="'quantity-' + ${iter.index}"
+                       th:field="*{ingredientQuantities[__${iter.index}__]}"/>
+
+                <span class="input-group-text">Eenheid</span>
+                <select class="form-select" th:id="'unit-' + ${iter.index}"
+                        th:field="*{unitIds[__${iter.index}__]}">
+                    <option th:each="unit : ${allUnits}"
+                            th:value="${unit.unitId}"
+                            th:text="${unit.unitName}">
+                    </option>
+                </select>
+
+                <button type="button" class="btn btn-danger" onclick="removeIngredient(this)">Verwijderen</button>
+            </div>
         </div>
-        <br>
 
-        <p>Kies de eenheid van de hoeveelheid</p>
-        <select class="form-select col" size="3" th:field="*{unitIds}">
-            <option th:each="unit : ${allUnits}"
-                    th:text="${unit.unitName}"
-                    th:value="${unit.unitId}"></option>
-        </select>
-
-        <p>Kies een ingredient 2</p>
-        <select class="form-select col" size="3" th:field="*{foodIds}">
-            <option th:each="food : ${allFoods}"
-                    th:text="${food.foodName}"
-                    th:value="${food.foodId}"></option>
-        </select>
-        <br>
-
-        <div class="mb-3">
-            <label for="newFoodQuantity" class="form-label">Geef de ingredient 2 hoeveelheid</label>
-            <input type="text" th:field="*{ingredientQuantities}" class="form-control" id="newFoodQuantity"
-                   placeholder="Geef de hoeveelheid">
+        <div>
+            <button type="button" class="btn btn-primary" onclick="addIngredient()">Toevoegen</button>
         </div>
-        <br>
-
-        <p>Kies de eenheid van de hoeveelheid</p>
-        <select class="form-select col" size="3" th:field="*{unitIds}">
-            <option th:each="unit : ${allUnits}"
-                    th:text="${unit.unitName}"
-                    th:value="${unit.unitId}"></option>
-        </select>
-
-        <p>Kies een ingredient 3</p>
-        <select class="form-select col" size="3" th:field="*{foodIds}">
-            <option th:each="food : ${allFoods}"
-                    th:text="${food.foodName}"
-                    th:value="${food.foodId}"></option>
-        </select>
-        <br>
-
-        <div class="mb-3">
-            <label for="newFoodQuantity3" class="form-label">Geef de ingredient 3 hoeveelheid</label>
-            <input type="text" th:field="*{ingredientQuantities}" class="form-control" id="newFoodQuantity3"
-                   placeholder="Geef de hoeveelheid">
-        </div>
-        <br>
-
-        <p>Kies de eenheid van de hoeveelheid</p>
-        <select class="form-select col" size="3" th:field="*{unitIds}">
-            <option th:each="unit : ${allUnits}"
-                    th:text="${unit.unitName}"
-                    th:value="${unit.unitId}"></option>
-        </select>
 
         <div class="mb-3">
             <label for="recipePreparation" class="form-label">Bereiding beschrijving</label>
@@ -92,12 +85,37 @@
                    placeholder="Beschrijf de bereiding van het recept">
         </div>
 
-        <input type="submit" value="Sla recept op"/>
+        <input type="submit" value="Sla recept op" class="btn btn-success"/>
     </form>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>
 <div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+<script>
+    let ingredientCount = 1;
+
+    function removeIngredient(button) {
+
+        if (ingredientCount==1){
+            alert("Er is tenminste 1 ingredient nodig.");
+        }
+
+        if (ingredientCount > 1) {
+            const row = button.closest('.ingredient-row');
+            if (row) row.remove();
+            ingredientCount--;
+        }
+    }
+
+    function addIngredient() {
+        const template = document.querySelector('.ingredient-row');
+        if (!template) return;
+        const clone = template.cloneNode(true);
+        document.getElementById('ingredient-list').appendChild(clone);
+        ingredientCount++;
+    }
+</script>
 
 </body>
 </html>
