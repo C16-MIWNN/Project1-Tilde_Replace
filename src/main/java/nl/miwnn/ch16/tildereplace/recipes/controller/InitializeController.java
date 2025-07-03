@@ -3,7 +3,9 @@ package nl.miwnn.ch16.tildereplace.recipes.controller;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import nl.miwnn.ch16.tildereplace.recipes.service.RecipesUserService;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -25,21 +27,26 @@ public class InitializeController {
     private RecipeRepository recipeRepository;
     private RecipesUserService recipesUserService;
     private UnitRepository unitRepository;
+    private AllergyRepository allergyRepository;
+
 
     private Map<String, Food> foodCache = new HashMap<String, Food>();
     private Map<String, Unit> unitCache = new HashMap<String, Unit>();
+    private Map<String, Allergy> allergyCache = new HashMap<String, Allergy>();
 
     public InitializeController(FoodRepository foodRepository,
                                 IngredientRepository ingredientRepository,
                                 RecipeRepository recipeRepository,
                                 RecipesUserService recipesUserService,
-                                UnitRepository unitRepository
+                                UnitRepository unitRepository,
+                                AllergyRepository allergyRepository
                                 ) {
         this.foodRepository = foodRepository;
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
         this.recipesUserService = recipesUserService;
         this.unitRepository = unitRepository;
+        this.allergyRepository = allergyRepository;
     }
 
     @EventListener
@@ -56,6 +63,7 @@ public class InitializeController {
             user.setPassword("userPW");
             recipesUserService.saveUser(user);
 
+            loadAllergies();
             loadUnits();
             loadFoods();
             loadRecipes();
@@ -81,6 +89,23 @@ public class InitializeController {
         }
     }
 
+    private void loadAllergies() throws IOException, CsvValidationException {
+
+        try (CSVReader reader = new CSVReader(new InputStreamReader(
+                        new ClassPathResource("/example_data/allergies.csv").getInputStream()))) {
+
+            // Skip header
+            reader.skip(1);
+
+            for (String[] allergyLine : reader) {
+                Allergy allergy = new Allergy();
+                allergy.setAllergyName(allergyLine[0]);
+
+                allergyRepository.save(allergy);
+                allergyCache.put(allergy.getAllergyName(), allergy);
+            }
+        }
+    }
 
     private void loadFoods() throws IOException, CsvValidationException {
         try (CSVReader reader = new CSVReader(new InputStreamReader(
@@ -92,12 +117,33 @@ public class InitializeController {
             for (String[] foodLine : reader) {
                 Food food = new Food();
                 food.setFoodName(foodLine[1]);
+                food.setEnergy(Double.parseDouble(foodLine[2]));
+                food.setProtein(Double.parseDouble(foodLine[3]));
+                food.setFat(Double.parseDouble(foodLine[4]));
+                food.setCarbohydrates(Double.parseDouble(foodLine[5]));
+                food.setFiber(Double.parseDouble(foodLine[6]));
+                food.setSalt(Double.parseDouble(foodLine[7]));
+
+                Set<Allergy> allergies = getAllergyList(foodLine[8]);
+                food.setAllergies(allergies);
+
                 foodRepository.save(food);
                 foodCache.put(food.getFoodName(), food);
             }
         }
     }
 
+    private Set<Allergy> getAllergyList(String allergyLine) {
+        Set<Allergy> allergies = new HashSet<Allergy>();
+        for (String allergyString : allergyLine.split(",")) {
+            System.out.println("allergy " + allergyString);
+            Allergy allergy = allergyCache.get(allergyString);
+            System.out.println(allergyString);
+            allergies.add(allergy);
+        }
+
+        return allergies;
+    }
 
     private void loadRecipes() throws IOException, CsvValidationException {
         try (CSVReader reader = new CSVReader(new InputStreamReader(
@@ -134,8 +180,4 @@ public class InitializeController {
         }
 
     }
-
-
-
-
 }
