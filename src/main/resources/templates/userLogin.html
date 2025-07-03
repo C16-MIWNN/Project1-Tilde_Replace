@@ -1,60 +1,79 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
-    <title>login.html</title>
-</head>
-<body>
-<div th:replace="~{fragments/general :: navbar}"></div>
+ <!DOCTYPE html>
+    <html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100" >
+    <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
+        <title>Aanmelden</title>
+    </head>
 
-<div class="container">
+    <body>
+    <div th:replace="~{fragments/general :: navbar}"></div>
 
-    <div class="row justify-content-center">
-        <div class="col-5">
-
-            <div class="card shadow-lg">
-                <div class="card-header text-center">Login</div>
-
-                <div class="card-body">
-                    <form th:action="@{/user/login}" method="post">
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-11">
-                                <label for="username" class="form-label">Gebruikersnaam</label>
-                                <input type="text" class="form-control" id="username" name="username">
-                            </div>
-                        </div>
-
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-11">
-                                <label for="password" class="form-label">Wachtwoord</label>
-                                <input id="password" class="form-control" type="password" name="password">
-                            </div>
-                        </div>
-
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-11 d-grid">
-                                <button class="btn btn-primary" type="submit">Login</button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <div class="row justify-content-center mb-3">
-                        <div class="col-11 d-grid">
-                            <a th:href="@{/user/new}">Ik heb nog geen account</a>
-                        </div>
-                    </div>
-
-                </div>
+    <div class="container-fluid" id="our-main-container">
+        <div class="row" id="our-row-header">
+            <div class="container" id="our-container-header">
+                <h1>Welkom terug</h1>
             </div>
         </div>
 
+        <div class="row" id="our-content-row">
+            <div class="container col-2" id="our-content-left">
+                <!-- LEFT SIDE -->
+            </div>
 
+            <div class="container col-8" id="our-content-middle">
+                <!-- MIDDLE -->
+                <div class="row justify-content-center">
+                    <div class="col-5">
+
+                        <div class="card shadow-lg">
+
+                            <img src="https://uitpaulineskeuken.nl/wp-content/uploads/2024/08/Cacio-e-pepe.jpg" class="card-img-top img-fluid object-fit-cover" style="height: 500px;">
+
+                            <div class="card-body">
+                                <form th:action="@{/user/login}" method="post">
+                                    <div class="row justify-content-center mb-3">
+                                        <div class="col-11">
+                                            <label for="username" class="form-label">Gebruikersnaam</label>
+                                            <input type="text" class="form-control" id="username" name="username">
+                                        </div>
+                                    </div>
+
+                                    <div class="row justify-content-center mb-3">
+                                        <div class="col-11">
+                                            <label for="password" class="form-label">Wachtwoord</label>
+                                            <input id="password" class="form-control" type="password" name="password">
+                                        </div>
+                                    </div>
+
+                                    <div class="row justify-content-center mb-3">
+                                        <div class="col-11 d-grid">
+                                            <button class="btn btn-primary" type="submit">Login</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-11 d-grid">
+                                        <a th:href="@{/user/new}">Ik heb nog geen account</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div class="containter col-2" id="our-content-right">
+                <!-- RIGHT -->
+            </div>
+        </div>
     </div>
 
-</div>
+    <div th:replace="~{fragments/general :: footer}"></div>
+    <div th:replace="~{fragments/general :: bottomScripts}"></div>
 
-<div th:replace="~{fragments/general :: footer}"></div>
-
-<div th:replace="~{fragments/general :: bottomScripts}"></div>
-
-</body>
-</html>
+    </body>
+    </html>

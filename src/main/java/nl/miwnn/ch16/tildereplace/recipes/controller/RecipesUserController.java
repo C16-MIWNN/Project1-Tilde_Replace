@@ -42,8 +42,7 @@ public class RecipesUserController {
     }
 
     @PostMapping("/save")
-    public String saveOrUpdateRecipesUser(@ModelAttribute("userForm") NewRecipesUserDTO newRecipesUserDTO,
-                                          BindingResult result, Model dataModel) {
+    public String saveOrUpdateRecipesUser(@ModelAttribute("userForm") NewRecipesUserDTO newRecipesUserDTO, BindingResult result) {
 
         if (recipesUserService.usernameInUse(newRecipesUserDTO.getUsername())) {
             result.rejectValue("username", "duplicate username", "gebruikersnaam is al in gebruik");
@@ -62,8 +61,7 @@ public class RecipesUserController {
         }
 
         if (result.hasErrors()) {
-            dataModel.addAttribute("registerReturn", true);
-            return "userLogin";
+            return "userForm";
         }
 
         recipesUserService.save(newRecipesUserDTO);
