@@ -48,7 +48,7 @@ public class RecipeController {
         return "recipeDetails";
     }
 
-    @GetMapping({"/", "/recipeOverview"})
+    @GetMapping({"/recipeOverview"})
     private String showRecipeOverview(Model datamodel) {
         datamodel.addAttribute("allRecipes", recipeRepository.findAll());
         return "recipeOverview";
