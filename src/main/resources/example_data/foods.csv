@@ -1,14 +1,39 @@
 ingredientId,ingredientName,energy,protein,fat,carbohydrates,fiber,salt,allergy
-1,Tomaat,100,30,10,40,6,7,"lactose,pinda,noten"
-2,Paprika,133,30,10,40,7,2,
-3,Wortel,110,30,10,40,8,7,
-4,Courgette,102,30,13,40,6,2,
-5,Broccoli,103,40,13,40,6,7,
-6,Spinazie,104,30,10,40,6,2,
-7,Aubergine,132,30,10,40,6,2,"eiwit,gluten"
-8,Champignon,136,30,10,40,6,7,
-9,Ui,100,30,14,53,6,6,
-10,Witlof,124,30,10,40,6,2,
-11,Aardappel,100,30,10,40,6,2,"eiwit,gluten"
-12,Ham,350,30,10,40,6,3,
-13,Olijf,1000,31,10,40,6,3,"eiwit,gluten"
+1,Aardappel,100,30,10,40,6,2,"eiwit,gluten"
+2,Basilicum,22,3.2,0.6,2.7,1.6,0,
+3,Bakpoeder,53,0,0,27,0,12500,
+4,Bechamelsaus,150,4,8,10,0,0.4,"lactose,gluten"
+5,Boter,717,0.9,81,0,0,0.8,"lactose"
+6,Bouillon,15,0.5,0,3,0,1,
+7,Cacaopoeder,228,20,14,58,33,0,
+8,Champignons,136,30,10,40,6,7,
+9,Citroen,29,1.1,0.3,9.3,2.8,0,
+10,Courgette,102,30,13,40,6,2,
+11,Curry pasta,150,4,8,10,3,1,
+12,Eieren,155,13,11,1,0,0,
+13,Groene asperges,20,2.2,0.1,3.9,2.1,0,
+14,Kip,180,27,9,0,0,0,
+15,Kipfilet,165,31,3.6,0,0,0,
+16,Knoflook,149,6.4,0.5,33,2.1,0,
+17,Kokosmelk,230,2,24,6,2,0.1,
+18,Lasagnebladen,350,12,2,70,3,0.02,"gluten"
+19,Melk,42,3.4,1,5,0,0.1,"lactose"
+20,Olijfolie,884,0,100,0,0,0,
+21,Paprika,133,30,10,40,7,2,
+22,Parmezaanse kaas,431,38,29,4,0,1.6,"lactose"
+23,Pasta,350,12,2,70,3,0.02,"gluten"
+24,Peper,255,11,3.3,64,26,0,
+25,Pijnboompitten,673,14,68,13,3.7,0,"noten"
+26,Prei,61,1.5,0.3,14,1.8,0,
+27,Rijst,130,2.7,0.3,28,0.4,0,
+28,Rookworst,300,12,25,2,0,1.8,
+29,Selderij,16,0.7,0.2,3,1.6,0,
+30,Spinazie,104,30,10,40,6,2,
+31,Spliterwten,116,8,0.4,21,8,0,
+32,Suiker,387,0,0,100,0,0,
+33,Tomatensaus,80,1.5,0.5,16,2,0.3,
+34,Uien,40,1.1,0.1,9.3,1.7,0,
+35,Wortel,110,30,10,40,8,7,
+36,Zalmfilet,206,22,13,0,0,0,
+37,Zout,0,0,0,0,0,10000,
+38,Zure room,150,3,15,4,0,0.2,"lactose"

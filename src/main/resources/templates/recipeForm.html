@@ -10,7 +10,7 @@
 <div class="container-fluid" id="our-main-container">
     <div class="row" id="our-row-header">
         <div class="container" id="our-container-header">
-            <h1>Maak een nieuw recept</h1>
+            <h1 th:text="${isEditRecipe} ? 'Recept wijzigen' : 'Maak een nieuw recept'"></h1>
         </div>
     </div>
 

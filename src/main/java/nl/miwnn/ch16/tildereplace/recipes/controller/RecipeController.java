@@ -62,6 +62,7 @@ public class RecipeController {
             return "recipeOverview";
         }
 
+        datamodel.addAttribute("isMyRecipes", true);
         datamodel.addAttribute("allRecipes", recipeRepository.findAll());
         return "recipeOverview";
     }
@@ -97,6 +98,7 @@ public class RecipeController {
             dataModel.addAttribute("allIngredients", ingredientRepository.findAll());
             dataModel.addAttribute("allFoods", foodRepository.findAll());
             dataModel.addAttribute("allUnits",unitRepository.findAll());
+            dataModel.addAttribute("isEditRecipe", true);
         }
 
         return "recipeForm";

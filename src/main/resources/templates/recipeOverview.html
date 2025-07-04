@@ -10,7 +10,7 @@
 <div class="container-fluid" id="our-main-container">
     <div class="row" id="our-row-header">
         <div class="container" id="our-container-header">
-            <h1>Overzicht van recepten</h1>
+            <h1 th:text="${isMyRecipes} ? 'Mijn recepeten' : 'Overzicht van recepten'"></h1>
         </div>
     </div>
 
