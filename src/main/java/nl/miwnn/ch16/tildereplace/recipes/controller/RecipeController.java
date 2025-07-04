@@ -126,4 +126,15 @@ public class RecipeController {
         return "redirect:/";
     }
 
+    @PostMapping("/recipe/search")
+    private String searchRecipe(@ModelAttribute("searchString") String searchString, Model dataModel) {
+        Optional<List<Recipe>> recipeOptional = recipeRepository.findRecipeByRecipeNameContaining(searchString);
+        if (recipeOptional.isPresent()) {
+            dataModel.addAttribute("allRecipes", recipeOptional.get());
+            return "recipeOverview";
+        }
+
+        return "recipeOverview";
+    }
+
 }
