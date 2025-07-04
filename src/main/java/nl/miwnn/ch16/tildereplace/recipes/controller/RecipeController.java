@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,8 +78,10 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/new")
-    private String newRecipe(Model datamodel) {
-        datamodel.addAttribute("recipeForm", new NewRecipeDTO());
+    private String newRecipe(Model datamodel, Principal principal) {
+        NewRecipeDTO newRecipeDTO = new NewRecipeDTO();
+        newRecipeDTO.setAuthorUsername(principal.getName());
+        datamodel.addAttribute("recipeForm", newRecipeDTO);
         datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
         datamodel.addAttribute("allFoods", foodRepository.findAll());
         datamodel.addAttribute("allUnits",unitRepository.findAll());

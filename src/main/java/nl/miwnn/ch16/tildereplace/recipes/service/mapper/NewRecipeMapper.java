@@ -2,14 +2,8 @@ package nl.miwnn.ch16.tildereplace.recipes.service.mapper;
 
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
-import nl.miwnn.ch16.tildereplace.recipes.model.Food;
-import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
-import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
-import nl.miwnn.ch16.tildereplace.recipes.model.Unit;
-import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.UnitRepository;
+import nl.miwnn.ch16.tildereplace.recipes.model.*;
+import nl.miwnn.ch16.tildereplace.recipes.repository.*;
 
 import java.util.Optional;
 
@@ -20,13 +14,16 @@ public class NewRecipeMapper {
     private final UnitRepository unitRepository;
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
+    private final RecipesUserRepository recipesUserRepository;
 
     public NewRecipeMapper(FoodRepository foodRepository,
-                           UnitRepository unitRepository, IngredientRepository ingredientRepository, RecipeRepository recipeRepository) {
+                           UnitRepository unitRepository, IngredientRepository ingredientRepository,
+                           RecipeRepository recipeRepository, RecipesUserRepository recipesUserRepository) {
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
+        this.recipesUserRepository = recipesUserRepository;
     }
 
     public Recipe fromDto(NewRecipeDTO newRecipeDTO) {
@@ -47,6 +44,10 @@ public class NewRecipeMapper {
         Recipe recipe = new Recipe();
         recipe.setRecipeName(newRecipeDTO.getRecipeName());
         recipe.setPreperationInstructions(newRecipeDTO.getPreparationInstruction());
+        Optional<RecipesUser> authorOptional = recipesUserRepository.findByUsername(newRecipeDTO.getAuthorUsername());
+        if (authorOptional.isPresent()) {
+            recipe.setAuthor(authorOptional.get());
+        }
 
         return recipe;
     }
