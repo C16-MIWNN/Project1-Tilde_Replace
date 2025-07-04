@@ -152,6 +152,7 @@ public class InitializeController {
 
             for (String[] recipeLine : reader) {
                 Recipe recipe = setRecipeDetails(recipeLine);
+                recipe.setAuthor(recipesUserService.getRecipeUserByUsername("user"));
                 recipeRepository.save(recipe);
 
                 loadIngredients(recipeLine[1], recipe);

@@ -54,6 +54,17 @@ public class RecipeController {
         return "recipeOverview";
     }
 
+    @GetMapping("/recipe/myRecipes/{username}")
+    private String showUserRecipes(@PathVariable("username") String username ,Model datamodel) {
+        Optional<List<Recipe>> optionalRecipes = recipeRepository.findRecipeByAuthorUsername(username);
+        if (!optionalRecipes.isPresent()) {
+            return "recipeOverview";
+        }
+
+        datamodel.addAttribute("allRecipes", recipeRepository.findAll());
+        return "recipeOverview";
+    }
+
     @GetMapping("/recipe/detail/{recipeName}")
     private String showRecipeDetail(@PathVariable("recipeName") String name, Model datamodel) {
 

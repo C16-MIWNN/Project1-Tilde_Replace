@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class RecipesUserService implements UserDetailsService {
 
@@ -25,7 +27,7 @@ public class RecipesUserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return recipesUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s was not found", username)));
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("UserDetail: %s was not found", username)));
     }
 
     public void saveUser(RecipesUser user) {
@@ -41,5 +43,12 @@ public class RecipesUserService implements UserDetailsService {
         saveUser(NewRecipeUserMapper.fromDto(newRecipesUserDTO));
     }
 
+    public RecipesUser getRecipeUserByUsername(String username) {
+        Optional<RecipesUser> recipesUserOptional = recipesUserRepository.findByUsername(username);
+        if (!recipesUserOptional.isPresent()) {
+            throw new UsernameNotFoundException("RecipeUser: %s was not found");
+        }
 
+        return recipesUserOptional.get();
+    }
 }

@@ -1,9 +1,6 @@
 package nl.miwnn.ch16.tildereplace.recipes.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +17,9 @@ public class RecipesUser implements UserDetails {
     private String username;
 
     private String password;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    private List<Recipe> recipes;
 
     @Override
     public boolean isAccountNonExpired() {
@@ -68,5 +68,13 @@ public class RecipesUser implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 }
