@@ -3,10 +3,7 @@ package nl.miwnn.ch16.tildereplace.recipes.service;
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
-import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.UnitRepository;
+import nl.miwnn.ch16.tildereplace.recipes.repository.*;
 import nl.miwnn.ch16.tildereplace.recipes.service.mapper.NewRecipeMapper;
 import org.springframework.stereotype.Service;
 
@@ -17,24 +14,26 @@ public class RecipeService {
     private final FoodRepository foodRepository;
     private final UnitRepository unitRepository;
     private final IngredientRepository ingredientRepository;
+    private final TagRepository tagRepository;
 
     public RecipeService(RecipeRepository recipeRepository,
                          FoodRepository foodRepository,
                          UnitRepository unitRepository,
-                         IngredientRepository ingredientRepository) {
+                         IngredientRepository ingredientRepository, TagRepository tagRepository) {
         this.recipeRepository = recipeRepository;
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
         this.ingredientRepository = ingredientRepository;
+        this.tagRepository = tagRepository;
     }
 
     public void save(NewRecipeDTO newRecipeDTO) {
-        NewRecipeMapper mapper = new NewRecipeMapper(foodRepository, unitRepository, ingredientRepository, recipeRepository);
+        NewRecipeMapper mapper = new NewRecipeMapper(foodRepository, unitRepository, ingredientRepository, recipeRepository, tagRepository);
         recipeRepository.save(mapper.fromDto(newRecipeDTO));
     }
 
     public NewRecipeDTO recipeEdit(Recipe recipe) {
-        NewRecipeMapper mapper = new NewRecipeMapper(foodRepository, unitRepository, ingredientRepository, recipeRepository);
+        NewRecipeMapper mapper = new NewRecipeMapper(foodRepository, unitRepository, ingredientRepository, recipeRepository, tagRepository);
         return mapper.toDto(recipe);
     }
 
