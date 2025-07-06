@@ -3,11 +3,9 @@ package nl.miwnn.ch16.tildereplace.recipes.controller;
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
 import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
-import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
+import nl.miwnn.ch16.tildereplace.recipes.model.Tag;
+import nl.miwnn.ch16.tildereplace.recipes.repository.*;
 
-import nl.miwnn.ch16.tildereplace.recipes.repository.UnitRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class RecipeController {
@@ -30,20 +29,25 @@ public class RecipeController {
     private final FoodRepository foodRepository;
     private final UnitRepository unitRepository;
     private final RecipeService recipeService;
+    private final TagRepository tagRepository;
 
     public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository,
-                            FoodRepository foodRepository, UnitRepository unitRepository, RecipeService recipeService) {
+                            FoodRepository foodRepository, UnitRepository unitRepository, RecipeService recipeService, TagRepository tagRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
         this.recipeService = recipeService;
+        this.tagRepository = tagRepository;
     }
 
     private String setupRecipeDetail(Model datamodel, Recipe recipeToShow) {
         datamodel.addAttribute("recipe", recipeToShow);
         List<Ingredient> allIngredients = recipeToShow.getIngredients();
         datamodel.addAttribute("myIngredients", allIngredients);
+        List<Tag> allTags = recipeToShow.getTags();
+        datamodel.addAttribute("myTags", allTags);
+        datamodel.addAttribute("allTags", tagRepository.findAll());
 
         return "recipeDetails";
     }
@@ -71,6 +75,7 @@ public class RecipeController {
         datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
         datamodel.addAttribute("allFoods", foodRepository.findAll());
         datamodel.addAttribute("allUnits",unitRepository.findAll());
+        datamodel.addAttribute("allTags", tagRepository.findAll());
 
         return "recipeForm";
     }
