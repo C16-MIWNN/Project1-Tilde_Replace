@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100">
 <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
-    <title>Title placeholder</title>
+    <title>Recept beschrijving</title>
 </head>
 
 <body>
@@ -10,7 +10,7 @@
 <div class="container-fluid" id="our-main-container">
     <div class="row" id="our-row-header">
         <div class="container" id="our-container-header">
-            <h1 th:text="${recipe.recipeName}"></h1>
+            <h1 th:text="|Recept voor ${recipe.recipeName}|"></h1>
         </div>
     </div>
 
@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <h4 class="card-title" th:text="${recipe.recipeName}"></h4>
                     <h5>Ingredienten</h5>
-                    <!--            <p th:text="${myIngredients}"></p>-->
+
                     <table class="table">
                         <tbody>
                         <tr th:each="ingredient: ${myIngredients}">
@@ -36,6 +36,15 @@
                         </tr>
                         </tbody>
                     </table>
+
+                    <table class="table">
+                        <tbody>
+                        <tr th:each="tag: ${myTags}">
+                            <td th:text="${tag.tagName}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
             <div class="card col-8 border-0">
