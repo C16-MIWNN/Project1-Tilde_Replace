@@ -16,19 +16,14 @@
 
     <div class="row" id="our-content-row">
         <div class="container col-2" id="our-content-left">
-            <!-- LEFT SIDE -->
         </div>
 
         <div class="container col-8" id="our-content-middle">
-            <!-- MIDDLE -->
-            <div th:replace="~{fragments/recipe :: recipeCards(${allRecipes})}"></div>
+           <div th:replace="~{fragments/recipe :: recipeCards(${allRecipes})}"></div>
         </div>
 
-        <div class="containter col-2" id="our-content-right">
-            <!-- RIGHT -->
-                <a th:href="@{/recipe/new}">
-                    <button type="button" class="btn btn-primary btn-lg"><i class="bi bi-plus-circle pe-2"></i>Nieuw recept</button>
-                </a>
+        <div class="d-flex flex-column col-2 gap-1" id="our-content-right">
+            <a th:href="@{/recipe/new}" class="btn btn-primary btn-lg"><i class="bi bi-plus-circle pe-2"></i>Nieuw recept</a>
         </div>
     </div>
 </div>
