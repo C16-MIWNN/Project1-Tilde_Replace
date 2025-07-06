@@ -2,14 +2,8 @@ package nl.miwnn.ch16.tildereplace.recipes.service.mapper;
 
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
-import nl.miwnn.ch16.tildereplace.recipes.model.Food;
-import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
-import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
-import nl.miwnn.ch16.tildereplace.recipes.model.Unit;
-import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.UnitRepository;
+import nl.miwnn.ch16.tildereplace.recipes.model.*;
+import nl.miwnn.ch16.tildereplace.recipes.repository.*;
 
 import java.util.Optional;
 
@@ -20,13 +14,15 @@ public class NewRecipeMapper {
     private final UnitRepository unitRepository;
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
+    private final TagRepository tagRepository;
 
     public NewRecipeMapper(FoodRepository foodRepository,
-                           UnitRepository unitRepository, IngredientRepository ingredientRepository, RecipeRepository recipeRepository) {
+                           UnitRepository unitRepository, IngredientRepository ingredientRepository, RecipeRepository recipeRepository, TagRepository tagRepository) {
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
+        this.tagRepository = tagRepository;
     }
 
     public Recipe fromDto(NewRecipeDTO newRecipeDTO) {
@@ -40,7 +36,16 @@ public class NewRecipeMapper {
             ingredientRepository.save(ingredient);
         }
 
+        setRecipeTags(newRecipeDTO, recipe);
+
         return recipe;
+    }
+
+    private void setRecipeTags(NewRecipeDTO newRecipeDTO, Recipe recipe) {
+        for (Long tagId : newRecipeDTO.getTagIds()) {
+            tagRepository.findById(tagId)
+                    .ifPresent(recipe.getTags()::add);
+        }
     }
 
     private Recipe setRecipeDetails(NewRecipeDTO newRecipeDTO) {
