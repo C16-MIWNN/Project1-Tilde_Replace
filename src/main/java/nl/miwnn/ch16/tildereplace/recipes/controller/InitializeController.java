@@ -28,6 +28,7 @@ public class InitializeController {
     private RecipesUserService recipesUserService;
     private UnitRepository unitRepository;
     private AllergyRepository allergyRepository;
+    private TagRepository tagRepository;
 
 
     private Map<String, Food> foodCache = new HashMap<String, Food>();
@@ -39,7 +40,8 @@ public class InitializeController {
                                 RecipeRepository recipeRepository,
                                 RecipesUserService recipesUserService,
                                 UnitRepository unitRepository,
-                                AllergyRepository allergyRepository
+                                AllergyRepository allergyRepository,
+                                TagRepository tagRepository
                                 ) {
         this.foodRepository = foodRepository;
         this.ingredientRepository = ingredientRepository;
@@ -47,6 +49,7 @@ public class InitializeController {
         this.recipesUserService = recipesUserService;
         this.unitRepository = unitRepository;
         this.allergyRepository = allergyRepository;
+        this.tagRepository = tagRepository;
     }
 
     @EventListener
@@ -67,6 +70,7 @@ public class InitializeController {
             loadUnits();
             loadFoods();
             loadRecipes();
+            loadTags();
         } catch (IOException | CsvValidationException e) {
             throw new RuntimeException("Failed to initialize database from CSV files", e);
         }
@@ -187,4 +191,22 @@ public class InitializeController {
         return ingredient;
     }
 
-}
+    private void loadTags() throws IOException, CsvValidationException {
+
+        try (CSVReader reader = new CSVReader(new InputStreamReader(
+                new ClassPathResource("/example_data/tags.csv").getInputStream()))) {
+
+            // Skip header
+            reader.skip(1);
+
+            for (String[] tagLine : reader) {
+                Tag tag = new Tag();
+                tag.setTagName(tagLine[0]);
+                tagRepository.save(tag);
+            }
+        }
+        }
+
+    }
+
+
