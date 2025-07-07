@@ -8,21 +8,26 @@
             <div class="container">
                 <div class="row">
                     <ul class="list-group list-group-flush">
-                      <li class="col-10 list-group-item" th:text="|Ingredient: ${food.foodName}|"></li>
-                      <a class="col" th:href="@{/food/edit/{id}(id = ${food.foodId})}"><i class="bi bi-wrench-adjustable-circle fs-4"></i> </a>
 
-                      <div>
+
+                      <div class="row mt-4">
+                          <span class="list-group-item  col-11" th:text="|Ingredient: ${food.foodName}|"></span>
+                          <th:block th:replace="~{fragments/util :: our-button-link(type='edit', text='', action=@{/food/edit/{id}(id = ${food.foodId})}, col='col-1')}"></th:block>
+                      </div>
+
+                        <ul class="list-group list-group-flush mt-4">
                           <span>Voedingswaarde</span>
-                      <li class="list-group-item" th:text="|energie: ${food.energy}|"></li>
-                      <li class="list-group-item" th:text="|eiwit: ${food.protein}|"></li>
-                      <li class="list-group-item" th:text="|koolhydraten: ${food.fat}|"></li>
-                      <li class="list-group-item" th:text="|vezels: ${food.carbohydrates}|"></li>
-                      <li class="list-group-item" th:text="|zout: ${food.salt}|"></li>
-                      </div>
-                      <div>
+                          <li class="list-group-item" th:text="|energie: ${food.energy}|"></li>
+                          <li class="list-group-item" th:text="|eiwit: ${food.protein}|"></li>
+                          <li class="list-group-item" th:text="|koolhydraten: ${food.fat}|"></li>
+                          <li class="list-group-item" th:text="|vezels: ${food.carbohydrates}|"></li>
+                          <li class="list-group-item" th:text="|zout: ${food.salt}|"></li>
+                      </ul>
+
+                      <ul class="list-group list-group-flush mt-4">
                           <span>Allergie informatie</span>
-                     <span th:each="allergy : ${food.allergies}" class="list-group-item" th:text="${allergy.allergyName}"></span>
-                      </div>
+                          <span th:each="allergy : ${food.allergies}" class="list-group-item" th:text="${allergy.allergyName}"></span>
+                      </ul>
 
                     </ul>
                 </div>
