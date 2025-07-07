@@ -48,19 +48,14 @@
                 </div>
 
                 <div class="containter col-2" id="our-content-right">
-                    <div class="list-group">
-                        <a th:href="@{/food/new}">
-                            <button type="button" class="btn btn-primary btn-lg">
-                            <i class="bi bi-plus-circle pe-2"></i>
-                                Nieuw Ingredient
-                            </button>
-                        </a>
-                    </div>
+                   <div class="row">
+                       <div th:replace="~{fragments/util :: our-button('add', 'Nieuw Ingredient', '/food/new')}"></div>
+                   </div>
                 </div>
             </div>
 
             <div th:replace="~{fragments/general :: footer}"></div>
-    <div th:replace="~{fragments/general :: bottomScripts}"></div>
+            <div th:replace="~{fragments/general :: bottomScripts}"></div>
 
     </body>
 </html>
