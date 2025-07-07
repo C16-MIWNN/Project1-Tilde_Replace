@@ -13,8 +13,8 @@
     </div>
 </div>
 
-<div th:fragment="tagCards(cards)" class="row row-cols-1 row-cols-4">
-    <div th:each="tag : ${allTags}" th:insert="~{:: tagCard(tag)}"></div>
+<div th:fragment="tagCards(tags)" class="row row-cols-1 row-cols-4">
+    <div th:each="tag : ${tags}" th:insert="~{:: tagCard(tag)}"></div>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>
