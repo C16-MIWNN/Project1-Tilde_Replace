@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100" >
 <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
-    <title>Title placeholder</title>
+    <title>Maak een nieuw recept aan</title>
 </head>
 
 <body>
@@ -23,13 +23,11 @@
             <!-- MIDDLE -->
             <form th:action="@{/recipe/save}" method="post" th:object="${recipeForm}">
 
-                <!--        <input type="hidden" th:field="*{id}"/>-->
                 <div class="mb-3">
-                    <label for="newReceptName" class="form-label">Recept naam</label>
-                    <input type="text" th:field="*{recipeName}" class="form-control" id="newReceptName"
+                    <label class="form-label">Recept naam</label>
+                    <input type="text" th:field="*{recipeName}" class="form-control" required
                            placeholder="Geef het recept een naam">
                 </div>
-
 
                 <div class="mb-3" id="ingredient-list">
                     <div th:if="${#lists.isEmpty(recipeForm.foodIds)}" class="ingredient-row input-group mb-3">
@@ -62,8 +60,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="recipePreparation" class="form-label">Bereiding beschrijving</label>
-                    <input type="text" th:field="*{preparationInstruction}" class="form-control" id="recipePreparation"
+                    <label class="form-label">Bereiding beschrijving</label>
+                    <input type="text" th:field="*{preparationInstruction}" class="form-control" required
                            placeholder="Beschrijf de bereiding van het recept">
                 </div>
 
@@ -81,7 +79,7 @@
             </form>
         </div>
 
-        <div class="containter col-2" id="our-content-right">
+        <div class="container col-2" id="our-content-right">
             <!-- RIGHT -->
         </div>
     </div>
