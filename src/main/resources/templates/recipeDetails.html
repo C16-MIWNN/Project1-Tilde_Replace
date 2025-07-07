@@ -30,23 +30,18 @@
 
                     <table class="table">
                         <tbody>
-                        <tr th:each="ingredient: ${myIngredients}">
+                        <tr th:each="ingredient: ${recipe.ingredients}">
                             <td th:text="${ingredient.getFood().getFoodName()}"></td>
                             <td th:text="|${ingredient.getAmount()} ${ingredient.getUnit().abbreviation}|"></td>
                         </tr>
                         </tbody>
                     </table>
 
-                    <table class="table">
-                        <tbody>
-                        <tr th:each="tag: ${myTags}">
-                            <td th:text="${tag.tagName}"></td>
-                        </tr>
-                        </tbody>
-                    </table>
+  <div th:replace="~{fragments/tag :: tagCards(${recipe.getTags()})}"></div>
 
                 </div>
             </div>
+
             <div class="card col-8 border-0">
                 <div class="card-body">
                     <h4 class="card-title">Bereiding</h4>
