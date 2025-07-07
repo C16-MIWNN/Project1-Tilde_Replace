@@ -11,8 +11,9 @@
 
 
                       <div class="row mt-4">
-                          <span class="list-group-item  col-11" th:text="|Ingredient: ${food.foodName}|"></span>
-                          <th:block th:replace="~{fragments/util :: our-button-link(type='edit', text='', action=@{/food/edit/{id}(id = ${food.foodId})}, col='col-1')}"></th:block>
+                          <span class="list-group-item  col-10" th:text="|Ingredient: ${food.foodName}|"></span>
+                          <th:block th:replace="~{fragments/util :: our-button(type='edit', text='', action=@{/food/edit/{id}(id = ${food.foodId})}, col='col-1')}"></th:block>
+                          <th:block th:replace="~{fragments/util :: our-button(type='remove', text='', action=@{/food/delete/{id}(id = ${food.foodId})}, col='col-1')}"></th:block>
                       </div>
 
                         <ul class="list-group list-group-flush mt-4">
