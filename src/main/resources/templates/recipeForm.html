@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100" >
+<html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100">
 <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
     <title>Maak een nieuw recept aan</title>
 </head>
@@ -51,12 +51,15 @@
                             </option>
                         </select>
 
-                        <button type="button" class="btn btn-danger" onclick="removeIngredient(this)"><i class="bi bi-trash3"></i></button>
+                        <button type="button" class="btn btn-danger" onclick="removeIngredient(this)"><i
+                                class="bi bi-trash3"></i></button>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary btn-lg" onclick="addIngredient()"><i class="bi bi-plus-circle pe-2"></i>Toevoegen</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="addIngredient()"><i
+                            class="bi bi-plus-circle pe-2"></i>Toevoegen
+                    </button>
                 </div>
 
                 <div class="mb-3">
@@ -65,16 +68,32 @@
                            placeholder="Beschrijf de bereiding van het recept">
                 </div>
 
-                <span class="input-group-text">Tags</span>
-                <select class="form-select" th:field="*{tagIds}">
-                    <option th:each="tag : ${allTags}"
-                            th:value="${tag.tagId}"
-                            th:text="${tag.tagName}">
-                    </option>
-                </select>
+                <!--                <span class="input-group-text">Voeg een tag toe</span>-->
+                <!--                <select class="form-select" th:field="*{tagIds}">-->
+                <!--                    <option th:each="tag : ${allTags}"-->
+                <!--                            th:value="${tag.tagId}"-->
+                <!--                            th:text="${tag.tagName}">-->
+                <!--                    </option>-->
+                <!--                </select>-->
+
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Voeg een tag toe</span>
+                    <select
+                            class="form-select"
+                            th:field="*{tagIds}">
+                        <option
+                                th:each="tag : ${allTags}"
+                                th:value="${tag.tagId}"
+                                th:text="${tag.tagName}">
+                        </option>
+                    </select>
+                </div>
+
 
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-check-lg pe-2"></i>Sla recept op</button>
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-check-lg pe-2"></i>Sla recept
+                        op
+                    </button>
                 </div>
             </form>
         </div>
