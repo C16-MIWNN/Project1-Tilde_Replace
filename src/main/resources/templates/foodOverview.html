@@ -29,8 +29,10 @@
                                                                 th:id="|${food.foodName}-item|"
                                                                 data-bs-toggle="list"
                                                                 role="tab"
-                                                                th:href="|#${food.foodName}-detail|"
-                                                                th:text="${food.foodName}">
+                                                                th:href="|#${foodNameSanitized}-detail|"
+                                                                th:text="${food.foodName}"
+                                                                th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}">
+
                                 </a>
                             </div>
                         </div>
@@ -38,9 +40,10 @@
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane"
                                      th:each="food : ${allFoods}"
-                                     th:id="|${food.foodName}-detail|"
+                                     th:id="|${foodNameSanitized}-detail|"
                                      role"tabpanel"
-                                     th:insert="~{fragments/food :: foodCard(food)}">
+                                     th:insert="~{fragments/food :: foodCard(food)}"
+                                     th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}">
                                 </div>
                             </div>
                         </div>
