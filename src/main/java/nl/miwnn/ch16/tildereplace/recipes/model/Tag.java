@@ -45,4 +45,8 @@ public class Tag {
     public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
+
+    public String toString() {
+        return String.format("%s",this.tagName);
+    }
 }
