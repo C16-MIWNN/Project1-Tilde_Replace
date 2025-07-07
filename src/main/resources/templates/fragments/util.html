@@ -4,7 +4,7 @@
 <body>
 
 <th:block th:fragment="our-button(type, text, action)">
-    <div th:replace="${#strings.startsWith(action,'/')} ? ~{:: our-button-link(${type}, ${text}, ${action})} : ~{:: our-button-button(${type}, ${text}, ${action})}"></div>
+    <div th:replace="${#strings.startsWith(action,'@')} ? ~{:: our-button-link(${type}, ${text}, ${action})} : ~{:: our-button-button(${type}, ${text}, ${action})}"></div>
 </th:block>
 
 <th:block th:fragment="our-button-link(type, text, action)">
