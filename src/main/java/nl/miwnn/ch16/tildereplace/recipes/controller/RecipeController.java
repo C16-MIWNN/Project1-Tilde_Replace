@@ -41,17 +41,6 @@ public class RecipeController {
         this.tagRepository = tagRepository;
     }
 
-    private String setupRecipeDetail(Model datamodel, Recipe recipeToShow) {
-        datamodel.addAttribute("recipe", recipeToShow);
-        List<Ingredient> allIngredients = recipeToShow.getIngredients();
-        datamodel.addAttribute("myIngredients", allIngredients);
-        List<Tag> allTags = recipeToShow.getTags();
-        datamodel.addAttribute("myTags", allTags);
-        datamodel.addAttribute("allTags", tagRepository.findAll());
-
-        return "recipeDetails";
-    }
-
     @GetMapping({"/", "/recipeOverview"})
     private String showRecipeOverview(Model datamodel) {
         datamodel.addAttribute("allRecipes", recipeRepository.findAll());
@@ -66,7 +55,9 @@ public class RecipeController {
         if (recipeOptional.isEmpty()) {
             return "redirect:/recipeOverview";
         }
-        return setupRecipeDetail(datamodel, recipeOptional.get());
+        datamodel.addAttribute("recipe",recipeOptional.get());
+
+        return "recipeDetails";
     }
 
     @GetMapping("/recipe/new")
