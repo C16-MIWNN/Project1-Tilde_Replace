@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100" >
-<head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
-    <title>Title placeholder</title>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{fragments/general :: baseheader(~{:: title})}">
+    <title>Recepten beschrijven</title>
 </head>
-
 <body>
+
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div class="container-fluid" id="our-main-container">
@@ -14,14 +14,17 @@
         </div>
     </div>
 
-    <div class="row" id="our-content-row">
-        <div class="container col-2" id="our-content-left">
-            <!-- LEFT SIDE -->
+    <h4>Maak een nieuw recept aan</h4>
+
+    <form th:action="@{/recipe/save}" method="post" th:object="${recipeForm}">
+
+        <!--        <input type="hidden" th:field="*{id}"/>-->
+        <div class="mb-3">
+            <label for="newReceptName" class="form-label">Recept naam</label>
+            <input type="text" th:field="*{recipeName}" class="form-control" id="newReceptName"
+                   placeholder="Geef het recept een naam">
         </div>
 
-        <div class="container col-8" id="our-content-middle">
-            <!-- MIDDLE -->
-            <form th:action="@{/recipe/save}" method="post" th:object="${recipeForm}">
 
                 <!--        <input type="hidden" th:field="*{id}"/>-->
                 <div class="mb-3">
@@ -31,53 +34,34 @@
                            placeholder="Geef het recept een naam">
                 </div>
 
+                <span class="input-group-text">Hoeveelheid</span>
+                <input type="number" class="form-control" placeholder="Hoeveelheid"
+                       th:field="*{ingredientQuantities}"/>
 
-                <div class="mb-3" id="ingredient-list">
-                    <div th:if="${#lists.isEmpty(recipeForm.foodIds)}" class="ingredient-row input-group mb-3">
-                        <span class="input-group-text">Ingredient</span>
-                        <select class="form-select" th:field="*{foodIds}">
-                            <option th:each="food : ${allFoods}"
-                                    th:value="${food.foodId}"
-                                    th:text="${food.foodName}">
-                            </option>
-                        </select>
+                <span class="input-group-text">Eenheid</span>
+                <select class="form-select" th:field="*{unitIds}">
+                    <option th:each="unit : ${allUnits}"
+                            th:value="${unit.unitId}"
+                            th:text="${unit.unitName}">
+                    </option>
+                </select>
 
-                        <span class="input-group-text">Hoeveelheid</span>
-                        <input type="number" class="form-control" placeholder="Hoeveelheid"
-                               th:field="*{ingredientQuantities}"/>
-
-                        <span class="input-group-text">Eenheid</span>
-                        <select class="form-select" th:field="*{unitIds}">
-                            <option th:each="unit : ${allUnits}"
-                                    th:value="${unit.unitId}"
-                                    th:text="${unit.unitName}">
-                            </option>
-                        </select>
-
-                        <button type="button" class="btn btn-danger" onclick="removeIngredient(this)"><i class="bi bi-trash3"></i></button>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary btn-lg" onclick="addIngredient()"><i class="bi bi-plus-circle pe-2"></i>Toevoegen</button>
-                </div>
-
-                <div class="mb-3">
-                    <label for="recipePreparation" class="form-label">Bereiding beschrijving</label>
-                    <input type="text" th:field="*{preparationInstruction}" class="form-control" id="recipePreparation"
-                           placeholder="Beschrijf de bereiding van het recept">
-                </div>
-
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-check-lg pe-2"></i>Sla recept op</button>
-                </div>
-            </form>
+                <button type="button" class="btn btn-danger" onclick="removeIngredient(this)">Verwijderen</button>
+            </div>
         </div>
 
-        <div class="containter col-2" id="our-content-right">
-            <!-- RIGHT -->
+        <div>
+            <button type="button" class="btn btn-primary" onclick="addIngredient()">Toevoegen</button>
         </div>
-    </div>
+
+        <div class="mb-3">
+            <label for="recipePreparation" class="form-label">Bereiding beschrijving</label>
+            <input type="text" th:field="*{preparationInstruction}" class="form-control" id="recipePreparation"
+                   placeholder="Beschrijf de bereiding van het recept">
+        </div>
+
+        <input type="submit" value="Sla recept op" class="btn btn-success"/>
+    </form>
 </div>
 
 <div th:replace="~{fragments/general :: footer}"></div>
@@ -107,8 +91,6 @@
         ingredientCount++;
     }
 </script>
+
 </body>
 </html>
-
-
-
