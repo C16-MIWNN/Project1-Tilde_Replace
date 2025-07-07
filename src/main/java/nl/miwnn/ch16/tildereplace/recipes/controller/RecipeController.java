@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +55,18 @@ public class RecipeController {
         return "recipeOverview";
     }
 
+    @GetMapping("/recipe/myRecipes/{username}")
+    private String showUserRecipes(@PathVariable("username") String username ,Model datamodel) {
+        Optional<List<Recipe>> optionalRecipes = recipeRepository.findRecipeByAuthorUsername(username);
+        if (!optionalRecipes.isPresent()) {
+            return "recipeOverview";
+        }
+
+        datamodel.addAttribute("isMyRecipes", true);
+        datamodel.addAttribute("allRecipes", recipeRepository.findAll());
+        return "recipeOverview";
+    }
+
     @GetMapping("/recipe/detail/{recipeName}")
     private String showRecipeDetail(@PathVariable("recipeName") String name, Model datamodel) {
 
@@ -66,8 +79,10 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/new")
-    private String newRecipe(Model datamodel) {
-        datamodel.addAttribute("recipeForm", new NewRecipeDTO());
+    private String newRecipe(Model datamodel, Principal principal) {
+        NewRecipeDTO newRecipeDTO = new NewRecipeDTO();
+        newRecipeDTO.setAuthorUsername(principal.getName());
+        datamodel.addAttribute("recipeForm", newRecipeDTO);
         datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
         datamodel.addAttribute("allFoods", foodRepository.findAll());
         datamodel.addAttribute("allUnits",unitRepository.findAll());
@@ -83,6 +98,7 @@ public class RecipeController {
             dataModel.addAttribute("allIngredients", ingredientRepository.findAll());
             dataModel.addAttribute("allFoods", foodRepository.findAll());
             dataModel.addAttribute("allUnits",unitRepository.findAll());
+            dataModel.addAttribute("isEditRecipe", true);
         }
 
         return "recipeForm";
@@ -108,6 +124,17 @@ public class RecipeController {
         }
 
         return "redirect:/";
+    }
+
+    @PostMapping("/recipe/search")
+    private String searchRecipe(@ModelAttribute("searchString") String searchString, Model dataModel) {
+        Optional<List<Recipe>> recipeOptional = recipeRepository.findRecipeByRecipeNameContaining(searchString);
+        if (recipeOptional.isPresent()) {
+            dataModel.addAttribute("allRecipes", recipeOptional.get());
+            return "recipeOverview";
+        }
+
+        return "recipeOverview";
     }
 
 }

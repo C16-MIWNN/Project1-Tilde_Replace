@@ -1,12 +1,15 @@
 package nl.miwnn.ch16.tildereplace.recipes.dto;
 
 
+import nl.miwnn.ch16.tildereplace.recipes.model.RecipesUser;
+
 import java.util.ArrayList;
 
 public class NewRecipeDTO {
 
     private String recipeName;
     private String preparationInstruction;
+    private String authorUsername;
 
     private ArrayList<Long> foodIds;
     private ArrayList<Integer> ingredientQuantities;
@@ -50,5 +53,13 @@ public class NewRecipeDTO {
 
     public void setUnitIds(ArrayList<Long> unitIds) {
         this.unitIds = unitIds;
+    }
+
+    public String getAuthorUsername() {
+        return authorUsername;
+    }
+
+    public void setAuthorUsername(String authorUsername) {
+        this.authorUsername = authorUsername;
     }
 }

@@ -1,15 +1,15 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipesUserDTO;
+import nl.miwnn.ch16.tildereplace.recipes.model.RecipesUser;
 import nl.miwnn.ch16.tildereplace.recipes.repository.RecipesUserRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.RecipesUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -24,7 +24,8 @@ public class RecipesUserController {
     }
 
     @GetMapping("/login")
-    public String loginUser() {
+    public String loginUser(Model dataModel) {
+        dataModel.addAttribute("userForm", new NewRecipesUserDTO());
         return "userLogin";
     }
 
@@ -67,10 +68,11 @@ public class RecipesUserController {
         return "redirect:/";
     }
 
-    @PostMapping("/delete")
-    public String deleteRecipesUser(@ModelAttribute("userId") Long userId, BindingResult result) {
-        if (result.hasErrors()) {
-            return "userOverview";
+    @GetMapping("/delete/{userId}")
+    public String deleteRecipesUser(@PathVariable("userId") Long userId) {
+        Optional<RecipesUser> userOptional = recipesUserRepository.findById(userId);
+        if (!userOptional.isPresent()) {
+            return "redirect:/user/userOverview";
         }
 
         recipesUserRepository.deleteById(userId);

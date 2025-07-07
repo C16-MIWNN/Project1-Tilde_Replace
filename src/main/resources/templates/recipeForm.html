@@ -10,7 +10,7 @@
 <div class="container-fluid" id="our-main-container">
     <div class="row" id="our-row-header">
         <div class="container" id="our-container-header">
-            <h1>Maak een nieuw recept</h1>
+            <h1 th:text="${isEditRecipe} ? 'Recept wijzigen' : 'Maak een nieuw recept'"></h1>
         </div>
     </div>
 
@@ -25,6 +25,7 @@
 
                 <!--        <input type="hidden" th:field="*{id}"/>-->
                 <div class="mb-3">
+                    <input type="hidden" th:field="*{authorUsername}">
                     <label for="newReceptName" class="form-label">Recept naam</label>
                     <input type="text" th:field="*{recipeName}" class="form-control" id="newReceptName"
                            placeholder="Geef het recept een naam">

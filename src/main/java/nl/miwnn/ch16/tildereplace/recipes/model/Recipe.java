@@ -17,6 +17,9 @@ public class Recipe {
     private List<Ingredient> ingredients;
     private String preparationInstructions;
 
+    @ManyToOne
+    private RecipesUser author;
+
     public Long getRecipeId() {
         return recipeId;
     }
@@ -48,4 +51,19 @@ public class Recipe {
         this.preparationInstructions = preperationInstructions;
     }
 
+    public String getPreparationInstructions() {
+        return preparationInstructions;
+    }
+
+    public void setPreparationInstructions(String preparationInstructions) {
+        this.preparationInstructions = preparationInstructions;
+    }
+
+    public RecipesUser getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(RecipesUser author) {
+        this.author = author;
+    }
 }

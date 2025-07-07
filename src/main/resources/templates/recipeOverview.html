@@ -10,7 +10,7 @@
 <div class="container-fluid" id="our-main-container">
     <div class="row" id="our-row-header">
         <div class="container" id="our-container-header">
-            <h1>Overzicht van recepten</h1>
+            <h1 th:text="${isMyRecipes} ? 'Mijn recepeten' : 'Overzicht van recepten'"></h1>
         </div>
     </div>
 
@@ -21,11 +21,28 @@
 
         <div class="container col-8" id="our-content-middle">
             <!-- MIDDLE -->
+            <div>
+                <form th:action="@{/recipe/search}" method="post">
+                    <div class="input-group mb-5">
+                        <input name="searchString" list="recipeListOptions" class="form-control rounded-start-5" type="text">
+                        <button class="btn btn-lg btn-secondary bi bi-search rounded-end-5" type="submit"></button>
+                    </div>
+
+                    <datalist id="recipeListOptions" size="3">
+                        <option th:each="recipe : ${allRecipes}"><span th:text="${recipe.recipeName}"></span></option>
+                    </datalist>
+
+                </form>
+            </div>
+
             <div th:replace="~{fragments/recipe :: recipeCards(${allRecipes})}"></div>
         </div>
 
         <div class="containter col-2" id="our-content-right">
             <!-- RIGHT -->
+                <a th:href="@{/recipe/new}">
+                    <button type="button" class="btn btn-primary btn-lg"><i class="bi bi-plus-circle pe-2"></i>Nieuw recept</button>
+                </a>
         </div>
     </div>
 </div>
