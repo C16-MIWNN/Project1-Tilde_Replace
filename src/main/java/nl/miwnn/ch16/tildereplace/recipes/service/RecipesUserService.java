@@ -63,8 +63,6 @@ public class RecipesUserService implements UserDetailsService {
         passwordToBeUpdatedUser.get().setPassword(passwordEncoder.encode(password));
         recipesUserRepository.save(passwordToBeUpdatedUser.get());
 
-        System.err.println("Updated user password to");
-        System.err.println(password);
     }
 
     public boolean userExists(String username) {

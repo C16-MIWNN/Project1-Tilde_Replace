@@ -84,7 +84,8 @@ public class RecipesUserController {
                                       @ModelAttribute("password") String password,
                                       @ModelAttribute("passwordConfirm") String passwordConfirm,
                                       BindingResult result) {
-        if (recipesUserService.userExists(username)) {
+
+        if (!recipesUserService.userExists(username)) {
             result.rejectValue("username", "user not found", "user was not found");
         }
 
@@ -95,11 +96,8 @@ public class RecipesUserController {
         if (result.hasErrors()) {
             return "userOverview";
         } else {
-            System.err.println("Received user: ");
-            System.err.println(username);
-
             recipesUserService.updateRecipeUserPassword(username, password);
-            return "userOverview";
+            return "redirect:/user/userOverview";
         }
     }
 
