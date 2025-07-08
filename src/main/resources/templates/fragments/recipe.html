@@ -9,7 +9,7 @@
 <div th:fragment="recipeCard(recipe)">
     <div class="card" style="width: 20rem;">
         <a th:href="@{/recipe/detail/{recipeName}(recipeName= ${recipe.recipeName})}">
-            <img src="https://imgur.com/OByMbYu.jpeg" class="card-img-top object-fit-cover" alt="..."
+            <img th:src="${recipe.imageUrl}" class="card-img-top object-fit-cover" alt="..."
                  style="height:300px">
         </a>
         <div class="card-body">

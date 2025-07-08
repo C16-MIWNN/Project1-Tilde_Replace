@@ -20,6 +20,8 @@ public class Recipe {
     @ManyToOne
     private RecipesUser author;
 
+    private String imageUrl;
+
     public Long getRecipeId() {
         return recipeId;
     }
@@ -65,5 +67,13 @@ public class Recipe {
 
     public void setAuthor(RecipesUser author) {
         this.author = author;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

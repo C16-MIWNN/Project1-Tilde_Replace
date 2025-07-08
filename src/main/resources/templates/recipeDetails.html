@@ -22,7 +22,7 @@
         <div class="container col-8" id="our-content-middle">
             <!-- MIDDLE -->
             <div class="card">
-                <img src="https://imgur.com/OByMbYu.jpeg" class="card-img-top object-fit-cover" alt="..." style="height:300px">
+                <img th:src="${recipe.imageUrl}" class="card-img-top object-fit-cover" alt="..." style="height:300px">
                 <div class="card-body">
                     <h4 class="card-title" th:text="${recipe.recipeName}"></h4>
                     <h5>Ingredienten</h5>

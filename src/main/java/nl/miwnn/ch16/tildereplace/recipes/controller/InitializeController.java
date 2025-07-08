@@ -164,6 +164,7 @@ public class InitializeController {
         Recipe recipe = new Recipe();
         recipe.setRecipeName(recipeLine[0]);
         recipe.setPreperationInstructions(recipeLine[2]);
+        recipe.setImageUrl(recipeLine[3]);
         return recipe;
     }
 
