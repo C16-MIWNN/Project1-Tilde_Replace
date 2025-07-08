@@ -1,13 +1,9 @@
 package nl.miwnn.ch16.tildereplace.recipes;
 
 
-import nl.miwnn.ch16.tildereplace.recipes.model.Food;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
-import nl.miwnn.ch16.tildereplace.recipes.model.Unit;
-import org.hibernate.jdbc.Expectation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -43,12 +39,14 @@ public class IngredientTests {
             @ValueSource(ints = {-1, -5, -100})
             @DisplayName("Throws IllegalArgumentException message")
             void setAmountTo(int negativeValue) {
-
                 // Arrange
+                String expectedMessage = "Ingredient amount must be 0 or above";
+
+                // Act
                 Exception exception = assertThrows(IllegalArgumentException.class,
                         () -> ingredient.setAmount(negativeValue));
 
-                String expectedMessage = "Ingredient amount must be 0 or above";
+                // Assert
                 assertEquals(expectedMessage, exception.getMessage());
             }
 
