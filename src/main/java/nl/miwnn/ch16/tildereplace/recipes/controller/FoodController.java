@@ -75,18 +75,4 @@ public class FoodController {
         return "redirect:/food/overview";
     }
 
-    @GetMapping("/detail/{foodName}")
-    private String showFoodDetail(@PathVariable("foodName") String name, Model datamodel) {
-
-        Optional<Food> foodOptional = foodRepository.findFoodByFoodName(name);
-
-        if (foodOptional.isEmpty()) {
-            return "redirect:/food/overview";
-        }
-
-        datamodel.addAttribute("food", foodOptional.get());
-
-        return "foodDetails";
-    }
-
 }
