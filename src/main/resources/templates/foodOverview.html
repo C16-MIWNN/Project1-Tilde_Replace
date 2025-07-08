@@ -32,7 +32,6 @@
                                                                 th:href="|#${foodNameSanitized}-detail|"
                                                                 th:text="${food.foodName}"
                                                                 th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}">
-
                                 </a>
                             </div>
                         </div>
