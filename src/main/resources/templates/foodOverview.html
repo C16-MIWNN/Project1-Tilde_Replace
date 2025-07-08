@@ -7,20 +7,20 @@
     <body class="vh-100">
         <div th:replace="~{fragments/general :: navbar}"></div>
 
-        <div class="container-fluid" id="our-main-container">
+        <div class="container-fluid h-100" id="our-main-container">
             <div class="row" id="our-row-header">
                 <div class="container" id="our-container-header">
                     <h1>Overzicht van ingredienten</h1>
                 </div>
             </div>
 
-            <div class="row" id="our-content-row">
+            <div class="row h-100" id="our-content-row">
                 <div class="container col-2" id="our-content-left">
                     <!-- LEFT SIDE -->
                 </div>
 
-                <div class="container col-8" id="our-content-middle">
-                    <div class="row">
+                <div class="container col-8 h-100" id="our-content-middle">
+                    <div class="row h-100">
                         <div class="col-4 h-100">
                             <div class="list-group h-75 overflow-scroll"
                                  id="list-tab" role="tablist">
@@ -52,10 +52,13 @@
 
                 <div class="containter col-2" id="our-content-right">
                    <div class="row">
-                       <div th:replace="~{fragments/util :: our-button('add', 'Nieuw Ingredient', '/food/new')}"></div>
+                       <div th:replace="~{fragments/util :: our-button-modal(type='add', text='Nieuw Ingredient', target='#ingredientEditModal')}"></div>
                    </div>
                 </div>
             </div>
+
+
+            <div th:replace="~{fragments/food :: foodFormModal(${foodForm}, ${allAllergies})}"></div>
 
             <div th:replace="~{fragments/general :: footer}"></div>
             <div th:replace="~{fragments/general :: bottomScripts}"></div>

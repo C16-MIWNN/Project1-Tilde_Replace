@@ -1,5 +1,6 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
+import nl.miwnn.ch16.tildereplace.recipes.model.Allergy;
 import nl.miwnn.ch16.tildereplace.recipes.model.Food;
 
 import org.springframework.data.domain.Sort;
@@ -9,7 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
+import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 @Controller
@@ -17,20 +20,30 @@ import java.util.Optional;
 public class FoodController {
 
     private final FoodRepository foodRepository;
+    private final AllergyRepository allergyRepository;
 
-    public FoodController(FoodRepository foodRepository) {
+    public FoodController(FoodRepository foodRepository, AllergyRepository allergyRepository) {
         this.foodRepository = foodRepository;
+        this.allergyRepository = allergyRepository;
     }
 
     @GetMapping({"/overview"})
     private String showFoodOverview(Model datamodel) {
         datamodel.addAttribute("allFoods", foodRepository.findAll(Sort.by(Sort.Direction.ASC, "foodName")));
+
+        Food food = new Food();
+        // needed for foodForm checking list contains
+        food.setAllergies(new HashSet<Allergy>());
+        datamodel.addAttribute("foodForm", food);
+        datamodel.addAttribute("allAllergies", allergyRepository.findAll());
+
         return "foodOverview";
     }
 
     @GetMapping("/new")
     private String newIngredient(Model dataModel) {
         dataModel.addAttribute("foodForm", new Food());
+        dataModel.addAttribute("allAllergies", allergyRepository.findAll());
 
         return "foodForm";
     }
@@ -40,6 +53,7 @@ public class FoodController {
         Optional<Food> foodOptional = foodRepository.findById(foodId);
         if (foodOptional.isPresent()) {
             dataModel.addAttribute("foodForm", foodOptional.get());
+            dataModel.addAttribute("allAllergies", allergyRepository.findAll());
         }
 
         return "foodForm";

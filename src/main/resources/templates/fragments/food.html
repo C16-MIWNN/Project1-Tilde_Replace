@@ -9,10 +9,9 @@
                 <div class="row">
                     <ul class="list-group list-group-flush">
 
-
-                      <div class="row mt-4">
-                          <span class="list-group-item  col-10" th:text="|Ingredient: ${food.foodName}|"></span>
-                          <th:block th:replace="~{fragments/util :: our-button(type='edit', text='', action=@{/food/edit/{id}(id = ${food.foodId})}, col='col-1')}"></th:block>
+                      <div class="row mt-4 list-group-flush">
+                          <li class="list-group-item col-9 ms-2" th:text="|Ingredient ${food.foodName}|"></li>
+                          <th:block th:replace="~{fragments/util :: our-button(type='edit', text='', action=@{/food/edit/{id}(id = ${food.foodId})}, col='col-1 ms-5 me-2')}"></th:block>
                           <th:block th:replace="~{fragments/util :: our-button(type='remove', text='', action=@{/food/delete/{id}(id = ${food.foodId})}, col='col-1')}"></th:block>
                       </div>
 
@@ -35,6 +34,93 @@
             </div>
         </div>
     </div>
+</div>
+
+<div th:fragment="ingredientForm(foodForm, allAllergies)">
+    <form class="row g-3" th:action="@{/food/save}" method="post" th:object="${foodForm}">
+
+        <input type="hidden" th:field="*{foodId}">
+
+        <div class="input-group mb-3">
+            <span class="input-group-text col-6">Ingredient</span>
+            <input type="text" class="form-control" th:field="*{foodName}" placeholder="Naam">
+            <span th:replace="~{fragments/util :: our-button(type='save', text='', action='', typeButton='submit', col='col-2')}"></span>
+        </div>
+
+
+        <div class="mb-3">
+            <h2>Voedingswaarde</h2>
+            <div class="input-group mb-3">
+                <span class="input-group-text col-6">Energie</span>
+                <input type="text" class="form-control col" th:field="*{energy}" placeholder="0">
+                <div class="col-2"></div>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text col-6">Eiwit</span>
+                <input type="text" class="form-control" th:field="*{protein}" placeholder="0">
+                <div class="col-2"></div>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text col-6">Vet</span>
+                <input type="text" class="form-control" th:field="*{fat}" placeholder="0">
+                <div class="col-2"></div>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text col-6">Koolhydraten</span>
+                <input type="text" class="form-control" th:field="*{carbohydrates}" placeholder="0">
+                <div class="col-2"></div>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <span class="input-group-text col-6">Vezels</span>
+                <input type="text" class="form-control" th:field="*{fiber}" placeholder="0">
+                <div class="col-2"></div>
+            </div>
+
+
+            <div class="input-group mb-3">
+                <span class="input-group-text col-6">Zout</span>
+                <input type="text" class="form-control" th:field="*{salt}" placeholder="0">
+                <div class="col-2"></div>
+            </div>
+        </div>
+
+        <div class="">
+            <h2>Allergieen</h2>
+
+            <div class="form-check" th:each="allergy : ${allAllergies}">
+                <input class="form-check-input"
+                       type="checkbox" value=""
+                                       th:checked="${#lists.contains(foodForm.allergies, allergy)}">
+                <label th:text="${allergy.allergyName}" class="form-check-label">  </label>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal -->
+<div th:fragment="foodFormModal(ingredientForm, allAllergies)" class="modal fade" id="ingredientEditModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+
+
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div th:replace="~{:: ingredientForm(${ingredientForm}, ${allAllergies})}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:unless="${formModalHidden}">
+        new bootstrap.Modal(document.getElementById('ingredientEditModal'), {}).toggle()
+    </script>
 </div>
 
 </body>
