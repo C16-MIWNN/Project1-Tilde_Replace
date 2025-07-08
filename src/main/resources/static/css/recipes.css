@@ -6,3 +6,7 @@ footer {
 .navbar {
     margin-bottom: 3rem;
 }
+
+.min-tag-height {
+    height: 48px;
+}
