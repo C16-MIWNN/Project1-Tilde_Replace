@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -55,7 +56,7 @@ public class RecipeController {
         if (recipeOptional.isEmpty()) {
             return "redirect:/recipeOverview";
         }
-        datamodel.addAttribute("recipe",recipeOptional.get());
+        datamodel.addAttribute("recipe", recipeOptional.get());
 
         return "recipeDetails";
     }
@@ -65,7 +66,7 @@ public class RecipeController {
         datamodel.addAttribute("recipeForm", new NewRecipeDTO());
         datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
         datamodel.addAttribute("allFoods", foodRepository.findAll());
-        datamodel.addAttribute("allUnits",unitRepository.findAll());
+        datamodel.addAttribute("allUnits", unitRepository.findAll());
         datamodel.addAttribute("allTags", tagRepository.findAll());
 
         return "recipeForm";
@@ -78,7 +79,7 @@ public class RecipeController {
             dataModel.addAttribute("recipeForm", recipeService.recipeEdit(recipeOptional.get()));
             dataModel.addAttribute("allIngredients", ingredientRepository.findAll());
             dataModel.addAttribute("allFoods", foodRepository.findAll());
-            dataModel.addAttribute("allUnits",unitRepository.findAll());
+            dataModel.addAttribute("allUnits", unitRepository.findAll());
         }
 
         return "recipeForm";
@@ -104,6 +105,25 @@ public class RecipeController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/tag/{tagId}")
+    public String showRecipesByTag(@PathVariable("tagId") Long tagId, Model dataModel) {
+        List<Tag> tagList = new ArrayList<>();
+
+        Optional<Tag> optionalTag = tagRepository.findByTagId(tagId);
+        if (optionalTag.isPresent()) {
+            tagList.add(optionalTag.get());
+        } else {
+            return "redirect:/";
+        }
+
+        List<Recipe> recipes = recipeRepository.findRecipesByTags(tagList);
+
+        dataModel.addAttribute("recipesWithTag", recipes);
+        dataModel.addAttribute("tag", optionalTag.get());
+
+        return "tagSearchResults";
     }
 
 }
