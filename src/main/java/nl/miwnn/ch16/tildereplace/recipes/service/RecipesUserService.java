@@ -69,4 +69,12 @@ public class RecipesUserService implements UserDetailsService {
         Optional<RecipesUser> recipesUserOptional = recipesUserRepository.findByUsername(username);
         return recipesUserOptional.isPresent();
     }
+
+    public void setNewUsername(String username, String newUsername) {
+        Optional<RecipesUser> recipesUserOptional = recipesUserRepository.findByUsername(username);
+        if (recipesUserOptional.isPresent()) {
+            recipesUserOptional.get().setUsername(newUsername);
+            recipesUserRepository.save(recipesUserOptional.get());
+        }
+    }
 }

@@ -36,17 +36,21 @@
                             <td th:text="${user.getRecipes().size()}"></td>
                             <td><a class="btn btn-danger" th:href="@{/user/delete/{userId}(userId = ${user.userId})}">Verwijderen</a></td>
                             <td>
-<!--                                Modal button-->
-                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" th:data-bs-target="'#' + ${user.userId}">
-                                    Wachtwoord aanpassen
+<!--                                User information Modal button-->
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" th:data-bs-target="'#' + 'editInformationModal' + ${user.userId}">
+                                    Wijzig gegevens
+                                </button>
+<!--                                Password Modal button-->
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" th:data-bs-target="'#' + 'editPasswordModal' + ${user.userId}">
+                                    Wijzig wachtwoord
                                 </button>
 
 <!--                                Password Modal-->
-                                <div class="modal fade" th:id="${user.userId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" th:id="'editPasswordModal' + ${user.userId}" tabindex="-1" aria-labelledby="editPasswordModal" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Wachtwoord aanpassen voor <span th:text="${user.getUsername()}"></span> </h1>
+                                                <h1 class="modal-title fs-5" id="editPasswordModal">Wachtwoord aanpassen voor <span th:text="${user.getUsername()}"></span> </h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -79,6 +83,40 @@
                                         </div>
                                     </div>
                                 </div>
+
+<!--                                User information Modal-->
+                                <div class="modal fade" th:id="'editInformationModal' + ${user.userId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Wachtwoord aanpassen voor <span th:text="${user.getUsername()}"></span> </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <form th:action="@{/user/edit/info}" method="post">
+                                                    <input name="username" th:value="${user.username}" type="hidden">
+
+                                                    <div class="row justify-content-center mb-3">
+                                                        <div class="col-11">
+                                                            <label for="newUsername" class="form-label">Gebruikersnaam</label>
+                                                            <input type="text" id="newUsername" name="newUsername" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row justify-content-center mb-3">
+                                                        <div class="col-11 d-grid">
+                                                            <button class="btn btn-primary" type="submit">Opslaan</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </td>
                         </tr>
                     </table>

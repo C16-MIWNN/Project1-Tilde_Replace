@@ -101,4 +101,25 @@ public class RecipesUserController {
         }
     }
 
+    @PostMapping("/edit/info")
+    private String editUserInfo(@ModelAttribute("newUsername") String newUsername,
+                                @ModelAttribute("username") String username,
+                                BindingResult result) {
+
+        if (!recipesUserService.usernameInUse(username)) {
+            result.rejectValue("username", "user not found", "user was not found");
+        }
+
+        if (recipesUserService.usernameInUse(newUsername)) {
+            result.rejectValue("username", "user in use", "the username is already in use");
+        }
+
+        if (result.hasErrors()) {
+            return "userOverview";
+        } else {
+            recipesUserService.setNewUsername(username, newUsername);
+            return "redirect:/user/userOverview";
+        }
+    }
+
 }
