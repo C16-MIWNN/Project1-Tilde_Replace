@@ -44,6 +44,7 @@ public class NewRecipeMapper {
         Recipe recipe = new Recipe();
         recipe.setRecipeName(newRecipeDTO.getRecipeName());
         recipe.setPreperationInstructions(newRecipeDTO.getPreparationInstruction());
+        recipe.setImageUrl(newRecipeDTO.getImageUrl());
         Optional<RecipesUser> authorOptional = recipesUserRepository.findByUsername(newRecipeDTO.getAuthorUsername());
         if (authorOptional.isPresent()) {
             recipe.setAuthor(authorOptional.get());
