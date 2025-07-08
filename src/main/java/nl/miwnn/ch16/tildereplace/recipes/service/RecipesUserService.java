@@ -43,10 +43,10 @@ public class RecipesUserService implements UserDetailsService {
         saveUser(NewRecipeUserMapper.fromDto(newRecipesUserDTO));
     }
 
-    public RecipesUser getRecipeUserByUsername(String username) {
-        Optional<RecipesUser> recipesUserOptional = recipesUserRepository.findByUsername(username);
+    public RecipesUser getRecipeUserByUserId(Long userId) {
+        Optional<RecipesUser> recipesUserOptional = recipesUserRepository.findByUserId(userId);
         if (!recipesUserOptional.isPresent()) {
-            throw new UsernameNotFoundException("RecipeUser: %s was not found");
+            throw new UsernameNotFoundException(String.format("UserId: %s was not found", userId));
         }
 
         return recipesUserOptional.get();
@@ -76,5 +76,9 @@ public class RecipesUserService implements UserDetailsService {
             recipesUserOptional.get().setUsername(newUsername);
             recipesUserRepository.save(recipesUserOptional.get());
         }
+    }
+
+    public int getNumberOfUsers() {
+        return recipesUserRepository.findAll().size();
     }
 }
