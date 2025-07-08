@@ -2,6 +2,8 @@ package nl.miwnn.ch16.tildereplace.recipes.controller;
 
 import nl.miwnn.ch16.tildereplace.recipes.model.Allergy;
 import nl.miwnn.ch16.tildereplace.recipes.model.Food;
+import nl.miwnn.ch16.tildereplace.recipes.dto.FoodDTO;
+import nl.miwnn.ch16.tildereplace.recipes.dto.AllergyProxyObject;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
+import nl.miwnn.ch16.tildereplace.recipes.service.FoodService;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -21,51 +24,42 @@ public class FoodController {
 
     private final FoodRepository foodRepository;
     private final AllergyRepository allergyRepository;
+    private final FoodService foodService;
 
-    public FoodController(FoodRepository foodRepository, AllergyRepository allergyRepository) {
+    public FoodController(FoodRepository foodRepository, AllergyRepository allergyRepository, FoodService foodService) {
         this.foodRepository = foodRepository;
         this.allergyRepository = allergyRepository;
+        this.foodService = foodService;
     }
 
     @GetMapping({"/overview"})
     private String showFoodOverview(Model datamodel) {
         datamodel.addAttribute("allFoods", foodRepository.findAll(Sort.by(Sort.Direction.ASC, "foodName")));
-
-        Food food = new Food();
-        // needed for foodForm checking list contains
-        food.setAllergies(new HashSet<Allergy>());
-        datamodel.addAttribute("foodForm", food);
         datamodel.addAttribute("allAllergies", allergyRepository.findAll());
+        datamodel.addAttribute("foodForm",  new FoodDTO());
 
         return "foodOverview";
     }
 
-    @GetMapping("/new")
-    private String newIngredient(Model dataModel) {
-        dataModel.addAttribute("foodForm", new Food());
-        dataModel.addAttribute("allAllergies", allergyRepository.findAll());
-
-        return "foodForm";
-    }
 
     @GetMapping("/edit/{foodId}")
-    private String editFood(@PathVariable("foodId") Long foodId, Model dataModel) {
+    private String editFood(@PathVariable("foodId") Long foodId, Model datamodel) {
         Optional<Food> foodOptional = foodRepository.findById(foodId);
         if (foodOptional.isPresent()) {
-            dataModel.addAttribute("foodForm", foodOptional.get());
-            dataModel.addAttribute("allAllergies", allergyRepository.findAll());
+            datamodel.addAttribute("foodForm", foodService.toDTO(foodOptional.get()));
         }
+        datamodel.addAttribute("allAllergies", allergyRepository.findAll());
 
         return "foodForm";
     }
 
     @PostMapping("/save")
-    private String saveOrUpdateFood(@ModelAttribute("foodForm") Food toBeSavedFood,
+    private String saveOrUpdateFood(@ModelAttribute("foodForm") FoodDTO toBeSavedFood,
                                           BindingResult result) {
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
         } else {
-            foodRepository.save(toBeSavedFood);
+            foodService.save(toBeSavedFood);
         }
 
         return "redirect:/food/overview";

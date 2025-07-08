@@ -91,12 +91,13 @@
 
         <div class="">
             <h2>Allergieen</h2>
-
-            <div class="form-check" th:each="allergy : ${allAllergies}">
+            <div class="form-check" th:each="entry : ${allAllergies}">
                 <input class="form-check-input"
-                       type="checkbox" value=""
-                                       th:checked="${#lists.contains(foodForm.allergies, allergy)}">
-                <label th:text="${allergy.allergyName}" class="form-check-label">  </label>
+                       type="checkbox" th:value="${entry.allergyName}"
+                                       th:checked="${#lists.contains(foodForm.allergies, entry)}"
+                                       th:field="*{allergies}"
+                                       >
+                <label th:text="${entry.allergyName}" class="form-check-label">  </label>
             </div>
         </div>
     </form>
