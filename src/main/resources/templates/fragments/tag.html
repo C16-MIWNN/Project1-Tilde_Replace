@@ -8,9 +8,11 @@
 <div th:replace="~{fragments/general :: navbar}"></div>
 
 <div th:fragment="tagCard(tag)">
-    <div class="rounded-pill border border-1 border-dark text-center align-middle" style="height: 30px">
-        <span class="align-middle" th:text="${tag.tagName}"></span>
-    </div>
+    <a th:href="@{/tag/{tagId}(tagId= ${tag.tagId})}" class="text-decoration-none text-dark">
+        <div class="rounded-pill border border-dark text-center align-middle" style="height: 30px">
+            <span class="align-middle" th:text="${tag.tagName}"></span>
+        </div>
+    </a>
 </div>
 
 <div th:fragment="tagCards(tags)" class="row row-cols-1 row-cols-4">
