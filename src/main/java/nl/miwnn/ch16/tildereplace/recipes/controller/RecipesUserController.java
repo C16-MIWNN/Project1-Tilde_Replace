@@ -65,7 +65,7 @@ public class RecipesUserController {
         }
 
         recipesUserService.save(newRecipesUserDTO);
-        return "redirect:/";
+        return "redirect:/user/login";
     }
 
     @GetMapping("/delete/{userId}")
@@ -77,6 +77,30 @@ public class RecipesUserController {
 
         recipesUserRepository.deleteById(userId);
         return "redirect:/user/userOverview";
+    }
+
+    @PostMapping("/edit/password")
+    private String updateUserPassword(@ModelAttribute("username") String username,
+                                      @ModelAttribute("password") String password,
+                                      @ModelAttribute("passwordConfirm") String passwordConfirm,
+                                      BindingResult result) {
+        if (recipesUserService.userExists(username)) {
+            result.rejectValue("username", "user not found", "user was not found");
+        }
+
+        if (!password.equals(passwordConfirm)) {
+            result.rejectValue("password", "no matching", "wachtwoorden komen niet overeen");
+        }
+
+        if (result.hasErrors()) {
+            return "userOverview";
+        } else {
+            System.err.println("Received user: ");
+            System.err.println(username);
+
+            recipesUserService.updateRecipeUserPassword(username, password);
+            return "userOverview";
+        }
     }
 
 }

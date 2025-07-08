@@ -63,7 +63,7 @@ public class RecipeController {
         }
 
         datamodel.addAttribute("isMyRecipes", true);
-        datamodel.addAttribute("allRecipes", recipeRepository.findAll());
+        datamodel.addAttribute("allRecipes", optionalRecipes.get());
         return "recipeOverview";
     }
 

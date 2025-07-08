@@ -51,4 +51,24 @@ public class RecipesUserService implements UserDetailsService {
 
         return recipesUserOptional.get();
     }
+
+    public void updateRecipeUserPassword(String username, String password) {
+        Optional<RecipesUser> passwordToBeUpdatedUser = recipesUserRepository.
+                findByUsername(username);
+
+        if (!passwordToBeUpdatedUser.isPresent()) {
+            throw new UsernameNotFoundException("Username not found");
+        }
+
+        passwordToBeUpdatedUser.get().setPassword(passwordEncoder.encode(password));
+        recipesUserRepository.save(passwordToBeUpdatedUser.get());
+
+        System.err.println("Updated user password to");
+        System.err.println(password);
+    }
+
+    public boolean userExists(String username) {
+        Optional<RecipesUser> recipesUserOptional = recipesUserRepository.findByUsername(username);
+        return recipesUserOptional.isPresent();
+    }
 }
