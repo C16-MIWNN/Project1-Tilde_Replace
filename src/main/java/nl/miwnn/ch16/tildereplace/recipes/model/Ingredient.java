@@ -50,7 +50,11 @@ public class Ingredient {
     }
 
     public void setAmount(int amount) {
-        this.amount = amount;
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount can't be smaller than 0");
+        } else {
+            this.amount = amount;
+        }
     }
 
     public Unit getUnit() {
