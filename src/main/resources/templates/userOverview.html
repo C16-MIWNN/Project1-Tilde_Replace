@@ -34,17 +34,19 @@
                         <tr th:each="user : ${allUsers}" class="align-middle">
                             <td th:text="${user.username}"></td>
                             <td th:text="${user.getRecipes().size()}"></td>
-                            <td><a class="btn btn-danger" th:href="@{/user/delete/{userId}(userId = ${user.userId})}">Verwijderen</a></td>
                             <td>
+                                <div class="btn-group" role="group">
 <!--                                User information Modal button-->
-                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" th:data-bs-target="'#' + 'editInformationModal' + ${user.userId}">
-                                    Wijzig gegevens
-                                </button>
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" th:data-bs-target="'#' + 'editInformationModal' + ${user.userId}">
+                                        Wijzig gegevens
+                                    </button>
 <!--                                Password Modal button-->
-                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" th:data-bs-target="'#' + 'editPasswordModal' + ${user.userId}">
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" th:data-bs-target="'#' + 'editPasswordModal' + ${user.userId}">
                                     Wijzig wachtwoord
-                                </button>
+                                    </button>
 
+                                    <a class="btn btn-danger" th:href="@{/user/delete/{userId}(userId = ${user.userId})}">Verwijderen</a>
+                                </div>
 <!--                                Password Modal-->
                                 <div class="modal fade" th:id="'editPasswordModal' + ${user.userId}" tabindex="-1" aria-labelledby="editPasswordModal" aria-hidden="true">
                                     <div class="modal-dialog">
