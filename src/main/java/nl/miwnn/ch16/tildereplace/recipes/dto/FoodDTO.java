@@ -6,18 +6,27 @@ import java.util.Map;
 import java.util.Set;
 
 import nl.miwnn.ch16.tildereplace.recipes.model.Allergy;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 public class FoodDTO {
 
     private Long foodId;
 
+    @NotBlank(groups = FoodInfo.class, message = "Ingredient naam mag niet leeg zijn")
     private String foodName;
 
+    @Min(value = 0, groups = FoodInfo.class, message = "Energie moet positief zijn")
     private double energy;
+    @Min(value = 0, groups = FoodInfo.class, message = "Eiwit moet positief zijn")
     private double protein;
+    @Min(value = 0, groups = FoodInfo.class, message = "Vet moet positief zijn")
     private double fat;
+    @Min(value = 0, groups = FoodInfo.class, message = "Koolhydraten moet positief zijn")
     private double carbohydrates;
+    @Min(value = 0, groups = FoodInfo.class, message = "Vezels moet positief zijn")
     private double fiber;
+    @Min(value = 0, groups = FoodInfo.class, message = "Zout moet positief zijn")
     private double salt;
 
     private Set<String> allergies = new HashSet<String>();;
