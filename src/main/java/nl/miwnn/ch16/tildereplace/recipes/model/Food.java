@@ -49,10 +49,6 @@ public class Food {
     }
 
     public void setFoodName(String foodName) {
-        if (foodName.equals("")) {
-            throw new IllegalArgumentException("food name should not be empty");
-        }
-
         this.foodName = foodName;
     }
 
@@ -61,10 +57,6 @@ public class Food {
     }
 
     public void setEnergy(double energy) {
-        if (energy < 0) {
-            throw new IllegalArgumentException("energy cannot be negative");
-        }
-
         this.energy = energy;
     }
 
