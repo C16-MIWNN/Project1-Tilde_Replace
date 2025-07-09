@@ -17,8 +17,6 @@ import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.FoodService;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -58,7 +56,6 @@ public class FoodController {
         FoodDTO foodToBeSaved;
         if (foodOptional.isPresent()) {
             foodToBeSaved = foodService.toDTO(foodOptional.get());
-            //datamodel.addAttribute("foodForm", foodService.toDTO(foodOptional.get()));
         } else {
             foodToBeSaved = new FoodDTO();
         }
@@ -102,7 +99,6 @@ public class FoodController {
         return "redirect:/food/overview";
     }
 
-
     @GetMapping("/delete/{foodId}")
     private String deleteFood(@PathVariable("foodId") Long foodId) {
         Optional<Food> foodOptional = foodRepository.findById(foodId);
@@ -118,7 +114,6 @@ public class FoodController {
     }
 
     private void checkAllergyNameInUse(Allergy allergyToBeSaved, BindingResult result) {
-
         Optional<Allergy> optionalAllergy = allergyRepository.findAllergyByAllergyName(allergyToBeSaved.getAllergyName());
         if (optionalAllergy.isPresent() && !optionalAllergy.get().getAllergyName().equals(allergyToBeSaved.getAllergyName())) {
             result.addError(new FieldError("allergyForm", "allergyName", "Allergie naam bestaat al"));

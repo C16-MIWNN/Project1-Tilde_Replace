@@ -32,9 +32,7 @@
                                                                 th:href="|#${foodNameSanitized}-detail|"
                                                                 th:text="${food.foodName}"
                                                                 th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}"
-                                                                th:classappend="${stats.first} ? 'active'"
-                                                                >
-
+                                                                th:classappend="${stats.first} ? 'active'">
                                 </a>
                             </div>
                         </div>
@@ -64,8 +62,6 @@
                    </div>
                 </div>
             </div>
-
-
 
             <div th:replace="~{fragments/general :: footer}"></div>
             <div th:replace="~{fragments/general :: bottomScripts}"></div>
