@@ -49,6 +49,10 @@ public class Food {
     }
 
     public void setFoodName(String foodName) {
+        if (foodName.equals("")) {
+            throw new IllegalArgumentException("food name should not be empty");
+        }
+
         this.foodName = foodName;
     }
 
