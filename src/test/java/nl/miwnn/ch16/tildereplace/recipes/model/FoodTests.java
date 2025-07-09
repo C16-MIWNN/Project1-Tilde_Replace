@@ -7,6 +7,8 @@ import nl.miwnn.ch16.tildereplace.recipes.model.Food;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.Assertions;
+
 /**
  * @author Wouter Stegeman
  * Testing class for Food objects
@@ -14,32 +16,83 @@ import static org.junit.jupiter.api.Assertions.*;
 class FoodTests {
 
     @Test
-    void setFoodEnergy() {
-        // Arrange
+    void setNegativeValues() {
         Food food = new Food();
-        double badEnergyValue = 1;
+        double negativeValue = -1;
 
-        // Act
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                {
-                    food.setEnergy(badEnergyValue);
-                }
+        Assertions.assertAll(
+                (() -> assertThrows(IllegalArgumentException.class, () ->
+                        {
+                            food.setEnergy(negativeValue);
+                        }
+                )),
+                (() -> assertThrows(IllegalArgumentException.class, () ->
+                    {
+                        food.setProtein(negativeValue);
+                    }
+                 )),
+                 (() -> assertThrows(IllegalArgumentException.class, () ->
+                    {
+                        food.setFat(negativeValue);
+                    }
+                 )),
+                 (() -> assertThrows(IllegalArgumentException.class, () ->
+                        {
+                            food.setCarbohydrates(negativeValue);
+                        }
+                 )),
+                 (() -> assertThrows(IllegalArgumentException.class, () ->
+                        {
+                            food.setFiber(negativeValue);
+                        }
+                 )),
+                 (() -> assertThrows(IllegalArgumentException.class, () ->
+                        {
+                            food.setSalt(negativeValue);
+                        }
+                 ))
         );
     }
 
 
     @Test
-    void setFoodProtein() {
-        // Arrange
+    void setPositiveValues() {
         Food food = new Food();
-        double badProteinValue = 1;
+        double positiveValue = 1;
 
-        // Act
-        Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                {
-                    food.setProtein(badProteinValue);
-                }
+        Assertions.assertAll(
+                (() -> assertDoesNotThrow(() ->
+                        {
+                            food.setEnergy(positiveValue);
+                        }
+                )),
+                (() -> assertDoesNotThrow(() ->
+                    {
+                        food.setProtein(positiveValue);
+                    }
+                 )),
+                 (() -> assertDoesNotThrow(() ->
+                    {
+                        food.setFat(positiveValue);
+                    }
+                 )),
+                 (() -> assertDoesNotThrow(() ->
+                        {
+                            food.setCarbohydrates(positiveValue);
+                        }
+                 )),
+                 (() -> assertDoesNotThrow(() ->
+                        {
+                            food.setFiber(positiveValue);
+                        }
+                 )),
+                 (() -> assertDoesNotThrow(() ->
+                        {
+                            food.setSalt(positiveValue);
+                        }
+                 ))
         );
     }
+
 
 }

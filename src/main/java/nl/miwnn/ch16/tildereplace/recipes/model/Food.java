@@ -81,6 +81,10 @@ public class Food {
     }
 
     public void setFat(double fat) {
+        if (fat < 0) {
+            throw new IllegalArgumentException("fat cannot be negative");
+        }
+
         this.fat = fat;
     }
 
@@ -89,6 +93,10 @@ public class Food {
     }
 
     public void setCarbohydrates(double carbohydrates) {
+        if (carbohydrates < 0) {
+            throw new IllegalArgumentException("carbohydrates cannot be negative");
+        }
+
         this.carbohydrates = carbohydrates;
     }
 
@@ -97,6 +105,10 @@ public class Food {
     }
 
     public void setFiber(double fiber) {
+        if (fiber < 0) {
+            throw new IllegalArgumentException("fiber cannot be negative");
+        }
+
         this.fiber = fiber;
     }
 
@@ -105,6 +117,10 @@ public class Food {
     }
 
     public void setSalt(double salt) {
+        if (salt < 0) {
+            throw new IllegalArgumentException("salt cannot be negative");
+        }
+
         this.salt = salt;
     }
 
