@@ -4,26 +4,38 @@
     <title>Nieuw Ingredient</title>
 </head>
 <body>
+    <div th:replace="~{fragments/general :: navbar}"></div>
 
-<div th:replace="~{fragments/general :: navbar}"></div>
 
-<div class="container food-form-container">
-    <h1 th:text="${foodId} ? 'Aanpassing Ingredient' : 'Nieuw Ingredient'"></h1>
+    <div class="container-fluid" id="our-main-container">
+        <div class="row" id="our-row-header">
+            <div class="container" id="our-container-header">
+                <h1 th:text="${foodId} ? 'Aanpassing Ingredient' : 'Nieuw Ingredient'"></h1>
+            </div>
+        </div>
 
-    <form class="row g-3" th:action="@{/food/save}" method="post" th:object="${foodForm}">
-            <input type="hidden" th:field="*{foodId}">
-            <div class="col-7">
-                <input type="text" class="form-control" th:field="*{foodName}">
+        <div class="row" id="our-content-row">
+            <div class="container col-2" id="our-content-left">
+                <!-- LEFT SIDE -->
             </div>
 
-        <button type="submit" class="btn btn-secondary btn-lg fw-bold"
-            th:text="${foodId} ? 'Pas Aan' : 'Voeg Toe'"></button>
-    </form>
+            <div class="container col-8" id="our-content-middle">
 
-</div>
+                <div class="container col-6">
 
-<div th:replace="~{fragments/general :: footer}"></div>
-<div th:replace="~{fragments/general :: bottomScripts}"></div>
+                    <th:block th:replace="~{fragments/food :: ingredientForm(${foodForm}, ${allAllergies})}"></th:block>
 
-</body>
+                </div>
+            </div>
+
+            <div class="containter col-2" id="our-content-right">
+                <!-- RIGHT -->
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/general :: footer}"></div>
+    <div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+    </body>
 </html>

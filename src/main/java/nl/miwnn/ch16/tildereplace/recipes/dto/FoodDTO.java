@@ -1,17 +1,16 @@
-package nl.miwnn.ch16.tildereplace.recipes.model;
+package nl.miwnn.ch16.tildereplace.recipes.dto;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-import jakarta.persistence.*;
+import nl.miwnn.ch16.tildereplace.recipes.model.Allergy;
 
-@Entity
-public class Food {
+public class FoodDTO {
 
-    @Id
-    @GeneratedValue
     private Long foodId;
 
-    @Column(unique=true)
     private String foodName;
 
     private double energy;
@@ -21,19 +20,10 @@ public class Food {
     private double fiber;
     private double salt;
 
-    @ManyToMany
-    private Set<Allergy> allergies;
+    private Set<String> allergies = new HashSet<String>();;
 
-    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
-    private Set<Ingredient> Ingredients;
-
-
-    public Set<Ingredient> getIngredients() {
-        return Ingredients;
-    }
-
-    public void setIngredients(Set<Ingredient> ingredients) {
-        Ingredients = ingredients;
+    public FoodDTO() {
+        allergies  = new HashSet<String>();
     }
 
     public Long getFoodId() {
@@ -49,10 +39,6 @@ public class Food {
     }
 
     public void setFoodName(String foodName) {
-        if (foodName.equals("")) {
-            throw new IllegalArgumentException("food name should not be empty");
-        }
-
         this.foodName = foodName;
     }
 
@@ -61,10 +47,6 @@ public class Food {
     }
 
     public void setEnergy(double energy) {
-        if (energy < 0) {
-            throw new IllegalArgumentException("energy cannot be negative");
-        }
-
         this.energy = energy;
     }
 
@@ -73,10 +55,6 @@ public class Food {
     }
 
     public void setProtein(double protein) {
-        if (protein < 0) {
-            throw new IllegalArgumentException("protein cannot be negative");
-        }
-
         this.protein = protein;
     }
 
@@ -85,10 +63,6 @@ public class Food {
     }
 
     public void setFat(double fat) {
-        if (fat < 0) {
-            throw new IllegalArgumentException("fat cannot be negative");
-        }
-
         this.fat = fat;
     }
 
@@ -97,10 +71,6 @@ public class Food {
     }
 
     public void setCarbohydrates(double carbohydrates) {
-        if (carbohydrates < 0) {
-            throw new IllegalArgumentException("carbohydrates cannot be negative");
-        }
-
         this.carbohydrates = carbohydrates;
     }
 
@@ -109,10 +79,6 @@ public class Food {
     }
 
     public void setFiber(double fiber) {
-        if (fiber < 0) {
-            throw new IllegalArgumentException("fiber cannot be negative");
-        }
-
         this.fiber = fiber;
     }
 
@@ -121,18 +87,14 @@ public class Food {
     }
 
     public void setSalt(double salt) {
-        if (salt < 0) {
-            throw new IllegalArgumentException("salt cannot be negative");
-        }
-
         this.salt = salt;
     }
 
-    public Set<Allergy> getAllergies() {
+    public Set<String> getAllergies() {
         return allergies;
     }
 
-    public void setAllergies(Set<Allergy> allergies) {
+    public void setAllergies(Set<String> allergies) {
         this.allergies = allergies;
     }
 
