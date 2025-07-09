@@ -53,11 +53,15 @@
                    <div class="row">
                        <div th:replace="~{fragments/util :: our-button-modal(type='add', text='Nieuw Ingredient', target='#ingredientEditModal')}"></div>
                    </div>
+                   <div class="row mt-2">
+                       <div th:replace="~{fragments/util :: our-button-modal(type='add', text='Nieuwe Allergie', target='#addAllergyModal')}"></div>
+                   </div>
                 </div>
             </div>
 
 
             <div th:replace="~{fragments/food :: foodFormModal(${foodForm}, ${allAllergies})}"></div>
+            <div th:replace="~{fragments/food :: allergyFormModal(${allergyForm})}"></div>
 
             <div th:replace="~{fragments/general :: footer}"></div>
             <div th:replace="~{fragments/general :: bottomScripts}"></div>

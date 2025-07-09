@@ -3,12 +3,12 @@ package nl.miwnn.ch16.tildereplace.recipes.controller;
 import nl.miwnn.ch16.tildereplace.recipes.model.Allergy;
 import nl.miwnn.ch16.tildereplace.recipes.model.Food;
 import nl.miwnn.ch16.tildereplace.recipes.dto.FoodDTO;
-import nl.miwnn.ch16.tildereplace.recipes.dto.AllergyProxyObject;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
@@ -36,7 +36,8 @@ public class FoodController {
     private String showFoodOverview(Model datamodel) {
         datamodel.addAttribute("allFoods", foodRepository.findAll(Sort.by(Sort.Direction.ASC, "foodName")));
         datamodel.addAttribute("allAllergies", allergyRepository.findAll());
-        datamodel.addAttribute("foodForm",  new FoodDTO());
+        datamodel.addAttribute("foodForm", new FoodDTO());
+        datamodel.addAttribute("allergyForm", new Allergy());
 
         return "foodOverview";
     }
@@ -64,6 +65,19 @@ public class FoodController {
 
         return "redirect:/food/overview";
     }
+
+    @PostMapping("/allergy/save")
+    private String saveOrUpdateFood(@ModelAttribute("allergyForm") Allergy toBeSavedAllergy,
+                                          BindingResult result) {
+        if (result.hasErrors()) {
+            System.err.println(result.getAllErrors());
+        } else {
+            allergyRepository.save(toBeSavedAllergy);
+        }
+
+        return "redirect:/food/overview";
+    }
+
 
     @GetMapping("/delete/{foodId}")
     private String deleteFood(@PathVariable("foodId") Long foodId) {

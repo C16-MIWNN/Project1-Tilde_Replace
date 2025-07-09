@@ -104,6 +104,20 @@
 </div>
 
 
+
+<div th:fragment="allergyForm(allergyForm)">
+
+    <form class="row g-3" th:action="@{/food/allergy/save}" method="post" th:object="${allergyForm}">
+        <input type="hidden" th:field="${allergyForm.allergyId}">
+
+        <div class="input-group mb-3">
+            <span class="input-group-text col-6">Allergy</span>
+            <input type="text" class="form-control" th:field="${allergyForm.allergyName}" placeholder="Naam">
+            <span th:replace="~{fragments/util :: our-button(type='save', text='', action='', typeButton='submit', col='col-2')}"></span>
+        </div>
+    </form>
+</div>
+
 <!-- Modal -->
 <div th:fragment="foodFormModal(ingredientForm, allAllergies)" class="modal fade" id="ingredientEditModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -123,6 +137,25 @@
         new bootstrap.Modal(document.getElementById('ingredientEditModal'), {}).toggle()
     </script>
 </div>
+
+
+<div th:fragment="allergyFormModal(allergyForm)" class="modal fade" id="addAllergyModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div th:replace="~{:: allergyForm(${allergyForm})}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:unless="${formModalHidden}">
+        new bootstrap.Modal(document.getElementById('addAllergyModal'), {}).toggle()
+    </script>
+</div>
+
 
 </body>
 </html>
