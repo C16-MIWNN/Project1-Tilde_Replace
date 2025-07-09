@@ -3,11 +3,9 @@ package nl.miwnn.ch16.tildereplace.recipes.controller;
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
 import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
-import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.RecipeRepository;
-import nl.miwnn.ch16.tildereplace.recipes.repository.IngredientRepository;
+import nl.miwnn.ch16.tildereplace.recipes.repository.*;
+import nl.miwnn.ch16.tildereplace.recipes.model.Tag;
 
-import nl.miwnn.ch16.tildereplace.recipes.repository.UnitRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class RecipeController {
@@ -31,22 +31,16 @@ public class RecipeController {
     private final FoodRepository foodRepository;
     private final UnitRepository unitRepository;
     private final RecipeService recipeService;
+    private final TagRepository tagRepository;
 
     public RecipeController(RecipeRepository recipeRepository, IngredientRepository ingredientRepository,
-                            FoodRepository foodRepository, UnitRepository unitRepository, RecipeService recipeService) {
+                            FoodRepository foodRepository, UnitRepository unitRepository, RecipeService recipeService, TagRepository tagRepository) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
         this.recipeService = recipeService;
-    }
-
-    private String setupRecipeDetail(Model datamodel, Recipe recipeToShow) {
-        datamodel.addAttribute("recipe", recipeToShow);
-        List<Ingredient> allIngredients = recipeToShow.getIngredients();
-        datamodel.addAttribute("myIngredients", allIngredients);
-
-        return "recipeDetails";
+        this.tagRepository = tagRepository;
     }
 
     @GetMapping({"/", "/recipeOverview"})
@@ -75,7 +69,9 @@ public class RecipeController {
         if (recipeOptional.isEmpty()) {
             return "redirect:/recipeOverview";
         }
-        return setupRecipeDetail(datamodel, recipeOptional.get());
+        datamodel.addAttribute("recipe", recipeOptional.get());
+
+        return "recipeDetails";
     }
 
     @GetMapping("/recipe/new")
@@ -85,7 +81,8 @@ public class RecipeController {
         datamodel.addAttribute("recipeForm", newRecipeDTO);
         datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
         datamodel.addAttribute("allFoods", foodRepository.findAll());
-        datamodel.addAttribute("allUnits",unitRepository.findAll());
+        datamodel.addAttribute("allUnits", unitRepository.findAll());
+        datamodel.addAttribute("allTags", tagRepository.findAll());
 
         return "recipeForm";
     }
@@ -124,6 +121,25 @@ public class RecipeController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/tag/{tagId}")
+    public String showRecipesByTag(@PathVariable("tagId") Long tagId, Model dataModel) {
+        List<Tag> tagList = new ArrayList<>();
+
+        Optional<Tag> optionalTag = tagRepository.findByTagId(tagId);
+        if (optionalTag.isPresent()) {
+            tagList.add(optionalTag.get());
+        } else {
+            return "redirect:/";
+        }
+
+        List<Recipe> recipes = recipeRepository.findRecipesByTags(tagList);
+
+        dataModel.addAttribute("recipesWithTag", recipes);
+        dataModel.addAttribute("tag", optionalTag.get());
+
+        return "tagSearchResults";
     }
 
     @PostMapping("/recipe/search")

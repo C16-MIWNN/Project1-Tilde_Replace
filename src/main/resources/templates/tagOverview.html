@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100">
+<head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
+    <title>Overzicht van Tags</title>
+</head>
+
+<body>
+<div th:replace="~{fragments/general :: navbar}"></div>
+
+<div class="container-fluid" id="our-main-container">
+    <div class="row" id="our-row-header">
+        <div class="container" id="our-container-header">
+            <h1>Overzicht van Tags</h1>
+        </div>
+    </div>
+
+    <div class="row" id="our-content-row">
+        <div class="container col-2" id="our-content-left">
+        </div>
+
+        <div class="container col-8" id="our-content-middle">
+            <div th:replace="~{fragments/tag :: tagCards(${allTags})}"></div>
+        </div>
+
+        <div class="d-flex flex-column col-2 gap-1" id="our-content-right">
+            <form th:action="@{/tags/save}" method="post" th:object="${tagForm}">
+                <div>
+                    <input type="text" class="form-control mb-1" placeholder="Maak nieuwe tag" th:field="*{tagName}"
+                           required>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100"><i class="bi bi-check-lg pe-2"></i>Sla
+                        tag op
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="~{fragments/general :: footer}"></div>
+<div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+</body>
+</html>

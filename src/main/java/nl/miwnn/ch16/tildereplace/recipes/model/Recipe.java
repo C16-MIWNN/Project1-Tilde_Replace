@@ -1,5 +1,8 @@
 package nl.miwnn.ch16.tildereplace.recipes.model;
 
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -23,6 +26,9 @@ public class Recipe {
     private RecipesUser author;
 
     private String imageUrl;
+
+    @ManyToMany
+    private List<Tag> tags = new ArrayList<>();
 
     public Long getRecipeId() {
         return recipeId;
@@ -55,12 +61,12 @@ public class Recipe {
         this.preparationInstructions = preperationInstructions;
     }
 
-    public String getPreparationInstructions() {
-        return preparationInstructions;
+    public List<Tag> getTags() {
+        return tags;
     }
 
-    public void setPreparationInstructions(String preparationInstructions) {
-        this.preparationInstructions = preparationInstructions;
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public RecipesUser getAuthor() {

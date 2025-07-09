@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100" >
+<html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100">
 <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
-    <title>Nieuw Recept</title>
+    <title>Maak een nieuw recept aan</title>
 </head>
 
 <body>
@@ -23,14 +23,12 @@
             <!-- MIDDLE -->
             <form th:action="@{/recipe/save}" method="post" th:object="${recipeForm}">
 
-                <!--        <input type="hidden" th:field="*{id}"/>-->
                 <div class="mb-3">
                     <input type="hidden" th:field="*{authorUsername}">
-                    <label for="newReceptName" class="form-label">Recept naam</label>
-                    <input type="text" th:field="*{recipeName}" class="form-control" id="newReceptName"
+                    <label class="form-label">Recept naam</label>
+                    <input type="text" th:field="*{recipeName}" class="form-control" required
                            placeholder="Geef het recept een naam">
                 </div>
-
 
                 <div class="mb-3" id="ingredient-list">
                     <div th:if="${#lists.isEmpty(recipeForm.foodIds)}" class="ingredient-row input-group mb-3">
@@ -44,7 +42,7 @@
 
                         <span class="input-group-text">Hoeveelheid</span>
                         <input type="number" class="form-control" placeholder="Hoeveelheid"
-                               th:field="*{ingredientQuantities}"/>
+                               th:field="*{ingredientQuantities}" required/>
 
                         <span class="input-group-text">Eenheid</span>
                         <select class="form-select" th:field="*{unitIds}">
@@ -54,17 +52,20 @@
                             </option>
                         </select>
 
-                        <button type="button" class="btn btn-danger" onclick="removeIngredient(this)"><i class="bi bi-trash3"></i></button>
+                        <button type="button" class="btn btn-danger" onclick="removeIngredient(this)"><i
+                                class="bi bi-trash3"></i></button>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary btn-lg" onclick="addIngredient()"><i class="bi bi-plus-circle pe-2"></i>Toevoegen</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="addIngredient()"><i
+                            class="bi bi-plus-circle pe-2"></i>Toevoegen
+                    </button>
                 </div>
 
                 <div class="mb-3">
-                    <label for="recipePreparation" class="form-label">Bereiding beschrijving</label>
-                    <input type="text" th:field="*{preparationInstruction}" class="form-control" id="recipePreparation"
+                    <label class="form-label">Bereiding beschrijving</label>
+                    <input type="text" th:field="*{preparationInstruction}" class="form-control" required
                            placeholder="Beschrijf de bereiding van het recept">
                 </div>
 
@@ -73,13 +74,26 @@
                     <input type="text" th:field="*{imageUrl}" class="form-control" id="recipeImageUrl">
                 </div>
 
+                <span class="input-group-text">Voeg één of meerdere tags toe</span>
+                <div class="input-group">
+                    <select multiple
+                            class="form-select"
+                            th:field="*{tagIds}">
+                        <option
+                                th:each="tag : ${allTags}"
+                                th:value="${tag.tagId}"
+                                th:text="${tag.tagName}">
+                        </option>
+                    </select>
+                </div>
+
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-check-lg pe-2"></i>Sla recept op</button>
                 </div>
             </form>
         </div>
 
-        <div class="containter col-2" id="our-content-right">
+        <div class="container col-2" id="our-content-right">
             <!-- RIGHT -->
         </div>
     </div>

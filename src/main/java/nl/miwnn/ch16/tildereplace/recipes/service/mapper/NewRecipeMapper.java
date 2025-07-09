@@ -15,15 +15,21 @@ public class NewRecipeMapper {
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
     private final RecipesUserRepository recipesUserRepository;
+    private final TagRepository tagRepository;
 
     public NewRecipeMapper(FoodRepository foodRepository,
-                           UnitRepository unitRepository, IngredientRepository ingredientRepository,
-                           RecipeRepository recipeRepository, RecipesUserRepository recipesUserRepository) {
+                           UnitRepository unitRepository,
+                           IngredientRepository ingredientRepository,
+                           RecipeRepository recipeRepository,
+                           RecipesUserRepository recipesUserRepository,
+                           TagRepository tagRepository) {
+
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
         this.recipesUserRepository = recipesUserRepository;
+        this.tagRepository = tagRepository;
     }
 
     public Recipe fromDto(NewRecipeDTO newRecipeDTO) {
@@ -37,7 +43,16 @@ public class NewRecipeMapper {
             ingredientRepository.save(ingredient);
         }
 
+        setRecipeTags(newRecipeDTO, recipe);
+
         return recipe;
+    }
+
+    private void setRecipeTags(NewRecipeDTO newRecipeDTO, Recipe recipe) {
+        for (Long tagId : newRecipeDTO.getTagIds()) {
+            tagRepository.findById(tagId)
+                    .ifPresent(recipe.getTags()::add);
+        }
     }
 
     private Recipe setRecipeDetails(NewRecipeDTO newRecipeDTO) {
@@ -51,7 +66,7 @@ public class NewRecipeMapper {
             recipe.setImageUrl(newRecipeDTO.getImageUrl());
         }
 
-        Optional<RecipesUser> authorOptional = recipesUserRepository.findByUsername(newRecipeDTO.getAuthorUsername());
+        Optional<RecipesUser> authorOptional = this.recipesUserRepository.findByUsername(newRecipeDTO.getAuthorUsername());
         if (authorOptional.isPresent()) {
             recipe.setAuthor(authorOptional.get());
         }

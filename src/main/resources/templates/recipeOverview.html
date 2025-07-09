@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100" >
 <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
-    <title>Alle Recepten</title>
+    <title>Overzicht van Recepten</title>
 </head>
 
 <body>
@@ -10,7 +10,7 @@
 <div class="container-fluid" id="our-main-container">
     <div class="row" id="our-row-header">
         <div class="container" id="our-container-header">
-            <h1 th:text="${isMyRecipes} ? 'Mijn recepeten' : 'Overzicht van recepten'"></h1>
+            <h1 th:text="${isMyRecipes} ? 'Mijn recepten' : 'Overzicht van recepten'"></h1>
         </div>
     </div>
 
@@ -38,11 +38,8 @@
             <div th:replace="~{fragments/recipe :: recipeCards(${allRecipes})}"></div>
         </div>
 
-        <div class="containter col-2" id="our-content-right">
-            <!-- RIGHT -->
-                <a th:href="@{/recipe/new}">
-                    <button type="button" class="btn btn-primary btn-lg"><i class="bi bi-plus-circle pe-2"></i>Nieuw recept</button>
-                </a>
+        <div class="d-flex flex-column col-2 gap-1" id="our-content-right">
+            <a th:href="@{/recipe/new}" class="btn btn-primary btn-lg"><i class="bi bi-plus-circle pe-2"></i>Nieuw recept</a>
         </div>
     </div>
 </div>

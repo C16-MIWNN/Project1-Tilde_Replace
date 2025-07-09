@@ -6,3 +6,7 @@ footer {
 h1 {
     margin: 2rem;
 }
+
+.min-tag-height {
+    height: 48px;
+}

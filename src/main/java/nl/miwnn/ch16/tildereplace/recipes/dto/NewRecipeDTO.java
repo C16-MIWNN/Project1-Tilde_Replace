@@ -15,6 +15,7 @@ public class NewRecipeDTO {
     private ArrayList<Long> foodIds;
     private ArrayList<Integer> ingredientQuantities;
     private ArrayList<Long> unitIds;
+    private ArrayList<Long> tagIds;
 
     public String getRecipeName() {
         return recipeName;
@@ -54,6 +55,14 @@ public class NewRecipeDTO {
 
     public void setUnitIds(ArrayList<Long> unitIds) {
         this.unitIds = unitIds;
+    }
+
+    public ArrayList<Long> getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(ArrayList<Long> tagIds) {
+        this.tagIds = tagIds;
     }
 
     public String getAuthorUsername() {

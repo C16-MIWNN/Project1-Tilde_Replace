@@ -20,6 +20,7 @@ public class RecipesSecurityConfig {
                         .requestMatchers("/", "/recipeOverview").permitAll()
                         .requestMatchers("/food/overview").permitAll()
                         .requestMatchers("/user/new", "user/save").permitAll()
+                        .requestMatchers("/tags/**").permitAll()
                         .requestMatchers("/webjars/**", "/css/**").permitAll()
                         .anyRequest().authenticated()
                     )
