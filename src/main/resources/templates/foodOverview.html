@@ -56,10 +56,10 @@
 
                 <div class="containter col-2" id="our-content-right">
 
-                   <div class="row" sec:authorize="isAuthenticated()">
+                   <div class="row col-10" sec:authorize="isAuthenticated()">
                        <div th:replace="~{fragments/util :: our-button-modal(type='add', text='Nieuw Ingredient', target='#ingredientEditModal')}"></div>
                    </div>
-                   <div class="row mt-2" sec:authorize="isAuthenticated()">
+                   <div class="row mt-2 col-10" sec:authorize="isAuthenticated()">
                        <div th:replace="~{fragments/util :: our-button-modal(type='add', text='Nieuwe Allergie', target='#addAllergyModal')}"></div>
                    </div>
                 </div>
