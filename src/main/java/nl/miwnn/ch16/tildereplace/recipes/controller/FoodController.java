@@ -17,6 +17,7 @@ import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.FoodService;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -33,10 +34,11 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    private String setupFoodOverview(Model datamodel, Allergy allergyForm, boolean formFoodModalHidden, boolean formAllergyModalHidden) {
+    private String setupFoodOverview(Model datamodel, FoodDTO foodForm, Allergy allergyForm,
+            boolean formFoodModalHidden, boolean formAllergyModalHidden) {
         datamodel.addAttribute("allFoods", foodRepository.findAll(Sort.by(Sort.Direction.ASC, "foodName")));
         datamodel.addAttribute("allAllergies", allergyRepository.findAll());
-        datamodel.addAttribute("foodForm", new FoodDTO());
+        datamodel.addAttribute("foodForm", foodForm);
         datamodel.addAttribute("allergyForm", allergyForm);
         datamodel.addAttribute("formFoodModalHidden", formFoodModalHidden);
         datamodel.addAttribute("formAllergyModalHidden", formAllergyModalHidden);
@@ -46,7 +48,7 @@ public class FoodController {
 
     @GetMapping({"/overview"})
     public String showFoodOverview(Model datamodel) {
-        return setupFoodOverview(datamodel, new Allergy(), true, true);
+        return setupFoodOverview(datamodel, new FoodDTO(), new Allergy(), true, true);
     }
 
     @GetMapping("/edit/{foodName}")
@@ -61,16 +63,20 @@ public class FoodController {
     }
 
     @PostMapping("/save")
-    private String saveOrUpdateFood(@ModelAttribute("foodForm") FoodDTO toBeSavedFood,
-                                          BindingResult result) {
+    private String saveOrUpdateFood(@ModelAttribute("foodForm") FoodDTO foodToBeSaved,
+                                    @ModelAttribute("allergyForm") Allergy allergyForm,
+                                          BindingResult result,
+                                          Model datamodel) {
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
         } else {
             try {
-                foodService.save(toBeSavedFood);
+                foodService.save(foodToBeSaved);
             } catch (IllegalArgumentException e) {
                 System.err.println(e.getMessage());
-                return "redirect:/food/overview";
+
+                List<FieldError> allErrors = foodService.getAllFieldlErrors(foodToBeSaved, "foodForm");
+                return setupFoodOverview(datamodel, foodToBeSaved, allergyForm, false, true);
             }
         }
 
@@ -79,13 +85,15 @@ public class FoodController {
 
     @PostMapping("/allergy/save")
     private String saveOrUpdateFood(@ModelAttribute("allergyForm") Allergy allergyToBeSaved,
-                                          BindingResult result,
-                                          Model datamodel) {
+                                    @ModelAttribute("foodForm") FoodDTO foodForm,
+                                    BindingResult result,
+                                    Model datamodel) {
+
         checkAllergyNameInUse(allergyToBeSaved, result);
 
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
-            return setupFoodOverview(datamodel, allergyToBeSaved, true, false);
+            return setupFoodOverview(datamodel, foodForm, allergyToBeSaved, true, false);
         } else {
             allergyRepository.save(allergyToBeSaved);
         }

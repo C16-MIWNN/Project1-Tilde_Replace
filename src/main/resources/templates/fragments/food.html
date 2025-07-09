@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<div th:fragment="ingredientForm(foodForm, allAllergies)">
+<div th:fragment="ingredientForm(foodForm, allAllergies, #fields)">
     <form class="row g-3" th:action="@{/food/save}" method="post" th:object="${foodForm}">
 
         <input type="hidden" th:field="*{foodId}">
@@ -54,6 +54,10 @@
                 <span class="input-group-text col-6">Energie</span>
                 <input type="text" class="form-control col" th:field="*{energy}" placeholder="0">
                 <div class="col-2"></div>
+                <div>
+                    <span th:if="${#fields.hasErrors('energy')}" id="nameHelpInline" class="form-text" th:errors="*{energy}">
+                    </span>
+                </div>
             </div>
 
             <div class="input-group mb-3">
@@ -124,13 +128,13 @@
 </div>
 
 <!-- Modal -->
-<div th:fragment="foodFormModal(ingredientForm, allAllergies)" class="modal fade" id="ingredientEditModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
+<div th:fragment="foodFormModal(ingredientForm, allAllergies, #fields)" class="modal fade" id="ingredientEditModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-body">
                 <div class="container-fluid">
-                    <div th:replace="~{:: ingredientForm(${ingredientForm}, ${allAllergies})}"></div>
+                    <div th:replace="~{:: ingredientForm(${ingredientForm}, ${allAllergies}, ${#fields})}"></div>
                 </div>
             </div>
         </div>
