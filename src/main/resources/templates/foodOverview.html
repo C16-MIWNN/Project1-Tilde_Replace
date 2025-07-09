@@ -60,11 +60,12 @@
             </div>
 
 
-            <div th:replace="~{fragments/food :: foodFormModal(${foodForm}, ${allAllergies})}"></div>
-            <div th:replace="~{fragments/food :: allergyFormModal(${allergyForm})}"></div>
 
             <div th:replace="~{fragments/general :: footer}"></div>
             <div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+            <div th:replace="~{fragments/food :: foodFormModal(${foodForm}, ${allAllergies})}"></div>
+            <div th:replace="~{fragments/food :: allergyFormModal(${allergyForm}, ${#fields})}"></div>
 
     </body>
 </html>

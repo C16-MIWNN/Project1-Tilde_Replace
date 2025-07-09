@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,16 +33,21 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @GetMapping({"/overview"})
-    private String showFoodOverview(Model datamodel) {
+    private String setupFoodOverview(Model datamodel, Allergy allergyForm, boolean formFoodModalHidden, boolean formAllergyModalHidden) {
         datamodel.addAttribute("allFoods", foodRepository.findAll(Sort.by(Sort.Direction.ASC, "foodName")));
         datamodel.addAttribute("allAllergies", allergyRepository.findAll());
         datamodel.addAttribute("foodForm", new FoodDTO());
-        datamodel.addAttribute("allergyForm", new Allergy());
+        datamodel.addAttribute("allergyForm", allergyForm);
+        datamodel.addAttribute("formFoodModalHidden", formFoodModalHidden);
+        datamodel.addAttribute("formAllergyModalHidden", formAllergyModalHidden);
 
         return "foodOverview";
     }
 
+    @GetMapping({"/overview"})
+    public String showFoodOverview(Model datamodel) {
+        return setupFoodOverview(datamodel, new Allergy(), true, true);
+    }
 
     @GetMapping("/edit/{foodId}")
     private String editFood(@PathVariable("foodId") Long foodId, Model datamodel) {
@@ -67,12 +73,16 @@ public class FoodController {
     }
 
     @PostMapping("/allergy/save")
-    private String saveOrUpdateFood(@ModelAttribute("allergyForm") Allergy toBeSavedAllergy,
-                                          BindingResult result) {
+    private String saveOrUpdateFood(@ModelAttribute("allergyForm") Allergy allergyToBeSaved,
+                                          BindingResult result,
+                                          Model datamodel) {
+        checkAllergyNameInUse(allergyToBeSaved, result);
+
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
+            return setupFoodOverview(datamodel, allergyToBeSaved, true, false);
         } else {
-            allergyRepository.save(toBeSavedAllergy);
+            allergyRepository.save(allergyToBeSaved);
         }
 
         return "redirect:/food/overview";
@@ -87,6 +97,15 @@ public class FoodController {
         }
 
         return "redirect:/food/overview";
+    }
+
+
+    private void checkAllergyNameInUse(Allergy allergyToBeSaved, BindingResult result) {
+
+        Optional<Allergy> optionalAllergy = allergyRepository.findAllergyByAllergyName(allergyToBeSaved.getAllergyName());
+        if (optionalAllergy.isPresent() && !optionalAllergy.get().getAllergyName().equals(allergyToBeSaved.getAllergyName())) {
+            result.addError(new FieldError("allergyForm", "allergyName", "Allergie naam bestaat al"));
+        }
     }
 
 }
