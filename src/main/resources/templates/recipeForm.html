@@ -10,7 +10,7 @@
 <div class="container-fluid" id="our-main-container">
     <div class="row" id="our-row-header">
         <div class="container" id="our-container-header">
-            <h1>Maak een nieuw recept</h1>
+            <h1 th:text="${isEditRecipe} ? 'Recept wijzigen' : 'Maak een nieuw recept'"></h1>
         </div>
     </div>
 
@@ -24,6 +24,7 @@
             <form th:action="@{/recipe/save}" method="post" th:object="${recipeForm}">
 
                 <div class="mb-3">
+                    <input type="hidden" th:field="*{authorUsername}">
                     <label class="form-label">Recept naam</label>
                     <input type="text" th:field="*{recipeName}" class="form-control" required
                            placeholder="Geef het recept een naam">
@@ -68,6 +69,11 @@
                            placeholder="Beschrijf de bereiding van het recept">
                 </div>
 
+                <div class="mb-3">
+                    <label for="recipeImageUrl" class="form-label">Voeg een afbeelding link toe</label>
+                    <input type="text" th:field="*{imageUrl}" class="form-control" id="recipeImageUrl">
+                </div>
+
                 <span class="input-group-text">Voeg één of meerdere tags toe</span>
                 <div class="input-group">
                     <select multiple
@@ -82,9 +88,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-check-lg pe-2"></i>Sla recept
-                        op
-                    </button>
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-check-lg pe-2"></i>Sla recept op</button>
                 </div>
             </form>
         </div>

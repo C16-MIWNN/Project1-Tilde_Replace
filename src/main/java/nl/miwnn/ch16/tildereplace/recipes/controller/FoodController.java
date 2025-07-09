@@ -1,6 +1,8 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
 import nl.miwnn.ch16.tildereplace.recipes.model.Food;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +24,7 @@ public class FoodController {
 
     @GetMapping({"/overview"})
     private String showFoodOverview(Model datamodel) {
-        datamodel.addAttribute("allFoods", foodRepository.findAll());
+        datamodel.addAttribute("allFoods", foodRepository.findAll(Sort.by(Sort.Direction.ASC, "foodName")));
         return "foodOverview";
     }
 

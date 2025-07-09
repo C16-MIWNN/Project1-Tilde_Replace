@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100" >
 <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
     <title>Recept beschrijving</title>
 </head>
@@ -22,8 +22,7 @@
         <div class="container col-8" id="our-content-middle">
             <!-- MIDDLE -->
             <div class="card">
-                <img src="https://imgur.com/OByMbYu.jpeg" class="card-img-top object-fit-cover" alt="..."
-                     style="height:300px">
+                <img th:src="${recipe.imageUrl}" class="card-img-top object-fit-cover" alt="..." style="height:300px">
                 <div class="card-body">
                     <h4 class="card-title" th:text="${recipe.recipeName}"></h4>
                     <h5>Ingredienten</h5>
@@ -36,12 +35,12 @@
                         </tr>
                         </tbody>
                     </table>
+                    <p class="text-muted">Auteur: <span th:text="${recipe.getAuthor().username}"></span></p>
 
   <div th:replace="~{fragments/tag :: tagCards(${recipe.getTags()})}"></div>
 
                 </div>
             </div>
-
             <div class="card col-8 border-0">
                 <div class="card-body">
                     <h4 class="card-title">Bereiding</h4>

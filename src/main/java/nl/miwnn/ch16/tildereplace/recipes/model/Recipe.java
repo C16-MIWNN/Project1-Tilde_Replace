@@ -18,7 +18,14 @@ public class Recipe {
 
     @OneToMany (mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
+
+    @Column(columnDefinition = "TEXT")
     private String preparationInstructions;
+
+    @ManyToOne
+    private RecipesUser author;
+
+    private String imageUrl;
 
     @ManyToMany
     private List<Tag> tags = new ArrayList<>();
@@ -60,5 +67,21 @@ public class Recipe {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public RecipesUser getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(RecipesUser author) {
+        this.author = author;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

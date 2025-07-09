@@ -10,16 +10,32 @@
 <div class="container-fluid" id="our-main-container">
     <div class="row" id="our-row-header">
         <div class="container" id="our-container-header">
-            <h1>Overzicht van Recepten</h1>
+            <h1 th:text="${isMyRecipes} ? 'Mijn recepten' : 'Overzicht van recepten'"></h1>
         </div>
     </div>
 
     <div class="row" id="our-content-row">
         <div class="container col-2" id="our-content-left">
+            <!-- LEFT SIDE -->
         </div>
 
         <div class="container col-8" id="our-content-middle">
-           <div th:replace="~{fragments/recipe :: recipeCards(${allRecipes})}"></div>
+            <!-- MIDDLE -->
+            <div>
+                <form th:action="@{/recipe/search}" method="post">
+                    <div class="input-group mb-5">
+                        <input name="searchString" list="recipeListOptions" class="form-control rounded-start-3" type="text">
+                        <button class="btn btn-lg btn-secondary bi bi-search rounded-end-3" type="submit"></button>
+                    </div>
+
+                    <datalist id="recipeListOptions" size="3">
+                        <option th:each="recipe : ${allRecipes}"><span th:text="${recipe.recipeName}"></span></option>
+                    </datalist>
+
+                </form>
+            </div>
+
+            <div th:replace="~{fragments/recipe :: recipeCards(${allRecipes})}"></div>
         </div>
 
         <div class="d-flex flex-column col-2 gap-1" id="our-content-right">

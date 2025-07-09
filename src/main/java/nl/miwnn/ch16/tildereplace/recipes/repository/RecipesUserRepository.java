@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface RecipesUserRepository extends JpaRepository<RecipesUser, Long> {
     Optional<RecipesUser> findByUsername(String username);
+    Optional<RecipesUser> findByUserId(Long userId);
     boolean existsByUsername(String username);
 }

@@ -14,14 +14,21 @@ public class NewRecipeMapper {
     private final UnitRepository unitRepository;
     private final IngredientRepository ingredientRepository;
     private final RecipeRepository recipeRepository;
+    private final RecipesUserRepository recipesUserRepository;
     private final TagRepository tagRepository;
 
     public NewRecipeMapper(FoodRepository foodRepository,
-                           UnitRepository unitRepository, IngredientRepository ingredientRepository, RecipeRepository recipeRepository, TagRepository tagRepository) {
+                           UnitRepository unitRepository,
+                           IngredientRepository ingredientRepository,
+                           RecipeRepository recipeRepository,
+                           RecipesUserRepository recipesUserRepository,
+                           TagRepository tagRepository) {
+
         this.foodRepository = foodRepository;
         this.unitRepository = unitRepository;
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
+        this.recipesUserRepository = recipesUserRepository;
         this.tagRepository = tagRepository;
     }
 
@@ -52,6 +59,17 @@ public class NewRecipeMapper {
         Recipe recipe = new Recipe();
         recipe.setRecipeName(newRecipeDTO.getRecipeName());
         recipe.setPreperationInstructions(newRecipeDTO.getPreparationInstruction());
+
+        if (newRecipeDTO.getImageUrl().isEmpty()) {
+            recipe.setImageUrl("https://as1.ftcdn.net/jpg/05/18/30/58/1000_F_518305884_YoV7e5ifRhY2Q0AwP8ssZsNm3KvWhyZY.jpg");
+        } else {
+            recipe.setImageUrl(newRecipeDTO.getImageUrl());
+        }
+
+        Optional<RecipesUser> authorOptional = this.recipesUserRepository.findByUsername(newRecipeDTO.getAuthorUsername());
+        if (authorOptional.isPresent()) {
+            recipe.setAuthor(authorOptional.get());
+        }
 
         return recipe;
     }

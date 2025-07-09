@@ -1,10 +1,10 @@
 footer {
     text-align: center;
-    margin-top: 3rem
+    margin: 3rem
 }
 
-.navbar {
-    margin-bottom: 3rem;
+h1 {
+    margin: 2rem;
 }
 
 .min-tag-height {

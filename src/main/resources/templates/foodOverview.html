@@ -1,49 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100" >
-<head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
-    <title>Ingredienten Overzicht</title>
-</head>
-<body class="vh-100">
-<div th:replace="~{fragments/general :: navbar}"></div>
+    <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
+        <title>Alle Ingredienten</title>
+    </head>
 
-<div class="container food-overview-container h-100">
-    <h1>Overzicht van ingredienten</h1>
+    <body class="vh-100">
+        <div th:replace="~{fragments/general :: navbar}"></div>
 
-    <div class="row h-100">
-        <div class="col-4 h-100">
-            <div class="list-group h-75 overflow-scroll"
-                id="list-tab" role="tablist">
-
-                <a th:each="food : ${allFoods}" class="list-group-item list-group-item-action"
-                    th:id="|${food.foodName}-item|"
-                    data-bs-toggle="list"
-                    role="tab"
-                    th:href="|#${food.foodName}-detail|"
-                    th:text="${food.foodName}">
-                </a>
-            </div>
-            <div class="list-group">
-                <a class=" btn btn-secondary btn-lg fw-bold"
-                   th:href="@{/food/new}">
-                    Voeg Nieuw Ingredient Toe
-                </a>
-            </div>
-        </div>
-            <div class="col-8">
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane"
-                        th:each="food : ${allFoods}"
-                        th:id="|${food.foodName}-detail|"
-                        role"tabpanel"
-                        th:insert="~{fragments/food :: foodCard(food)}">
-                    </div>
+        <div class="container-fluid" id="our-main-container">
+            <div class="row" id="our-row-header">
+                <div class="container" id="our-container-header">
+                    <h1>Overzicht van ingredienten</h1>
                 </div>
             </div>
-    </div>
-</div>
 
-<div th:replace="~{fragments/general :: footer}"></div>
-<div th:replace="~{fragments/general :: bottomScripts}"></div>
+            <div class="row" id="our-content-row">
+                <div class="container col-2" id="our-content-left">
+                    <!-- LEFT SIDE -->
+                </div>
 
-</body>
+                <div class="container col-8" id="our-content-middle">
+                    <div class="row">
+                        <div class="col-4 h-100">
+                            <div class="list-group h-75 overflow-scroll"
+                                 id="list-tab" role="tablist">
+
+                                <a th:each="food : ${allFoods}" class="list-group-item list-group-item-action"
+                                                                th:id="|${food.foodName}-item|"
+                                                                data-bs-toggle="list"
+                                                                role="tab"
+                                                                th:href="|#${foodNameSanitized}-detail|"
+                                                                th:text="${food.foodName}"
+                                                                th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}">
+
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane"
+                                     th:each="food : ${allFoods}"
+                                     th:id="|${foodNameSanitized}-detail|"
+                                     role"tabpanel"
+                                     th:insert="~{fragments/food :: foodCard(food)}"
+                                     th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="containter col-2" id="our-content-right">
+                   <div class="row">
+                       <div th:replace="~{fragments/util :: our-button('add', 'Nieuw Ingredient', '/food/new')}"></div>
+                   </div>
+                </div>
+            </div>
+
+            <div th:replace="~{fragments/general :: footer}"></div>
+            <div th:replace="~{fragments/general :: bottomScripts}"></div>
+
+    </body>
 </html>
+

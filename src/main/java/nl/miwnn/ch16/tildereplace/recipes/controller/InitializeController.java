@@ -61,11 +61,7 @@ public class InitializeController {
 
     private void initializeDB() {
         try {
-            RecipesUser user = new RecipesUser();
-            user.setUsername("user");
-            user.setPassword("userPW");
-            recipesUserService.saveUser(user);
-
+            loadUsers();
             loadAllergies();
             loadUnits();
             loadFoods();
@@ -153,9 +149,14 @@ public class InitializeController {
 
             // Skip header
             reader.skip(1);
+            int numberOfUsers = recipesUserService.getNumberOfUsers();
 
             for (String[] recipeLine : reader) {
                 Recipe recipe = setRecipeDetails(recipeLine);
+
+                Long randomUserId = (long) (Math.random() * numberOfUsers) + 1;
+                recipe.setAuthor(recipesUserService.getRecipeUserByUserId(randomUserId));
+
                 recipeRepository.save(recipe);
 
                 loadIngredients(recipeLine[1], recipe);
@@ -167,6 +168,7 @@ public class InitializeController {
         Recipe recipe = new Recipe();
         recipe.setRecipeName(recipeLine[0]);
         recipe.setPreperationInstructions(recipeLine[2]);
+        recipe.setImageUrl(recipeLine[3]);
         return recipe;
     }
 
@@ -191,6 +193,22 @@ public class InitializeController {
         return ingredient;
     }
 
+    private void loadUsers() throws IOException, CsvValidationException {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(
+                new ClassPathResource("/example_data/users.csv").getInputStream()))) {
+
+            // Skip header
+            reader.skip(1);
+
+            for (String[] userLine : reader) {
+                RecipesUser user = new RecipesUser();
+                user.setUsername(userLine[0]);
+                user.setPassword(userLine[1]);
+                recipesUserService.saveUser(user);
+            }
+        }
+    }
+
     private void loadTags() throws IOException, CsvValidationException {
 
         try (CSVReader reader = new CSVReader(new InputStreamReader(
@@ -205,8 +223,9 @@ public class InitializeController {
                 tagRepository.save(tag);
             }
         }
-        }
-
     }
+
+
+}
 
 

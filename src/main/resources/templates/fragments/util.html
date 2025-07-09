@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
+
+<body>
+
+<th:block th:fragment="our-button(type, text, action)">
+    <div th:replace="${#strings.startsWith(action,'/')} ? ~{:: our-button-link(${type}, ${text}, ${action})} : ~{:: our-button-button(${type}, ${text}, ${action})}"></div>
+</th:block>
+
+<th:block th:fragment="our-button-link(type, text, action)">
+    <th:block th:switch="${type}">
+        <a th:case="'add'"    th:href=@{${action}} th:class='|btn btn-primary btn-lg ${col}|'   > <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </a>
+        <a th:case="'save'"   th:href=@{${action}} th:class='|btn btn-primary btn-lg ${col}|'   > <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </a>
+        <a th:case="'edit'"   th:href=@{${action}} th:class='|btn btn-secondary btn-lg ${col}|' > <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </a>
+        <a th:case="'remove'" th:href=@{${action}} th:class='|btn btn-danger btn-lg ${col}|'    > <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </a>
+        <a th:case="*"        th:href=@{${action}} th:class='|btn border btn-lg ${col}|'        > <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </a>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="our-button-button(type, text, action)">
+    <th:block th:switch="${type}">
+        <button th:case="'add'"    th:class="|btn btn-primary btn-lg ${col}|"    th:attr="onclick=${action},type=${typeButton}?: button"> <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </button>
+        <button th:case="'save'"   th:class="|btn btn-primary btn-lg ${col}|"    th:attr="onclick=${action},type=${typeButton}?: button"> <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </button>
+        <button th:case="'edit'"   th:class="|btn btn-secondary btn-lg ${col}|"  th:attr="onclick=${action},type=${typeButton}?: button"> <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </button>
+        <button th:case="'remove'" th:class="|btn btn-danger btn-lg ${col}|"     th:attr="onclick=${action},type=${typeButton}?: button"> <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </button>
+        <button th:case="*"        th:class="|btn border btn-lg ${col}|"         th:attr="onclick=${action},type=${typeButton}?: button"> <th:block th:replace="~{:: our-icon(${type}, ${text})}"></th:block> </button>
+    </th:block>
+
+</th:block>
+
+<th:block th:fragment="our-icon(type, text)">
+
+    <th:block th:switch="${type}">
+        <i th:case="'add'"      class="bi bi-plus-circle"></i>
+        <i th:case="'save'"     class="bi bi-floppy2"></i>
+        <i th:case="'edit'"     class="bi bi-pencil-fill"></i>
+        <i th:case="'remove'"   class="bi bi-trash"></i>
+        <i th:case="*"          class="bi bi-question-circle-fill"></i>
+    </th:block>
+
+    <span th:text="${text}"><span>
+</th:block>
+
+</body>
+</html>

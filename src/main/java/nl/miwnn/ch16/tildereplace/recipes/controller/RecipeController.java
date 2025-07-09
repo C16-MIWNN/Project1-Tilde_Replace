@@ -3,8 +3,8 @@ package nl.miwnn.ch16.tildereplace.recipes.controller;
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
 import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
-import nl.miwnn.ch16.tildereplace.recipes.model.Tag;
 import nl.miwnn.ch16.tildereplace.recipes.repository.*;
+import nl.miwnn.ch16.tildereplace.recipes.model.Tag;
 
 import nl.miwnn.ch16.tildereplace.recipes.service.RecipeService;
 import org.springframework.stereotype.Controller;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -48,6 +49,18 @@ public class RecipeController {
         return "recipeOverview";
     }
 
+    @GetMapping("/recipe/myRecipes/{username}")
+    private String showUserRecipes(@PathVariable("username") String username ,Model datamodel) {
+        Optional<List<Recipe>> optionalRecipes = recipeRepository.findRecipeByAuthorUsername(username);
+        if (!optionalRecipes.isPresent()) {
+            return "recipeOverview";
+        }
+
+        datamodel.addAttribute("isMyRecipes", true);
+        datamodel.addAttribute("allRecipes", optionalRecipes.get());
+        return "recipeOverview";
+    }
+
     @GetMapping("/recipe/detail/{recipeName}")
     private String showRecipeDetail(@PathVariable("recipeName") String name, Model datamodel) {
 
@@ -62,8 +75,10 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/new")
-    private String newRecipe(Model datamodel) {
-        datamodel.addAttribute("recipeForm", new NewRecipeDTO());
+    private String newRecipe(Model datamodel, Principal principal) {
+        NewRecipeDTO newRecipeDTO = new NewRecipeDTO();
+        newRecipeDTO.setAuthorUsername(principal.getName());
+        datamodel.addAttribute("recipeForm", newRecipeDTO);
         datamodel.addAttribute("allIngredients", ingredientRepository.findAll());
         datamodel.addAttribute("allFoods", foodRepository.findAll());
         datamodel.addAttribute("allUnits", unitRepository.findAll());
@@ -79,7 +94,8 @@ public class RecipeController {
             dataModel.addAttribute("recipeForm", recipeService.recipeEdit(recipeOptional.get()));
             dataModel.addAttribute("allIngredients", ingredientRepository.findAll());
             dataModel.addAttribute("allFoods", foodRepository.findAll());
-            dataModel.addAttribute("allUnits", unitRepository.findAll());
+            dataModel.addAttribute("allUnits",unitRepository.findAll());
+            dataModel.addAttribute("isEditRecipe", true);
         }
 
         return "recipeForm";
@@ -124,6 +140,17 @@ public class RecipeController {
         dataModel.addAttribute("tag", optionalTag.get());
 
         return "tagSearchResults";
+    }
+
+    @PostMapping("/recipe/search")
+    private String searchRecipe(@ModelAttribute("searchString") String searchString, Model dataModel) {
+        Optional<List<Recipe>> recipeOptional = recipeRepository.findRecipeByRecipeNameContaining(searchString);
+        if (recipeOptional.isPresent()) {
+            dataModel.addAttribute("allRecipes", recipeOptional.get());
+            return "recipeOverview";
+        }
+
+        return "recipeOverview";
     }
 
 }

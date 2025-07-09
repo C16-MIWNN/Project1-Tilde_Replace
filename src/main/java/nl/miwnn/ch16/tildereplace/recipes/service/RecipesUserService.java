@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class RecipesUserService implements UserDetailsService {
 
@@ -25,7 +27,7 @@ public class RecipesUserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return recipesUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(String.format("User: %s was not found", username)));
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("UserDetail: %s was not found", username)));
     }
 
     public void saveUser(RecipesUser user) {
@@ -41,5 +43,42 @@ public class RecipesUserService implements UserDetailsService {
         saveUser(NewRecipeUserMapper.fromDto(newRecipesUserDTO));
     }
 
+    public RecipesUser getRecipeUserByUserId(Long userId) {
+        Optional<RecipesUser> recipesUserOptional = recipesUserRepository.findByUserId(userId);
+        if (!recipesUserOptional.isPresent()) {
+            throw new UsernameNotFoundException(String.format("UserId: %s was not found", userId));
+        }
 
+        return recipesUserOptional.get();
+    }
+
+    public void updateRecipeUserPassword(String username, String password) {
+        Optional<RecipesUser> passwordToBeUpdatedUser = recipesUserRepository.
+                findByUsername(username);
+
+        if (!passwordToBeUpdatedUser.isPresent()) {
+            throw new UsernameNotFoundException("Username not found");
+        }
+
+        passwordToBeUpdatedUser.get().setPassword(passwordEncoder.encode(password));
+        recipesUserRepository.save(passwordToBeUpdatedUser.get());
+
+    }
+
+    public boolean userExists(String username) {
+        Optional<RecipesUser> recipesUserOptional = recipesUserRepository.findByUsername(username);
+        return recipesUserOptional.isPresent();
+    }
+
+    public void setNewUsername(String username, String newUsername) {
+        Optional<RecipesUser> recipesUserOptional = recipesUserRepository.findByUsername(username);
+        if (recipesUserOptional.isPresent()) {
+            recipesUserOptional.get().setUsername(newUsername);
+            recipesUserRepository.save(recipesUserOptional.get());
+        }
+    }
+
+    public int getNumberOfUsers() {
+        return recipesUserRepository.findAll().size();
+    }
 }

@@ -15,4 +15,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     List<Recipe> findRecipesByTags(List<Tag> tags);
 
+    Optional<List<Recipe>> findRecipeByAuthorUsername(String userId);
+    Optional<List<Recipe>> findRecipeByRecipeNameContaining(String searchString);
 }
