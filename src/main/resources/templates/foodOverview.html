@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" class="vh-100" >
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org" class="vh-100" >
     <head th:replace="~{/fragments/general :: baseheader(~{:: title})}">
         <title>Overzicht van ingredienten</title>
     </head>
@@ -50,10 +50,11 @@
                 </div>
 
                 <div class="containter col-2" id="our-content-right">
-                   <div class="row">
+
+                   <div class="row" sec:authorize="isAuthenticated()">
                        <div th:replace="~{fragments/util :: our-button-modal(type='add', text='Nieuw Ingredient', target='#ingredientEditModal')}"></div>
                    </div>
-                   <div class="row mt-2">
+                   <div class="row mt-2" sec:authorize="isAuthenticated()">
                        <div th:replace="~{fragments/util :: our-button-modal(type='add', text='Nieuwe Allergie', target='#addAllergyModal')}"></div>
                    </div>
                 </div>
