@@ -57,6 +57,10 @@ public class Food {
     }
 
     public void setEnergy(double energy) {
+        if (energy < 0) {
+            throw new IllegalArgumentException("energy cannot be negative");
+        }
+
         this.energy = energy;
     }
 
@@ -65,6 +69,10 @@ public class Food {
     }
 
     public void setProtein(double protein) {
+        if (protein < 0) {
+            throw new IllegalArgumentException("protein cannot be negative");
+        }
+
         this.protein = protein;
     }
 

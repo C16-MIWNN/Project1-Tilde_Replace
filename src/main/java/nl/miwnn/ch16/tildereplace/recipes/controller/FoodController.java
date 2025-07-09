@@ -66,7 +66,11 @@ public class FoodController {
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
         } else {
-            foodService.save(toBeSavedFood);
+            try {
+                foodService.save(toBeSavedFood);
+            } catch (IllegalArgumentException e) {
+                return "redirect:/food/overview";
+            }
         }
 
         return "redirect:/food/overview";
