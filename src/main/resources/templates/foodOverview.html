@@ -25,24 +25,29 @@
                             <div class="list-group h-75 overflow-scroll"
                                  id="list-tab" role="tablist">
 
-                                <a th:each="food : ${allFoods}" class="list-group-item list-group-item-action"
+                                <a th:each="food, stats : ${allFoods}" class="list-group-item list-group-item-action"
                                                                 th:id="|${food.foodName}-item|"
                                                                 data-bs-toggle="list"
                                                                 role="tab"
                                                                 th:href="|#${foodNameSanitized}-detail|"
                                                                 th:text="${food.foodName}"
-                                                                th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}">
+                                                                th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}"
+                                                                th:classappend="${stats.first} ? 'active'"
+                                                                >
+
                                 </a>
                             </div>
                         </div>
                         <div class="col-8">
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane"
-                                     th:each="food : ${allFoods}"
+                                     th:each="food, stats : ${allFoods}"
                                      th:id="|${foodNameSanitized}-detail|"
                                      role"tabpanel"
                                      th:insert="~{fragments/food :: foodCard(food)}"
-                                     th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}">
+                                     th:with="foodNameSanitized=${#strings.replace(food.foodName, ' ', '')}"
+                                     th:classappend="${stats.first} ? 'active'"
+                                     >
                                 </div>
                             </div>
                         </div>
