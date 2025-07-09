@@ -1,11 +1,8 @@
 package nl.miwnn.ch16.tildereplace.recipes.dto;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-import nl.miwnn.ch16.tildereplace.recipes.model.Allergy;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
