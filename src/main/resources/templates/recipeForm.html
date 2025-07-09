@@ -70,6 +70,19 @@
                            placeholder="Beschrijf de bereiding van het recept">
                 </div>
 
+                <span class="input-group-text">Voeg één of meerdere tags toe</span>
+                <div class="input-group">
+                    <select multiple
+                            class="form-select"
+                            th:field="*{tagIds}">
+                        <option
+                                th:each="tag : ${allTags}"
+                                th:value="${tag.tagId}"
+                                th:text="${tag.tagName}">
+                        </option>
+                    </select>
+                </div>
+
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-check-lg pe-2"></i>Sla recept op</button>
                 </div>
