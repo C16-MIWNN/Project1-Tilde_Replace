@@ -22,8 +22,13 @@
         <div class="container col-8" id="our-content-middle">
             <!-- MIDDLE -->
             <div class="card">
-                <img th:src="${recipe.imageUrl}" class="card-img-top object-fit-cover" alt="..." style="height:300px">
-                <div class="card-body">
+<!--                <img th:src="${recipe.imageUrl}" class="card-img-top object-fit-cover" alt="..." style="height:300px">-->
+                <span th:if="${recipe.image} != null">
+                    <img th:src="@{/image/{imageName}(imageName = ${recipe.getImage().name})}" class="card-img-top object-fit-cover" alt="..." style="height:300px">
+                </span>
+
+
+                    <div class="card-body">
                     <h4 class="card-title" th:text="${recipe.recipeName}"></h4>
                     <h5>Ingredienten</h5>
                     <!--            <p th:text="${myIngredients}"></p>-->
@@ -53,6 +58,40 @@
                     <button type="button" class="btn btn-danger btn-lg"><i class="bi bi-trash3 pe-2"></i>Verwijderen
                     </button>
                 </a>
+            </div>
+
+            <button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#editImageModal">
+                Afbeelding aanpassen
+            </button>
+
+            <div class="modal fade" id="editImageModal" tabindex="-1" aria-labelledby="editImageModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5">Selecteer een bestand</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <form th:action="@{/image/save}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="recipeId" th:value="${recipe.recipeId}">
+
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-11">
+                                        <input class="form-control form-control-lg" type="file" name="image">
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-11 d-grid">
+                                        <button type="submit" class="btn btn-lg btn-primary">Opslaan</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

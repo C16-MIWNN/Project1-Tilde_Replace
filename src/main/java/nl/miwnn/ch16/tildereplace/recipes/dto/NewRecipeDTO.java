@@ -10,7 +10,6 @@ public class NewRecipeDTO {
     private String recipeName;
     private String preparationInstruction;
     private String authorUsername;
-    private String imageUrl;
 
     private ArrayList<Long> foodIds;
     private ArrayList<Integer> ingredientQuantities;
@@ -64,11 +63,4 @@ public class NewRecipeDTO {
         this.authorUsername = authorUsername;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }

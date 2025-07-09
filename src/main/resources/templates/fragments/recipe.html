@@ -5,13 +5,17 @@
 </head>
 <body>
 
-
 <div th:fragment="recipeCard(recipe)">
     <div class="card" style="width: 20rem;">
         <a th:href="@{/recipe/detail/{recipeName}(recipeName= ${recipe.recipeName})}">
-            <img th:src="${recipe.imageUrl}" class="card-img-top object-fit-cover" alt="..."
-                 style="height:300px">
+            <span th:if="${recipe.image} != null">
+                <img th:src="@{/image/{imageName}(imageName = ${recipe.getImage().name})}" class="card-img-top object-fit-cover" alt="..." style="height:300px">
+            </span>
+            <span th:unless="${recipe.image} != null">
+                <div class="bg-secondary" style="height:300px"></div>
+            </span>
         </a>
+
         <div class="card-body">
             <h5 class="card-title" th:text="${recipe.recipeName}"></h5>
         </div>

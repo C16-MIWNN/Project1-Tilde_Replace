@@ -4,6 +4,7 @@ package nl.miwnn.ch16.tildereplace.recipes.service.mapper;
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.*;
 import nl.miwnn.ch16.tildereplace.recipes.repository.*;
+import nl.miwnn.ch16.tildereplace.recipes.service.ImageService;
 
 import java.util.Optional;
 
@@ -44,12 +45,6 @@ public class NewRecipeMapper {
         Recipe recipe = new Recipe();
         recipe.setRecipeName(newRecipeDTO.getRecipeName());
         recipe.setPreperationInstructions(newRecipeDTO.getPreparationInstruction());
-
-        if (newRecipeDTO.getImageUrl().isEmpty()) {
-            recipe.setImageUrl("https://as1.ftcdn.net/jpg/05/18/30/58/1000_F_518305884_YoV7e5ifRhY2Q0AwP8ssZsNm3KvWhyZY.jpg");
-        } else {
-            recipe.setImageUrl(newRecipeDTO.getImageUrl());
-        }
 
         Optional<RecipesUser> authorOptional = recipesUserRepository.findByUsername(newRecipeDTO.getAuthorUsername());
         if (authorOptional.isPresent()) {

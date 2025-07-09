@@ -22,7 +22,8 @@ public class Recipe {
     @ManyToOne
     private RecipesUser author;
 
-    private String imageUrl;
+    @OneToOne
+    private Image image;
 
     public Long getRecipeId() {
         return recipeId;
@@ -71,11 +72,11 @@ public class Recipe {
         this.author = author;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public Image getImage() {
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

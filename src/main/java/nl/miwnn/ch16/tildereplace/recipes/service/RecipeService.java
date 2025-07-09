@@ -2,10 +2,13 @@ package nl.miwnn.ch16.tildereplace.recipes.service;
 
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.NewRecipeDTO;
+import nl.miwnn.ch16.tildereplace.recipes.model.Image;
 import nl.miwnn.ch16.tildereplace.recipes.model.Recipe;
 import nl.miwnn.ch16.tildereplace.recipes.repository.*;
 import nl.miwnn.ch16.tildereplace.recipes.service.mapper.NewRecipeMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class RecipeService {
@@ -37,6 +40,13 @@ public class RecipeService {
         NewRecipeMapper mapper = new NewRecipeMapper(foodRepository, unitRepository, ingredientRepository,
                 recipeRepository, recipesUserRepository);
         return mapper.toDto(recipe);
+    }
+
+    public void setRecipeImage(Image image, Long recipeId) {
+        Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
+        if (recipeOptional.isPresent()) {
+            recipeOptional.get().setImage(image);
+        }
     }
 
 }

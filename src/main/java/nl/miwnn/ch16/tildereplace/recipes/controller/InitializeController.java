@@ -1,12 +1,12 @@
 package nl.miwnn.ch16.tildereplace.recipes.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import nl.miwnn.ch16.tildereplace.recipes.service.ImageService;
+import nl.miwnn.ch16.tildereplace.recipes.service.RecipeService;
 import nl.miwnn.ch16.tildereplace.recipes.service.RecipesUserService;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -22,31 +22,37 @@ import nl.miwnn.ch16.tildereplace.recipes.repository.*;
 @Controller
 public class InitializeController {
 
+    private final ImageService imageService;
+    private final RecipeService recipeService;
     private FoodRepository foodRepository;
     private IngredientRepository ingredientRepository;
     private RecipeRepository recipeRepository;
     private RecipesUserService recipesUserService;
     private UnitRepository unitRepository;
     private AllergyRepository allergyRepository;
+    private ImageRepository imageRepository;
 
 
     private Map<String, Food> foodCache = new HashMap<String, Food>();
     private Map<String, Unit> unitCache = new HashMap<String, Unit>();
     private Map<String, Allergy> allergyCache = new HashMap<String, Allergy>();
 
-    public InitializeController(FoodRepository foodRepository,
+    public InitializeController(ImageService imageService, FoodRepository foodRepository,
                                 IngredientRepository ingredientRepository,
                                 RecipeRepository recipeRepository,
                                 RecipesUserService recipesUserService,
                                 UnitRepository unitRepository,
-                                AllergyRepository allergyRepository
-                                ) {
+                                AllergyRepository allergyRepository,
+                                ImageRepository imageRepository, RecipeService recipeService) {
+        this.imageService = imageService;
         this.foodRepository = foodRepository;
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
         this.recipesUserService = recipesUserService;
         this.unitRepository = unitRepository;
         this.allergyRepository = allergyRepository;
+        this.imageRepository = imageRepository;
+        this.recipeService = recipeService;
     }
 
     @EventListener
@@ -62,6 +68,7 @@ public class InitializeController {
             loadAllergies();
             loadUnits();
             loadFoods();
+            loadImages();
             loadRecipes();
         } catch (IOException | CsvValidationException e) {
             throw new RuntimeException("Failed to initialize database from CSV files", e);
@@ -160,11 +167,18 @@ public class InitializeController {
         }
     }
 
-    private static Recipe setRecipeDetails(String[] recipeLine) {
+    private Recipe setRecipeDetails(String[] recipeLine) {
         Recipe recipe = new Recipe();
         recipe.setRecipeName(recipeLine[0]);
         recipe.setPreperationInstructions(recipeLine[2]);
-        recipe.setImageUrl(recipeLine[3]);
+
+        Optional<Image> imageOptional = imageRepository.findImageByName(recipeLine[3]);
+
+        if (imageOptional.isPresent()) {
+            Image managedImage = imageOptional.get();
+            recipe.setImage(managedImage);
+        }
+
         return recipe;
     }
 
@@ -203,6 +217,10 @@ public class InitializeController {
                 recipesUserService.saveUser(user);
             }
         }
+    }
+
+    private void loadImages() {
+        imageService.saveFile("/Users/dennismei/Make IT Work/Project1/Project1-Tilde_Replace/src/main/resources/example_data/images");
     }
 
 }
