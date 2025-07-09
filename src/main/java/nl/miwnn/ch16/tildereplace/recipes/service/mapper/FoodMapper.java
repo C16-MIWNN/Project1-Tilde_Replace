@@ -1,8 +1,6 @@
 package nl.miwnn.ch16.tildereplace.recipes.service.mapper;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,8 +12,6 @@ import nl.miwnn.ch16.tildereplace.recipes.model.Food;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
 import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
-
-import org.springframework.validation.FieldError;
 
 public class FoodMapper {
 
@@ -79,21 +75,6 @@ public class FoodMapper {
         foodDTO.setAllergies(allergies);
 
         return foodDTO;
-    }
-
-    public List<FieldError> getAllFieldlErrors(FoodDTO foodToBeSaved, String object) {
-
-        List<FieldError> fieldErrors = new ArrayList<FieldError>();
-        Food dummyFood = new Food();
-        try {
-            dummyFood.setEnergy(foodToBeSaved.getEnergy());
-        } catch (Exception exception) {
-            fieldErrors.add(new FieldError(object, "energy", exception.getMessage()));
-
-        }
-
-        return fieldErrors;
-
     }
 
 }
