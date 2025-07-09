@@ -5,7 +5,12 @@ import nl.miwnn.ch16.tildereplace.recipes.dto.FoodDTO;
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.mapper.FoodMapper;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+
+import org.springframework.validation.FieldError;
 
 @Service
 public class FoodService {
@@ -26,6 +31,10 @@ public class FoodService {
 
     public void save(FoodDTO foodDTO) {
         foodRepository.save(foodMapper.fromDTO(foodDTO));
+    }
+
+    public List<FieldError> getAllFieldlErrors(FoodDTO foodTobeSaved, String object) {
+        return foodMapper.getAllFieldlErrors(foodTobeSaved, object);
     }
 
 }
