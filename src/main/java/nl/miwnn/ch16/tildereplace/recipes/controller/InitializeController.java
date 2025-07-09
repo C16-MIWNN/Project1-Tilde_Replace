@@ -24,27 +24,31 @@ public class InitializeController {
 
     private final ImageService imageService;
     private final RecipeService recipeService;
-    private FoodRepository foodRepository;
-    private IngredientRepository ingredientRepository;
-    private RecipeRepository recipeRepository;
-    private RecipesUserService recipesUserService;
-    private UnitRepository unitRepository;
-    private AllergyRepository allergyRepository;
-    private ImageRepository imageRepository;
-
+    private final FoodRepository foodRepository;
+    private final IngredientRepository ingredientRepository;
+    private final RecipeRepository recipeRepository;
+    private final RecipesUserService recipesUserService;
+    private final UnitRepository unitRepository;
+    private final AllergyRepository allergyRepository;
+    private final ImageRepository imageRepository;
+    private final TagRepository tagRepository;
 
     private Map<String, Food> foodCache = new HashMap<String, Food>();
     private Map<String, Unit> unitCache = new HashMap<String, Unit>();
     private Map<String, Allergy> allergyCache = new HashMap<String, Allergy>();
 
-    public InitializeController(ImageService imageService, FoodRepository foodRepository,
+    public InitializeController(ImageService imageService,
+                                RecipeService recipeService,
+                                FoodRepository foodRepository,
                                 IngredientRepository ingredientRepository,
                                 RecipeRepository recipeRepository,
                                 RecipesUserService recipesUserService,
                                 UnitRepository unitRepository,
                                 AllergyRepository allergyRepository,
-                                ImageRepository imageRepository, RecipeService recipeService) {
+                                ImageRepository imageRepository,
+                                TagRepository tagRepository) {
         this.imageService = imageService;
+        this.recipeService = recipeService;
         this.foodRepository = foodRepository;
         this.ingredientRepository = ingredientRepository;
         this.recipeRepository = recipeRepository;
@@ -52,7 +56,7 @@ public class InitializeController {
         this.unitRepository = unitRepository;
         this.allergyRepository = allergyRepository;
         this.imageRepository = imageRepository;
-        this.recipeService = recipeService;
+        this.tagRepository = tagRepository;
     }
 
     @EventListener
@@ -70,6 +74,7 @@ public class InitializeController {
             loadFoods();
             loadImages();
             loadRecipes();
+            loadTags();
         } catch (IOException | CsvValidationException e) {
             throw new RuntimeException("Failed to initialize database from CSV files", e);
         }
@@ -223,4 +228,17 @@ public class InitializeController {
         imageService.saveFile("/Users/dennismei/Make IT Work/Project1/Project1-Tilde_Replace/src/main/resources/example_data/images");
     }
 
+    private void loadTags() throws IOException, CsvValidationException {
+        try (CSVReader reader = new CSVReader(new InputStreamReader(
+                new ClassPathResource("/example_data/tags.csv").getInputStream()))) {
+
+            reader.skip(1);
+
+            for (String[] tagLine : reader) {
+                Tag tag = new Tag();
+                tag.setTagName(tagLine[0]);
+                tagRepository.save(tag);
+            }
+        }
+    }
 }
