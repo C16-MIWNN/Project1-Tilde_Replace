@@ -49,9 +49,9 @@ public class FoodController {
         return setupFoodOverview(datamodel, new Allergy(), true, true);
     }
 
-    @GetMapping("/edit/{foodId}")
-    private String editFood(@PathVariable("foodId") Long foodId, Model datamodel) {
-        Optional<Food> foodOptional = foodRepository.findById(foodId);
+    @GetMapping("/edit/{foodName}")
+    private String editFood(@PathVariable("foodName") String foodName, Model datamodel) {
+        Optional<Food> foodOptional = foodRepository.findFoodByFoodName(foodName);
         if (foodOptional.isPresent()) {
             datamodel.addAttribute("foodForm", foodService.toDTO(foodOptional.get()));
         }
@@ -69,6 +69,7 @@ public class FoodController {
             try {
                 foodService.save(toBeSavedFood);
             } catch (IllegalArgumentException e) {
+                System.err.println(e.getMessage());
                 return "redirect:/food/overview";
             }
         }

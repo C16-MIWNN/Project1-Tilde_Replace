@@ -11,7 +11,7 @@
 
                       <div class="row mt-4 list-group-flush">
                           <li class="list-group-item col-9 ms-2" th:text="|Ingredient ${food.foodName}|"></li>
-                          <th:block sec:authorize="isAuthenticated()" th:replace="~{fragments/util :: our-button(type='edit', text='', action=@{/food/edit/{id}(id = ${food.foodId})}, col='col-1 ms-5 me-2')}"></th:block>
+                          <th:block sec:authorize="isAuthenticated()" th:replace="~{fragments/util :: our-button(type='edit', text='', action=@{/food/edit/{name}(name = ${food.foodName})}, col='col-1 ms-5 me-2')}"></th:block>
                           <th:block sec:authorize="isAuthenticated()" th:replace="~{fragments/util :: our-button(type='remove', text='', action=@{/food/delete/{id}(id = ${food.foodId})}, col='col-1')}"></th:block>
                       </div>
 
