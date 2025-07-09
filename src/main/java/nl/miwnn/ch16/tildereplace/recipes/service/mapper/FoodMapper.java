@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.FoodDTO;
-import nl.miwnn.ch16.tildereplace.recipes.dto.AllergyProxyObject;
 import nl.miwnn.ch16.tildereplace.recipes.model.Allergy;
 import nl.miwnn.ch16.tildereplace.recipes.model.Food;
 import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
