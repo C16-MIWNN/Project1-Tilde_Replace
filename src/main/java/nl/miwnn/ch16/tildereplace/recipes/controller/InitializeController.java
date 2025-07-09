@@ -210,11 +210,9 @@ public class InitializeController {
     }
 
     private void loadTags() throws IOException, CsvValidationException {
-
         try (CSVReader reader = new CSVReader(new InputStreamReader(
                 new ClassPathResource("/example_data/tags.csv").getInputStream()))) {
 
-            // Skip header
             reader.skip(1);
 
             for (String[] tagLine : reader) {
@@ -224,8 +222,6 @@ public class InitializeController {
             }
         }
     }
-
-
 }
 
 
