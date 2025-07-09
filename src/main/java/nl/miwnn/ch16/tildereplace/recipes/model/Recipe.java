@@ -15,6 +15,8 @@ public class Recipe {
 
     @OneToMany (mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
+
+    @Column(columnDefinition = "TEXT")
     private String preparationInstructions;
 
     @ManyToOne
