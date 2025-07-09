@@ -35,7 +35,6 @@ public class FoodMapper {
         food.setFiber(foodDTO.getFiber());
         food.setProtein(foodDTO.getProtein());
         food.setCarbohydrates(foodDTO.getCarbohydrates());
-        food.setImageUrl(foodDTO.getImageUrl());
 
         Set<String> allergyNameSet = foodDTO.getAllergies();
         Set<Allergy> allergies = new HashSet<Allergy>();
@@ -68,7 +67,6 @@ public class FoodMapper {
         foodDTO.setFiber(food.getFiber());
         foodDTO.setProtein(food.getProtein());
         foodDTO.setCarbohydrates(food.getCarbohydrates());
-        foodDTO.setImageUrl(food.getImageUrl());
 
         Set<String> allergies = new HashSet<String>();
         for (Allergy allergy : food.getAllergies()) {
