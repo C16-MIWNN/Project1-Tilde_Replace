@@ -2,14 +2,11 @@ package nl.miwnn.ch16.tildereplace.recipes.service.mapper;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Optional;
 
 import nl.miwnn.ch16.tildereplace.recipes.dto.FoodDTO;
 import nl.miwnn.ch16.tildereplace.recipes.model.Allergy;
 import nl.miwnn.ch16.tildereplace.recipes.model.Food;
-import nl.miwnn.ch16.tildereplace.recipes.model.Ingredient;
 import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
 

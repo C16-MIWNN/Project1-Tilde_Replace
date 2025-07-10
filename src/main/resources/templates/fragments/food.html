@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<div th:fragment="ingredientForm(foodForm, allAllergies)">
+<div th:fragment="ingredientForm(foodForm, allAllergies, #fields)">
     <form class="row g-3" th:action="@{/food/save}" method="post" th:object="${foodForm}">
 
         <input type="hidden" th:field="*{foodId}">
@@ -45,6 +45,11 @@
             <span class="input-group-text col-6">Ingredient</span>
             <input type="text" class="form-control" th:field="*{foodName}" placeholder="Naam">
             <span th:replace="~{fragments/util :: our-button(type='save', text='', action='', typeButton='submit', col='col-2')}"></span>
+
+            <div>
+                <span th:if="${#fields.hasErrors('foodName')}" id="nameHelpInline" class="invalid-feedback d-block" th:errors="*{foodName}">
+                </span>
+            </div>
         </div>
 
 
@@ -52,40 +57,56 @@
             <h2>Voedingswaarde</h2>
             <div class="input-group mb-3">
                 <span class="input-group-text col-6">Energie</span>
-                <input type="text" class="form-control col" th:field="*{energy}" placeholder="0">
+                <input type="text" class="form-control" th:field="*{energy}" placeholder="0">
                 <div class="col-2"></div>
+
+                <div th:if="${#fields.hasErrors('energy')}" class="invalid-feedback d-block" th:errors="*{energy}"></div>
+
             </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text col-6">Eiwit</span>
                 <input type="text" class="form-control" th:field="*{protein}" placeholder="0">
                 <div class="col-2"></div>
+
+                <div th:if="${#fields.hasErrors('protein')}" class="invalid-feedback d-block" th:errors="*{protein}">
+                </div>
             </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text col-6">Vet</span>
                 <input type="text" class="form-control" th:field="*{fat}" placeholder="0">
                 <div class="col-2"></div>
+
+                <div th:if="${#fields.hasErrors('fat')}" class="invalid-feedback d-block" th:errors="*{fat}">
+                </div>
             </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text col-6">Koolhydraten</span>
                 <input type="text" class="form-control" th:field="*{carbohydrates}" placeholder="0">
                 <div class="col-2"></div>
-            </div>
 
+                <div th:if="${#fields.hasErrors('carbohydrates')}" class="invalid-feedback d-block" th:errors="*{carbohydrates}">
+                </div>
+            </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text col-6">Vezels</span>
                 <input type="text" class="form-control" th:field="*{fiber}" placeholder="0">
                 <div class="col-2"></div>
-            </div>
 
+                <div th:if="${#fields.hasErrors('fiber')}" class="invalid-feedback d-block" th:errors="*{fiber}">
+                </div>
+            </div>
 
             <div class="input-group mb-3">
                 <span class="input-group-text col-6">Zout</span>
                 <input type="text" class="form-control" th:field="*{salt}" placeholder="0">
                 <div class="col-2"></div>
+
+                <div th:if="${#fields.hasErrors('salt')}" class="invalid-feedback d-block" th:errors="*{salt}">
+                </div>
             </div>
         </div>
 
@@ -102,8 +123,6 @@
         </div>
     </form>
 </div>
-
-
 
 <div th:fragment="allergyForm(allergyForm, #fields)">
 
@@ -124,13 +143,13 @@
 </div>
 
 <!-- Modal -->
-<div th:fragment="foodFormModal(ingredientForm, allAllergies)" class="modal fade" id="ingredientEditModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
+<div th:fragment="foodFormModal(ingredientForm, allAllergies, #fields)" class="modal fade" id="ingredientEditModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-body">
                 <div class="container-fluid">
-                    <div th:replace="~{:: ingredientForm(${ingredientForm}, ${allAllergies})}"></div>
+                    <div th:replace="~{:: ingredientForm(${ingredientForm}, ${allAllergies}, ${#fields})}"></div>
                 </div>
             </div>
         </div>
@@ -140,7 +159,6 @@
         new bootstrap.Modal(document.getElementById('ingredientEditModal'), {}).toggle()
     </script>
 </div>
-
 
 <div th:fragment="allergyFormModal(allergyForm, #fields)" class="modal fade" id="addAllergyModal" tabindex="-1" aria-labelledby="editFormModalLabel" aria-hidden="true">
     <div class="modal-dialog">

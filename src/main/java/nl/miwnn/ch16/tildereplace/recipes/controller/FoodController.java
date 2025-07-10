@@ -3,6 +3,7 @@ package nl.miwnn.ch16.tildereplace.recipes.controller;
 import nl.miwnn.ch16.tildereplace.recipes.model.Allergy;
 import nl.miwnn.ch16.tildereplace.recipes.model.Food;
 import nl.miwnn.ch16.tildereplace.recipes.dto.FoodDTO;
+import nl.miwnn.ch16.tildereplace.recipes.dto.FoodInfo;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,6 @@ import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.FoodService;
 
-import java.util.HashSet;
 import java.util.Optional;
 
 @Controller
@@ -33,10 +33,11 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    private String setupFoodOverview(Model datamodel, Allergy allergyForm, boolean formFoodModalHidden, boolean formAllergyModalHidden) {
+    private String setupFoodOverview(Model datamodel, FoodDTO foodForm, Allergy allergyForm,
+            boolean formFoodModalHidden, boolean formAllergyModalHidden) {
         datamodel.addAttribute("allFoods", foodRepository.findAll(Sort.by(Sort.Direction.ASC, "foodName")));
         datamodel.addAttribute("allAllergies", allergyRepository.findAll());
-        datamodel.addAttribute("foodForm", new FoodDTO());
+        datamodel.addAttribute("foodForm", foodForm);
         datamodel.addAttribute("allergyForm", allergyForm);
         datamodel.addAttribute("formFoodModalHidden", formFoodModalHidden);
         datamodel.addAttribute("formAllergyModalHidden", formAllergyModalHidden);
@@ -46,32 +47,35 @@ public class FoodController {
 
     @GetMapping({"/overview"})
     public String showFoodOverview(Model datamodel) {
-        return setupFoodOverview(datamodel, new Allergy(), true, true);
+        return setupFoodOverview(datamodel, new FoodDTO(), new Allergy(), true, true);
     }
 
     @GetMapping("/edit/{foodName}")
-    private String editFood(@PathVariable("foodName") String foodName, Model datamodel) {
+    private String editFood(@PathVariable("foodName") String foodName, Allergy allergyForm, Model datamodel) {
         Optional<Food> foodOptional = foodRepository.findFoodByFoodName(foodName);
+        FoodDTO foodToBeSaved;
         if (foodOptional.isPresent()) {
-            datamodel.addAttribute("foodForm", foodService.toDTO(foodOptional.get()));
+            foodToBeSaved = foodService.toDTO(foodOptional.get());
+        } else {
+            foodToBeSaved = new FoodDTO();
         }
+
         datamodel.addAttribute("allAllergies", allergyRepository.findAll());
 
-        return "foodForm";
+        return setupFoodOverview(datamodel, foodToBeSaved, allergyForm, false, true);
     }
 
     @PostMapping("/save")
-    private String saveOrUpdateFood(@ModelAttribute("foodForm") FoodDTO toBeSavedFood,
-                                          BindingResult result) {
+    private String saveOrUpdateFood(@Validated(FoodInfo.class) @ModelAttribute("foodForm") FoodDTO foodToBeSaved,
+                                    BindingResult result,
+                                    @ModelAttribute("allergyForm") Allergy allergyForm,
+                                    Model datamodel) {
         if (result.hasErrors()) {
+            //handleFoodFormErrors(foodToBeSaved, result);
             System.err.println(result.getAllErrors());
+            return setupFoodOverview(datamodel, foodToBeSaved, allergyForm, false, true);
         } else {
-            try {
-                foodService.save(toBeSavedFood);
-            } catch (IllegalArgumentException e) {
-                System.err.println(e.getMessage());
-                return "redirect:/food/overview";
-            }
+            foodService.save(foodToBeSaved);
         }
 
         return "redirect:/food/overview";
@@ -79,20 +83,21 @@ public class FoodController {
 
     @PostMapping("/allergy/save")
     private String saveOrUpdateFood(@ModelAttribute("allergyForm") Allergy allergyToBeSaved,
-                                          BindingResult result,
-                                          Model datamodel) {
+                                    @ModelAttribute("foodForm") FoodDTO foodForm,
+                                    BindingResult result,
+                                    Model datamodel) {
+
         checkAllergyNameInUse(allergyToBeSaved, result);
 
         if (result.hasErrors()) {
             System.err.println(result.getAllErrors());
-            return setupFoodOverview(datamodel, allergyToBeSaved, true, false);
+            return setupFoodOverview(datamodel, foodForm, allergyToBeSaved, true, false);
         } else {
             allergyRepository.save(allergyToBeSaved);
         }
 
         return "redirect:/food/overview";
     }
-
 
     @GetMapping("/delete/{foodId}")
     private String deleteFood(@PathVariable("foodId") Long foodId) {
@@ -104,9 +109,11 @@ public class FoodController {
         return "redirect:/food/overview";
     }
 
+    private void handleFoodFormErrors(FoodDTO foodToBeSaved, BindingResult result) {
+        result.addError(new FieldError("foodForm", "foodName", "Ingredientnaam mag niet leeg zijn"));
+    }
 
     private void checkAllergyNameInUse(Allergy allergyToBeSaved, BindingResult result) {
-
         Optional<Allergy> optionalAllergy = allergyRepository.findAllergyByAllergyName(allergyToBeSaved.getAllergyName());
         if (optionalAllergy.isPresent() && !optionalAllergy.get().getAllergyName().equals(allergyToBeSaved.getAllergyName())) {
             result.addError(new FieldError("allergyForm", "allergyName", "Allergie naam bestaat al"));
