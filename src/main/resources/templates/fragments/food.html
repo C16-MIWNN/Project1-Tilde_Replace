@@ -47,7 +47,7 @@
             <span th:replace="~{fragments/util :: our-button(type='save', text='', action='', typeButton='submit', col='col-2')}"></span>
 
             <div>
-                <span th:if="${#fields.hasErrors('foodName')}" id="nameHelpInline" class="form-text" th:errors="*{foodName}">
+                <span th:if="${#fields.hasErrors('foodName')}" id="nameHelpInline" class="invalid-feedback d-block" th:errors="*{foodName}">
                 </span>
             </div>
         </div>
@@ -57,13 +57,10 @@
             <h2>Voedingswaarde</h2>
             <div class="input-group mb-3">
                 <span class="input-group-text col-6">Energie</span>
-                <input type="text" class="form-control col" th:field="*{energy}" placeholder="0">
+                <input type="text" class="form-control" th:field="*{energy}" placeholder="0">
                 <div class="col-2"></div>
 
-                <div>
-                    <span th:if="${#fields.hasErrors('energy')}" id="nameHelpInline" class="form-text" th:errors="*{energy}">
-                    </span>
-                </div>
+                <div th:if="${#fields.hasErrors('energy')}" class="invalid-feedback d-block" th:errors="*{energy}"></div>
 
             </div>
 
@@ -72,9 +69,7 @@
                 <input type="text" class="form-control" th:field="*{protein}" placeholder="0">
                 <div class="col-2"></div>
 
-                <div>
-                    <span th:if="${#fields.hasErrors('protein')}" id="nameHelpInline" class="form-text" th:errors="*{protein}">
-                    </span>
+                <div th:if="${#fields.hasErrors('protein')}" class="invalid-feedback d-block" th:errors="*{protein}">
                 </div>
             </div>
 
@@ -83,9 +78,7 @@
                 <input type="text" class="form-control" th:field="*{fat}" placeholder="0">
                 <div class="col-2"></div>
 
-                <div>
-                    <span th:if="${#fields.hasErrors('fat')}" id="nameHelpInline" class="form-text" th:errors="*{fat}">
-                    </span>
+                <div th:if="${#fields.hasErrors('fat')}" class="invalid-feedback d-block" th:errors="*{fat}">
                 </div>
             </div>
 
@@ -94,9 +87,7 @@
                 <input type="text" class="form-control" th:field="*{carbohydrates}" placeholder="0">
                 <div class="col-2"></div>
 
-                <div>
-                    <span th:if="${#fields.hasErrors('carbohydrates')}" id="nameHelpInline" class="form-text" th:errors="*{carbohydrates}">
-                    </span>
+                <div th:if="${#fields.hasErrors('carbohydrates')}" class="invalid-feedback d-block" th:errors="*{carbohydrates}">
                 </div>
             </div>
 
@@ -105,9 +96,7 @@
                 <input type="text" class="form-control" th:field="*{fiber}" placeholder="0">
                 <div class="col-2"></div>
 
-                <div>
-                    <span th:if="${#fields.hasErrors('fiber')}" id="nameHelpInline" class="form-text" th:errors="*{fiber}">
-                    </span>
+                <div th:if="${#fields.hasErrors('fiber')}" class="invalid-feedback d-block" th:errors="*{fiber}">
                 </div>
             </div>
 
@@ -116,9 +105,7 @@
                 <input type="text" class="form-control" th:field="*{salt}" placeholder="0">
                 <div class="col-2"></div>
 
-                <div>
-                    <span th:if="${#fields.hasErrors('salt')}" id="nameHelpInline" class="form-text" th:errors="*{salt}">
-                    </span>
+                <div th:if="${#fields.hasErrors('salt')}" class="invalid-feedback d-block" th:errors="*{salt}">
                 </div>
             </div>
         </div>
