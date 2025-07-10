@@ -18,6 +18,7 @@ public class RecipesSecurityConfig {
         httpSecurity
                 .authorizeHttpRequests((request) -> request
                         .requestMatchers("/", "/recipeOverview").permitAll()
+                        .requestMatchers("/recipe/search").permitAll()
                         .requestMatchers("/food/overview").permitAll()
                         .requestMatchers("/user/new", "user/save", "/user/login").permitAll()
                         .requestMatchers("/tags/**").permitAll()
