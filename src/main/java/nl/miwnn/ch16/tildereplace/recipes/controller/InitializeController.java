@@ -225,7 +225,7 @@ public class InitializeController {
     }
 
     private void loadImages() {
-        imageService.saveFile("/Users/dennismei/Make IT Work/Project1/Project1-Tilde_Replace/src/main/resources/example_data/images");
+        imageService.saveFile("src/main/resources/example_data/images");
     }
 
     private void loadTags() throws IOException, CsvValidationException {

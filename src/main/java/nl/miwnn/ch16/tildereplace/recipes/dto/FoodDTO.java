@@ -5,7 +5,6 @@ import java.util.Set;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import nl.miwnn.ch16.tildereplace.recipes.dto.FoodInfo;
 
 public class FoodDTO {
 
