@@ -6,6 +6,11 @@ import java.util.Set;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * @author Wouter Stegeman
+ * Basic food dto
+ */
+
 public class FoodDTO {
 
     private Long foodId;

@@ -9,6 +9,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
+/**
+ * @author Wouter Stegeman
+ * Allergy Entity
+ */
+
 @Entity
 public class Allergy {
 

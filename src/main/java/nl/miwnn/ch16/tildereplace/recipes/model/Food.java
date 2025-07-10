@@ -4,6 +4,12 @@ import java.util.Set;
 
 import jakarta.persistence.*;
 
+/**
+ * @author Wouter Stegeman
+ * Food entity with its nutrition properties and link to allergy information
+ * Links to ingredients table for in what recipes it is used in
+ */
+
 @Entity
 public class Food {
 

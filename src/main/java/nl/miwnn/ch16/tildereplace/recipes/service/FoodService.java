@@ -7,6 +7,11 @@ import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
 import nl.miwnn.ch16.tildereplace.recipes.service.mapper.FoodMapper;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Wouter Stegeman
+ * Basic Food service
+ */
+
 @Service
 public class FoodService {
 

@@ -19,6 +19,12 @@ import com.opencsv.exceptions.CsvValidationException;
 import nl.miwnn.ch16.tildereplace.recipes.model.*;
 import nl.miwnn.ch16.tildereplace.recipes.repository.*;
 
+
+/**
+ * @author Wouter Stegeman, Remi, Dennis Mei
+ * Initializes all repositories with some example data
+ */
+
 @Controller
 public class InitializeController {
 

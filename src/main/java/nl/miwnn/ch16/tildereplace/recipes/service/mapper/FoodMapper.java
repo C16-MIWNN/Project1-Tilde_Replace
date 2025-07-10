@@ -10,6 +10,11 @@ import nl.miwnn.ch16.tildereplace.recipes.model.Food;
 import nl.miwnn.ch16.tildereplace.recipes.repository.AllergyRepository;
 import nl.miwnn.ch16.tildereplace.recipes.repository.FoodRepository;
 
+/**
+ * @author Wouter Stegeman
+ * Maps Food FoodDTO and FoodDTO to Food
+ */
+
 public class FoodMapper {
 
     private final AllergyRepository allergyRepository;

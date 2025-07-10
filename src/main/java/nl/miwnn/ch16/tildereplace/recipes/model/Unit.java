@@ -4,6 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+/**
+ * @author Wouter Stegeman
+ * Unit entity that keeps track of units like grams, mililiters, etc
+ */
+
 @Entity
 public class Unit {
 

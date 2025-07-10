@@ -19,6 +19,12 @@ import nl.miwnn.ch16.tildereplace.recipes.service.FoodService;
 
 import java.util.Optional;
 
+
+/**
+ * @author Wouter Stegeman
+ * Food controller with various mappings
+ */
+
 @Controller
 @RequestMapping("/food")
 public class FoodController {
@@ -71,7 +77,6 @@ public class FoodController {
                                     @ModelAttribute("allergyForm") Allergy allergyForm,
                                     Model datamodel) {
         if (result.hasErrors()) {
-            //handleFoodFormErrors(foodToBeSaved, result);
             System.err.println(result.getAllErrors());
             return setupFoodOverview(datamodel, foodToBeSaved, allergyForm, false, true);
         } else {
@@ -107,10 +112,6 @@ public class FoodController {
         }
 
         return "redirect:/food/overview";
-    }
-
-    private void handleFoodFormErrors(FoodDTO foodToBeSaved, BindingResult result) {
-        result.addError(new FieldError("foodForm", "foodName", "Ingredientnaam mag niet leeg zijn"));
     }
 
     private void checkAllergyNameInUse(Allergy allergyToBeSaved, BindingResult result) {

@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * @author Wouter Stegeman
+ */
+
 @Repository
 public interface AllergyRepository extends JpaRepository<Allergy, Long> {
 
