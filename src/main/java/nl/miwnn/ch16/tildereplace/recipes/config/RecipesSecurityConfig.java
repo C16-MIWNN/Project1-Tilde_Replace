@@ -19,9 +19,10 @@ public class RecipesSecurityConfig {
                 .authorizeHttpRequests((request) -> request
                         .requestMatchers("/", "/recipeOverview").permitAll()
                         .requestMatchers("/food/overview").permitAll()
-                        .requestMatchers("/user/new", "user/save").permitAll()
+                        .requestMatchers("/user/new", "user/save", "/user/login").permitAll()
                         .requestMatchers("/tags/**").permitAll()
                         .requestMatchers("/webjars/**", "/css/**").permitAll()
+                        .requestMatchers("/image/**").permitAll()
                         .anyRequest().authenticated()
                     )
                 .formLogin(form -> form.loginPage("/user/login").permitAll())
